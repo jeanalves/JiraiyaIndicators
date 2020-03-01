@@ -1,3 +1,4 @@
+using NinjaTrader.Custom.Indicators.JiraiyaIndicators;
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
 using NinjaTrader.NinjaScript.DrawingTools;
 using System;
@@ -112,13 +113,11 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 		{ get; set; }
 
         /// <summary>
-        /// This propertie returns the list data in the following sequence
-        /// double price, int barIndex, int pointIndex, int sideSwing,
-        /// when side swing is equal 1 means a high point and -1 a low one
+        /// This propertie returns the list data off zigzag points
         /// </summary>
         [Browsable(false)]
         [XmlIgnore()]
-        public List<Tuple<double, int, int, int>> PointsList
+        public List<Point> PointsList
         {   get
             {
                 switch (CalculationType)
@@ -136,9 +135,30 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
             }
         }
 
-		#endregion
+        [Browsable(false)]
+        [XmlIgnore()]
+        public Point LastPoint
+        {
+            get
+            {
+                switch (CalculationType)
+                {
+                    case CalculationTypeList.Tick:
+                        return tickCalculation.GetLastPoint();
 
-	}
+                    case CalculationTypeList.SwingForwardOne:
+                        return swingForwardCalculationOne.GetLastPoint();
+
+                    case CalculationTypeList.SwingForwardTwo:
+                        return swingForwardCalculationTwo.GetLastPoint();
+                }
+                return null;
+            }
+        }
+
+
+        #endregion
+    }
 }
 
 public enum CalculationTypeList

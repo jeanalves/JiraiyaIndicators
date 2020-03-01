@@ -11,7 +11,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         protected Series<double> highs;
         protected Series<double> lows;
         protected List<Point> points = new List<Point>();
-        private List<Tuple<double, int, int, int>> pointsListTuple = new List<Tuple<double, int, int, int>>();
         
         protected Calculation(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher)
         {
@@ -94,9 +93,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             return points[points.Count - 1];
         }
 
-        public List<Tuple<double, int, int, int>> GetPointsList()
+        public List<Point> GetPointsList()
         {
-            return pointsListTuple;
+            return points;
+        }
+
+        public Point GetLastPoint()
+        {
+            return points[points.Count - 1];
         }
 
         // Protected (methods)
@@ -221,7 +225,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             launcher.PrintLog("Calculation.AddHigh()");
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
-            AddToListTuple(price, barIndex, pointIndex, sideSwing);
 
             ToDraw.DrawDotWrapper(launcher, pointIndex, barIndex, price, Brushes.Green);
             ToDraw.DrawTextWrapper(launcher, pointIndex, barIndex, price, 15);
@@ -232,7 +235,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             launcher.PrintLog("Calculation.AddLow()");
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
-            AddToListTuple(price, barIndex, pointIndex, sideSwing);
 
             ToDraw.DrawDotWrapper(launcher, pointIndex, barIndex, price, Brushes.Red);
             ToDraw.DrawTextWrapper(launcher, pointIndex, barIndex, price, -15);
@@ -275,22 +277,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             ToDraw.DrawDotWrapper(launcher, temp.PointIndex, barIndex, price, Brushes.Red);
             ToDraw.DrawTextWrapper(launcher, temp.PointIndex, barIndex,price, -15);
-        }
-
-        private void AddToListTuple(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
-        {
-            int sideSwingNumber = 0;
-
-            if (sideSwing == Point.SideSwing.High)
-            {
-                sideSwingNumber = 1;
-            }
-            else if (sideSwing == Point.SideSwing.Low)
-            {
-                sideSwingNumber = -1;
-            }
-
-            pointsListTuple.Add(new Tuple<double, int, int, int>(price, barIndex, pointIndex, sideSwingNumber));
         }
 
         // Miscellaneous
