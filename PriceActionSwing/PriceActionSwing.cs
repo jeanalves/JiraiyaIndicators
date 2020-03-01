@@ -89,11 +89,6 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
             Draw.TextFixed(this, "Error", text.ToString(), TextPosition.BottomRight);
         }
 
-        public int ConvertBarIndexToBarsAgo(int barIndex)
-        {
-            return (barIndex - CurrentBar) < 0 ? (barIndex - CurrentBar) * -1 : barIndex - CurrentBar;
-        }
-
         #region Properties
 
         [NinjaScriptProperty]
