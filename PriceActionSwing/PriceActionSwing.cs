@@ -1,4 +1,3 @@
-#region Using declarations
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
 using NinjaTrader.NinjaScript.DrawingTools;
 using System;
@@ -6,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
-#endregion
 
 //This namespace holds Indicators in this folder and is required. Do not change it. 
 namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
@@ -156,19 +154,19 @@ namespace NinjaTrader.NinjaScript.Indicators
 {
 	public partial class Indicator : NinjaTrader.Gui.NinjaScript.IndicatorRenderBase
 	{
-		private JiraiyaIndicators.PriceActionSwing[] cachePriceActionSwingLauncher;
-		public JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(CalculationTypeList calculationType, double strength, bool useHighLow)
+		private JiraiyaIndicators.PriceActionSwing[] cachePriceActionSwing;
+		public JiraiyaIndicators.PriceActionSwing PriceActionSwing(CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return PriceActionSwingLauncher(Input, calculationType, strength, useHighLow);
+			return PriceActionSwing(Input, calculationType, strength, useHighLow);
 		}
 
-		public JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(ISeries<double> input, CalculationTypeList calculationType, double strength, bool useHighLow)
+		public JiraiyaIndicators.PriceActionSwing PriceActionSwing(ISeries<double> input, CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			if (cachePriceActionSwingLauncher != null)
-				for (int idx = 0; idx < cachePriceActionSwingLauncher.Length; idx++)
-					if (cachePriceActionSwingLauncher[idx] != null && cachePriceActionSwingLauncher[idx].CalculationType == calculationType && cachePriceActionSwingLauncher[idx].Strength == strength && cachePriceActionSwingLauncher[idx].UseHighLow == useHighLow && cachePriceActionSwingLauncher[idx].EqualsInput(input))
-						return cachePriceActionSwingLauncher[idx];
-			return CacheIndicator<JiraiyaIndicators.PriceActionSwing>(new JiraiyaIndicators.PriceActionSwing(){ CalculationType = calculationType, Strength = strength, UseHighLow = useHighLow }, input, ref cachePriceActionSwingLauncher);
+			if (cachePriceActionSwing != null)
+				for (int idx = 0; idx < cachePriceActionSwing.Length; idx++)
+					if (cachePriceActionSwing[idx] != null && cachePriceActionSwing[idx].CalculationType == calculationType && cachePriceActionSwing[idx].Strength == strength && cachePriceActionSwing[idx].UseHighLow == useHighLow && cachePriceActionSwing[idx].EqualsInput(input))
+						return cachePriceActionSwing[idx];
+			return CacheIndicator<JiraiyaIndicators.PriceActionSwing>(new JiraiyaIndicators.PriceActionSwing(){ CalculationType = calculationType, Strength = strength, UseHighLow = useHighLow }, input, ref cachePriceActionSwing);
 		}
 	}
 }
@@ -177,14 +175,14 @@ namespace NinjaTrader.NinjaScript.MarketAnalyzerColumns
 {
 	public partial class MarketAnalyzerColumn : MarketAnalyzerColumnBase
 	{
-		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwing(CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return indicator.PriceActionSwingLauncher(Input, calculationType, strength, useHighLow);
+			return indicator.PriceActionSwing(Input, calculationType, strength, useHighLow);
 		}
 
-		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwing(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return indicator.PriceActionSwingLauncher(input, calculationType, strength, useHighLow);
+			return indicator.PriceActionSwing(input, calculationType, strength, useHighLow);
 		}
 	}
 }
@@ -193,14 +191,14 @@ namespace NinjaTrader.NinjaScript.Strategies
 {
 	public partial class Strategy : NinjaTrader.Gui.NinjaScript.StrategyRenderBase
 	{
-		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwing(CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return indicator.PriceActionSwingLauncher(Input, calculationType, strength, useHighLow);
+			return indicator.PriceActionSwing(Input, calculationType, strength, useHighLow);
 		}
 
-		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwing(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return indicator.PriceActionSwingLauncher(input, calculationType, strength, useHighLow);
+			return indicator.PriceActionSwing(input, calculationType, strength, useHighLow);
 		}
 	}
 }

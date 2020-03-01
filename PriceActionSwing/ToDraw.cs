@@ -1,5 +1,4 @@
 ﻿using NinjaTrader.NinjaScript.DrawingTools;
-using NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators;
 using System.Windows.Media;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing

@@ -1,6 +1,4 @@
-﻿using NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators;
-
-namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
+﻿namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class SwingForwardCalculationOne : Calculation
     {

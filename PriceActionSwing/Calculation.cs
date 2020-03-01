@@ -1,5 +1,4 @@
 ﻿using NinjaTrader.NinjaScript;
-using NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media;
