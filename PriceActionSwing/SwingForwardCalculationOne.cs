@@ -46,21 +46,21 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                     launcher.PrintLog("Add high," +
                         " highCandidateValue: " + highCandidateValue +
                         ", highCandidateIndex: " + highCandidateIndex);
-                    return new CalculationData(true, highCandidateValue, highCandidateIndex, SideSwing.High);
+                    return new CalculationData(true, highCandidateValue, highCandidateIndex, Point.SideSwing.High);
                 }
                 else if (highCandidateIndex > lowCandidateIndex)
                 {
                     launcher.PrintLog("Add low," +
                         " lowCandidateValue: " + lowCandidateValue +
                         ", lowCandidateIndex: " + lowCandidateIndex);
-                    return new CalculationData(true, lowCandidateValue, lowCandidateIndex, SideSwing.Low);
+                    return new CalculationData(true, lowCandidateValue, lowCandidateIndex, Point.SideSwing.Low);
                 }
                 else if(highCandidateIndex == lowCandidateIndex)
                 {
                     launcher.PrintLog("Error: The two indexes are equal.");
                     launcher.PrintError("Error: The two indexes are equal. " +
                         "High bar index: " + highCandidateIndex + " Low bar index: " + lowCandidateIndex);
-                    return new CalculationData(true, 0, 0, SideSwing.Unknow);
+                    return new CalculationData(true, 0, 0, Point.SideSwing.Unknow);
                 }
                 else
                 {
@@ -78,8 +78,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             bool isRising= true;
             bool isFalling = true;
-            bool isOverHighStrength = (launcher.CurrentBar - LastLow().barIndex) >= launcher.Strength;
-            bool isOverLowStrength = (launcher.CurrentBar - LastHigh().barIndex) >= launcher.Strength;
+            bool isOverHighStrength = (launcher.CurrentBar - LastLow().BarIndex) >= launcher.Strength;
+            bool isOverLowStrength = (launcher.CurrentBar - LastHigh().BarIndex) >= launcher.Strength;
 
             double swingHighCandidateValue = highs[0];
             double swingLowCandidateValue = lows[0];
@@ -101,9 +101,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             launcher.PrintLog("isRising : " + isRising + ", isFalling : " + isFalling);
 
             if (isRising && isOverHighStrength)
-                return new CalculationData(true, swingHighCandidateValue, launcher.CurrentBar, SideSwing.High);
+                return new CalculationData(true, swingHighCandidateValue, launcher.CurrentBar, Point.SideSwing.High);
             if (isFalling && isOverLowStrength)
-                return new CalculationData(true, swingLowCandidateValue, launcher.CurrentBar, SideSwing.Low);
+                return new CalculationData(true, swingLowCandidateValue, launcher.CurrentBar, Point.SideSwing.Low);
 
             return new CalculationData(false);
         }

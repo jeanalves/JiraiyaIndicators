@@ -27,17 +27,17 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             // For a new swing high in an uptrend, Highs[BarsInProgress][0] must be 
             // greater than the current swing high
-            if (LastSideTrend() == SideSwing.High)
+            if (LastSideTrend() == Point.SideSwing.High)
             {
-                if (LastHigh().price > highs[0])
+                if (LastHigh().Price > highs[0])
                     newHigh = false;
             }
 
             // For a new swing low in a downtrend, Lows[BarsInProgress][0] must be 
             // smaller than the current swing low
-            if (LastSideTrend() == SideSwing.Low)
+            if (LastSideTrend() == Point.SideSwing.Low)
             {
-                if (LastLow().price < lows[0])
+                if (LastLow().Price < lows[0])
                     newLow = false;
             }
 
@@ -69,22 +69,22 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             if (newHigh && newLow)
             {
-                if (LastSideTrend() == SideSwing.High)
+                if (LastSideTrend() == Point.SideSwing.High)
                 {
-                    return new CalculationData(true, highs[0], launcher.CurrentBar, SideSwing.High);
+                    return new CalculationData(true, highs[0], launcher.CurrentBar, Point.SideSwing.High);
                 }
                 else
                 {
-                    return new CalculationData(true, lows[0], launcher.CurrentBar, SideSwing.Low);
+                    return new CalculationData(true, lows[0], launcher.CurrentBar, Point.SideSwing.Low);
                 }
             }
             else if (newHigh)
             {
-                return new CalculationData(true, highs[0], launcher.CurrentBar, SideSwing.High);
+                return new CalculationData(true, highs[0], launcher.CurrentBar, Point.SideSwing.High);
             }
             else if (newLow)
             {
-                return new CalculationData(true, lows[0], launcher.CurrentBar, SideSwing.Low);
+                return new CalculationData(true, lows[0], launcher.CurrentBar, Point.SideSwing.Low);
             }
             return new CalculationData(false);
         }

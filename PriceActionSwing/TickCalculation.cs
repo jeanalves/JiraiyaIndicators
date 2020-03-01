@@ -14,14 +14,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             bool isFalling = lows[0] < lows[1];
             launcher.PrintLog("isRising : " + isRising + ", isFalling: " + isFalling);
             
-            bool isOverHighStrength = highs[0] > (LastLow().price + (launcher.Strength * launcher.TickSize));
-            bool isOverLowStrength = lows[0] < (LastHigh().price - (launcher.Strength * launcher.TickSize));
+            bool isOverHighStrength = highs[0] > (LastLow().Price + (launcher.Strength * launcher.TickSize));
+            bool isOverLowStrength = lows[0] < (LastHigh().Price - (launcher.Strength * launcher.TickSize));
             launcher.PrintLog("isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
 
             if (isRising && isOverHighStrength)
-                return new CalculationData(true, highs[0], launcher.CurrentBar, SideSwing.High);
+                return new CalculationData(true, highs[0], launcher.CurrentBar, Point.SideSwing.High);
             if (isFalling && isOverLowStrength)
-                return new CalculationData(true, lows[0], launcher.CurrentBar, SideSwing.Low);
+                return new CalculationData(true, lows[0], launcher.CurrentBar, Point.SideSwing.Low);
             
             return new CalculationData(false);
         }

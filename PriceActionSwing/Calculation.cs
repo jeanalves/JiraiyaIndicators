@@ -53,14 +53,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         // Public (methods)
 
-        public SideSwing LastSideTrend()
+        public Point.SideSwing LastSideTrend()
         {
-            return points[points.Count - 1].sideSwing;
+            return points[points.Count - 1].CurrentSideSwing;
         }
 
         public double LastPrice()
         {
-            return points[points.Count - 1].price;
+            return points[points.Count - 1].Price;
         }
 
         public Point LastHigh()
@@ -68,7 +68,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             if (points.Count > 0)
             {
                 for (int i = points.Count - 1; i > 0; i--)
-                    if (points[i].sideSwing == SideSwing.High)
+                    if (points[i].CurrentSideSwing == Point.SideSwing.High)
                         return points[i];
             }
             else if (points.Count == 0)
@@ -84,7 +84,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             if (points.Count > 0)
             {
                 for (int i = points.Count - 1; i > 0; i--)
-                    if (points[i].sideSwing == SideSwing.Low)
+                    if (points[i].CurrentSideSwing == Point.SideSwing.Low)
                         return points[i];
             }
             else if (points.Count == 0)
@@ -106,17 +106,17 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             launcher.PrintLog("Virtual Calculation.CalculateFirstSwingPoint()");
 
-            SideSwing sideSwing = launcher.Close.GetValueAt(0) > launcher.Open.GetValueAt(0) ?
-                SideSwing.Low : SideSwing.High;
+            Point.SideSwing sideSwing = launcher.Close.GetValueAt(0) > launcher.Open.GetValueAt(0) ?
+                Point.SideSwing.Low : Point.SideSwing.High;
 
             if (launcher.UseHighLow)
             {
                 switch (sideSwing)
                 {
-                    case SideSwing.High:
+                    case Point.SideSwing.High:
                         return new CalculationData(true, launcher.High.GetValueAt(0), 0, sideSwing);
 
-                    case SideSwing.Low:
+                    case Point.SideSwing.Low:
                         return new CalculationData(true, launcher.Low.GetValueAt(0), 0, sideSwing);
                 }
             }
@@ -159,15 +159,15 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             {
                 case CalculationStage.FirstPoint:
 
-                    if (calculationData.sideSwing == SideSwing.High)
+                    if (calculationData.sideSwing == Point.SideSwing.High)
                     {
                         AddHigh(calculationData.price, calculationData.barIndex, points.Count, calculationData.sideSwing);
                     }
-                    else if (calculationData.sideSwing == SideSwing.Low)
+                    else if (calculationData.sideSwing == Point.SideSwing.Low)
                     {
                         AddLow(calculationData.price, calculationData.barIndex, points.Count, calculationData.sideSwing);
                     }
-                    else if (calculationData.sideSwing == SideSwing.Unknow && points.Count == 0)
+                    else if (calculationData.sideSwing == Point.SideSwing.Unknow && points.Count == 0)
                     {
                         AddUnknow(launcher.Open.GetValueAt(0), 0, points.Count, calculationData.sideSwing);
                     }
@@ -189,35 +189,35 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             if (points.Count > 1)
             {
-                ToDraw.DrawZigZagWrapper(launcher, points[points.Count - 2].pointIndex,
-                    points[points.Count - 2].barIndex, points[points.Count - 2].price,
-                    points[points.Count -1].barIndex, points[points.Count -1].price);
+                ToDraw.DrawZigZagWrapper(launcher, points[points.Count - 2].PointIndex,
+                    points[points.Count - 2].BarIndex, points[points.Count - 2].Price,
+                    points[points.Count -1].BarIndex, points[points.Count -1].Price);
             }
         }
 
         private void DefaultAddUpdatePointsManagement(CalculationData calculationData)
         {
-            if (calculationData.sideSwing == SideSwing.High && LastSideTrend() != SideSwing.High)
+            if (calculationData.sideSwing == Point.SideSwing.High && LastSideTrend() != Point.SideSwing.High)
             {
                 AddHigh(calculationData.price, calculationData.barIndex, points.Count, calculationData.sideSwing);
             }
-            else if (calculationData.sideSwing == SideSwing.Low && LastSideTrend() != SideSwing.Low)
+            else if (calculationData.sideSwing == Point.SideSwing.Low && LastSideTrend() != Point.SideSwing.Low)
             {
                 AddLow(calculationData.price, calculationData.barIndex, points.Count, calculationData.sideSwing);
             }
-            else if (calculationData.sideSwing == SideSwing.High && LastSideTrend() == SideSwing.High &&
+            else if (calculationData.sideSwing == Point.SideSwing.High && LastSideTrend() == Point.SideSwing.High &&
                 calculationData.price > LastPrice())
             {
                 UpdateHigh(calculationData.price, calculationData.barIndex);
             }
-            else if (calculationData.sideSwing == SideSwing.Low && LastSideTrend() == SideSwing.Low &&
+            else if (calculationData.sideSwing == Point.SideSwing.Low && LastSideTrend() == Point.SideSwing.Low &&
                 calculationData.price < LastPrice())
             {
                 UpdateLow(calculationData.price, calculationData.barIndex);
             }
         }
 
-        private void AddHigh(double price, int barIndex, int pointIndex, SideSwing sideSwing)
+        private void AddHigh(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
             launcher.PrintLog("Calculation.AddHigh()");
 
@@ -228,7 +228,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             ToDraw.DrawTextWrapper(launcher, pointIndex, barIndex, price, 15);
         }
 
-        private void AddLow(double price, int barIndex, int pointIndex, SideSwing sideSwing)
+        private void AddLow(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
             launcher.PrintLog("Calculation.AddLow()");
 
@@ -239,7 +239,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             ToDraw.DrawTextWrapper(launcher, pointIndex, barIndex, price, -15);
         }
 
-        private void AddUnknow(double price, int barIndex, int pointIndex, SideSwing sideSwing)
+        private void AddUnknow(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
             launcher.PrintLog("Calculation.AddUnknow()");
 
@@ -254,13 +254,13 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             Point temp = points[points.Count - 1];
 
-            temp.price = price;
-            temp.barIndex = barIndex;
+            temp.Price = price;
+            temp.BarIndex = barIndex;
 
             points[points.Count - 1] = temp;
 
-            ToDraw.DrawDotWrapper(launcher, temp.pointIndex, barIndex, price, Brushes.Green);
-            ToDraw.DrawTextWrapper(launcher, temp.pointIndex, barIndex, price, 15);
+            ToDraw.DrawDotWrapper(launcher, temp.PointIndex, barIndex, price, Brushes.Green);
+            ToDraw.DrawTextWrapper(launcher, temp.PointIndex, barIndex, price, 15);
         }
 
         private void UpdateLow(double price, int barIndex)
@@ -269,24 +269,24 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             Point temp = points[points.Count - 1];
 
-            temp.price = price;
-            temp.barIndex = barIndex;
+            temp.Price = price;
+            temp.BarIndex = barIndex;
 
             points[points.Count - 1] = temp;
 
-            ToDraw.DrawDotWrapper(launcher, temp.pointIndex, barIndex, price, Brushes.Red);
-            ToDraw.DrawTextWrapper(launcher, temp.pointIndex, barIndex,price, -15);
+            ToDraw.DrawDotWrapper(launcher, temp.PointIndex, barIndex, price, Brushes.Red);
+            ToDraw.DrawTextWrapper(launcher, temp.PointIndex, barIndex,price, -15);
         }
 
-        private void AddToListTuple(double price, int barIndex, int pointIndex, SideSwing sideSwing)
+        private void AddToListTuple(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
             int sideSwingNumber = 0;
 
-            if (sideSwing == SideSwing.High)
+            if (sideSwing == Point.SideSwing.High)
             {
                 sideSwingNumber = 1;
             }
-            else if (sideSwing == SideSwing.Low)
+            else if (sideSwing == Point.SideSwing.Low)
             {
                 sideSwingNumber = -1;
             }
@@ -296,28 +296,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         // Miscellaneous
 
-        public struct Point
-        {
-            public double price;
-            public int barIndex;
-            public int pointIndex;
-            public SideSwing sideSwing;
-
-            public Point(double price, int barIndex, int pointIndex, SideSwing sideSwing)
-            {
-                this.price = price;
-                this.barIndex = barIndex;
-                this.pointIndex = pointIndex;
-                this.sideSwing = sideSwing;
-            }
-        }
-
         protected struct CalculationData
         {
             public bool isNewSwing;
             public double price;
             public int barIndex;
-            public SideSwing sideSwing;
+            public Point.SideSwing sideSwing;
 
             /// <summary>
             /// Constructor used to pass informations
@@ -326,7 +310,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             /// <param name="price"></param>
             /// <param name="barIndex"></param>
             /// <param name="sideSwing"></param>
-            public CalculationData(bool isNewSwing, double price, int barIndex, SideSwing sideSwing)
+            public CalculationData(bool isNewSwing, double price, int barIndex, Point.SideSwing sideSwing)
             {
                 this.isNewSwing = isNewSwing;
                 this.price = price;
@@ -346,7 +330,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                 this.isNewSwing = isNewSwing;
                 price = 0;
                 barIndex = 0;
-                sideSwing = SideSwing.Unknow;
+                sideSwing = Point.SideSwing.Unknow;
             }
         }
 
