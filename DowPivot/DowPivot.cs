@@ -3,14 +3,16 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 {
 	public class DowPivot : Indicator
 	{
-		protected override void OnStateChange()
+        private PriceActionSwing priceActionSwing;
+
+        protected override void OnStateChange()
 		{
 			if (State == State.SetDefaults)
 			{
 				Description									= @"Enter the description for your new custom Indicator here.";
 				Name										= "DowPivot";
 				Calculate									= Calculate.OnEachTick;
-				IsOverlay									= false;
+				IsOverlay									= true;
 				DisplayInDataBox							= true;
 				DrawOnPricePanel							= true;
 				DrawHorizontalGridLines						= false;
@@ -22,11 +24,15 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			else if (State == State.Configure)
 			{
 			}
+            else if(State == State.DataLoaded)
+            {
+                priceActionSwing = PriceActionSwing(CalculationTypeList.SwingForwardOne, 5, true);
+            }
 		}
 
 		protected override void OnBarUpdate()
 		{
-			//Add your custom indicator logic here.
+            
 		}
 	}
 }
