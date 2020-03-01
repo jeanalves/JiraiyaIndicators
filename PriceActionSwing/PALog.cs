@@ -5,10 +5,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class Log
     {
-        private readonly PriceActionSwingLauncher launcher;
+        private readonly NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher;
         private int lastBarIndex = 0;
         
-        public Log(PriceActionSwingLauncher launcher)
+        public Log(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher)
         {
             this.launcher = launcher;
         }

@@ -8,13 +8,13 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public abstract partial class Calculation
     {
-        protected readonly PriceActionSwingLauncher launcher;
+        protected readonly NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher;
         protected Series<double> highs;
         protected Series<double> lows;
         protected List<Point> points = new List<Point>();
         private List<Tuple<double, int, int, int>> pointsListTuple = new List<Tuple<double, int, int, int>>();
         
-        protected Calculation(PriceActionSwingLauncher launcher)
+        protected Calculation(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher)
         {
             this.launcher = launcher;
             highs = new Series<double>(launcher);

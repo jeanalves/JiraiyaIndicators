@@ -6,7 +6,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public static class ToDraw
     {
-        public static void DrawDotWrapper(PriceActionSwingLauncher launcher ,int pointIndex ,int barIndex,
+        public static void DrawDotWrapper(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher ,int pointIndex ,int barIndex,
             double price ,Brush dotColor)
         {
             Draw.Dot(launcher, ("Dot " + pointIndex), true,
@@ -14,7 +14,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                         dotColor).OutlineBrush = Brushes.Transparent;
         }
 
-        public static void DrawTextWrapper(PriceActionSwingLauncher launcher, int pointIndex, int barIndex,
+        public static void DrawTextWrapper(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher, int pointIndex, int barIndex,
             double price, int yPixelOffSet)
         {
             Draw.Text(launcher, ("Text " + pointIndex), true, pointIndex.ToString(),
@@ -23,7 +23,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                         Brushes.Transparent, Brushes.Transparent, 100);
         }
 
-        public static void DrawZigZagWrapper(PriceActionSwingLauncher launcher,
+        public static void DrawZigZagWrapper(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher,
                                              int pointIndex,
                                              int barIndex1,
                                              double price1,

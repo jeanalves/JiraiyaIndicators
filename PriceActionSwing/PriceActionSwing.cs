@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 //This namespace holds Indicators in this folder and is required. Do not change it. 
 namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 {
-	public class PriceActionSwingLauncher : Indicator
+	public class PriceActionSwing : Indicator
 	{
         private TickCalculation tickCalculation;
         private SwingForwardCalculationOne swingForwardCalculationOne;
@@ -156,19 +156,19 @@ namespace NinjaTrader.NinjaScript.Indicators
 {
 	public partial class Indicator : NinjaTrader.Gui.NinjaScript.IndicatorRenderBase
 	{
-		private JiraiyaIndicators.PriceActionSwingLauncher[] cachePriceActionSwingLauncher;
-		public JiraiyaIndicators.PriceActionSwingLauncher PriceActionSwingLauncher(CalculationTypeList calculationType, double strength, bool useHighLow)
+		private JiraiyaIndicators.PriceActionSwing[] cachePriceActionSwingLauncher;
+		public JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
 			return PriceActionSwingLauncher(Input, calculationType, strength, useHighLow);
 		}
 
-		public JiraiyaIndicators.PriceActionSwingLauncher PriceActionSwingLauncher(ISeries<double> input, CalculationTypeList calculationType, double strength, bool useHighLow)
+		public JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(ISeries<double> input, CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
 			if (cachePriceActionSwingLauncher != null)
 				for (int idx = 0; idx < cachePriceActionSwingLauncher.Length; idx++)
 					if (cachePriceActionSwingLauncher[idx] != null && cachePriceActionSwingLauncher[idx].CalculationType == calculationType && cachePriceActionSwingLauncher[idx].Strength == strength && cachePriceActionSwingLauncher[idx].UseHighLow == useHighLow && cachePriceActionSwingLauncher[idx].EqualsInput(input))
 						return cachePriceActionSwingLauncher[idx];
-			return CacheIndicator<JiraiyaIndicators.PriceActionSwingLauncher>(new JiraiyaIndicators.PriceActionSwingLauncher(){ CalculationType = calculationType, Strength = strength, UseHighLow = useHighLow }, input, ref cachePriceActionSwingLauncher);
+			return CacheIndicator<JiraiyaIndicators.PriceActionSwing>(new JiraiyaIndicators.PriceActionSwing(){ CalculationType = calculationType, Strength = strength, UseHighLow = useHighLow }, input, ref cachePriceActionSwingLauncher);
 		}
 	}
 }
@@ -177,12 +177,12 @@ namespace NinjaTrader.NinjaScript.MarketAnalyzerColumns
 {
 	public partial class MarketAnalyzerColumn : MarketAnalyzerColumnBase
 	{
-		public Indicators.JiraiyaIndicators.PriceActionSwingLauncher PriceActionSwingLauncher(CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
 			return indicator.PriceActionSwingLauncher(Input, calculationType, strength, useHighLow);
 		}
 
-		public Indicators.JiraiyaIndicators.PriceActionSwingLauncher PriceActionSwingLauncher(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
 			return indicator.PriceActionSwingLauncher(input, calculationType, strength, useHighLow);
 		}
@@ -193,12 +193,12 @@ namespace NinjaTrader.NinjaScript.Strategies
 {
 	public partial class Strategy : NinjaTrader.Gui.NinjaScript.StrategyRenderBase
 	{
-		public Indicators.JiraiyaIndicators.PriceActionSwingLauncher PriceActionSwingLauncher(CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
 			return indicator.PriceActionSwingLauncher(Input, calculationType, strength, useHighLow);
 		}
 
-		public Indicators.JiraiyaIndicators.PriceActionSwingLauncher PriceActionSwingLauncher(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwingLauncher(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
 			return indicator.PriceActionSwingLauncher(input, calculationType, strength, useHighLow);
 		}

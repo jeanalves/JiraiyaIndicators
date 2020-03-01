@@ -4,7 +4,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class SwingForwardCalculationOne : Calculation
     {
-        public SwingForwardCalculationOne(PriceActionSwingLauncher launcher) : base(launcher) { }
+        public SwingForwardCalculationOne(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher) : base(launcher) { }
 
         protected override CalculationData CalculateFirstSwingPoint()
         {

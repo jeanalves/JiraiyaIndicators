@@ -4,7 +4,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class TickCalculation : Calculation
     {
-        public TickCalculation(PriceActionSwingLauncher launcher) : base(launcher) { }
+        public TickCalculation(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher) : base(launcher) { }
 
         protected override CalculationData CalculateEachBarSwingPoint()
         {
