@@ -7,19 +7,19 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
     {
         private static int lastBarIndex = 0;
 
-        public static void Print(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher, object text)
+        public static void Print(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner, object text)
         {
-            if (launcher.CurrentBar != lastBarIndex || launcher.CurrentBar == 0)
-                Code.Output.Process(launcher.CurrentBar + " " + text, PrintTo.OutputTab1);
+            if (owner.CurrentBar != lastBarIndex || owner.CurrentBar == 0)
+                Code.Output.Process(owner.CurrentBar + " " + text, PrintTo.OutputTab1);
             else
-                Code.Output.Process(GetStringSpace(launcher.CurrentBar) + " " + text, PrintTo.OutputTab1);
+                Code.Output.Process(GetStringSpace(owner.CurrentBar) + " " + text, PrintTo.OutputTab1);
 
-            lastBarIndex = launcher.CurrentBar;
+            lastBarIndex = owner.CurrentBar;
         }
 
-        public static  void PrintError(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher, object text)
+        public static  void PrintError(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner, object text)
         {
-            Draw.TextFixed(launcher, "Error", text.ToString(), TextPosition.BottomRight);
+            Draw.TextFixed(owner, "Error", text.ToString(), TextPosition.BottomRight);
         }
 
         private static string GetStringSpace(object text)

@@ -6,15 +6,15 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public abstract partial class Calculation
     {
-        protected readonly NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher = OwnerReference.Owner;
+        protected readonly NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner = OwnerReference.Owner;
         protected Series<double> highs;
         protected Series<double> lows;
         protected List<Point> points = new List<Point>();
         
         protected Calculation()
         {
-            highs = new Series<double>(launcher);
-            lows = new Series<double>(launcher);
+            highs = new Series<double>(owner);
+            lows = new Series<double>(owner);
         }
 
         // Initialization
@@ -30,12 +30,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             {
                 calculationData = CalculateFirstSwingPoint();
             }
-            else if (launcher.State == State.Historical)
+            else if (owner.State == State.Historical)
             {
                 calculationData = CalculateEachBarSwingPoint();
                 calculationStage = CalculationStage.EachBarSwingPoint;
             }
-            else if (launcher.State == State.Realtime)
+            else if (owner.State == State.Realtime)
             {
                 calculationData = CalculateEachTickSwing();
                 calculationStage = CalculationStage.EachTickSwingPoint;
@@ -105,25 +105,25 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         protected virtual CalculationData CalculateFirstSwingPoint()
         {
-            LogPrinter.Print(launcher, "Virtual Calculation.CalculateFirstSwingPoint()");
+            LogPrinter.Print(owner, "Virtual Calculation.CalculateFirstSwingPoint()");
 
-            Point.SideSwing sideSwing = launcher.Close.GetValueAt(0) > launcher.Open.GetValueAt(0) ?
+            Point.SideSwing sideSwing = owner.Close.GetValueAt(0) > owner.Open.GetValueAt(0) ?
                 Point.SideSwing.Low : Point.SideSwing.High;
 
-            if (launcher.UseHighLow)
+            if (owner.UseHighLow)
             {
                 switch (sideSwing)
                 {
                     case Point.SideSwing.High:
-                        return new CalculationData(true, launcher.High.GetValueAt(0), 0, sideSwing);
+                        return new CalculationData(true, owner.High.GetValueAt(0), 0, sideSwing);
 
                     case Point.SideSwing.Low:
-                        return new CalculationData(true, launcher.Low.GetValueAt(0), 0, sideSwing);
+                        return new CalculationData(true, owner.Low.GetValueAt(0), 0, sideSwing);
                 }
             }
             else
             {
-                return new CalculationData(true, launcher.Open.GetValueAt(0), 0, sideSwing);
+                return new CalculationData(true, owner.Open.GetValueAt(0), 0, sideSwing);
             }
 
             return new CalculationData(false);
@@ -133,7 +133,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         protected virtual CalculationData CalculateEachTickSwing()
         {
-            LogPrinter.Print(launcher, "virtual Calculation.CalculateEachTickSwing()");
+            LogPrinter.Print(owner, "virtual Calculation.CalculateEachTickSwing()");
 
             return new CalculationData(false);
         }
@@ -142,15 +142,15 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void SetValues()
         {
-            if (launcher.UseHighLow)
+            if (owner.UseHighLow)
             {
-                highs[0] = launcher.High[0];
-                lows[0] = launcher.Low[0];
+                highs[0] = owner.High[0];
+                lows[0] = owner.Low[0];
             }
             else
             {
-                highs[0] = launcher.Close[0];
-                lows[0] = launcher.Close[0];
+                highs[0] = owner.Close[0];
+                lows[0] = owner.Close[0];
             }
         }
 
@@ -170,7 +170,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                     }
                     else if (calculationData.sideSwing == Point.SideSwing.Unknow && points.Count == 0)
                     {
-                        AddUnknow(launcher.Open.GetValueAt(0), 0, points.Count, calculationData.sideSwing);
+                        AddUnknow(owner.Open.GetValueAt(0), 0, points.Count, calculationData.sideSwing);
                     }
 
                     break;
@@ -190,7 +190,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             if (points.Count > 1)
             {
-                ToDraw.DrawZigZagWrapper(launcher, points[points.Count - 2].PointIndex,
+                ToDraw.DrawZigZagWrapper(owner, points[points.Count - 2].PointIndex,
                     points[points.Count - 2].BarIndex, points[points.Count - 2].Price,
                     points[points.Count -1].BarIndex, points[points.Count -1].Price);
             }
@@ -220,36 +220,36 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void AddHigh(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
-            LogPrinter.Print(launcher, "Calculation.AddHigh()");
+            LogPrinter.Print(owner, "Calculation.AddHigh()");
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
 
-            ToDraw.DrawDotWrapper(launcher, pointIndex, barIndex, price, Brushes.Green);
-            ToDraw.DrawTextWrapper(launcher, pointIndex, barIndex, price, 15);
+            ToDraw.DrawDotWrapper(owner, pointIndex, barIndex, price, Brushes.Green);
+            ToDraw.DrawTextWrapper(owner, pointIndex, barIndex, price, 15);
         }
 
         private void AddLow(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
-            LogPrinter.Print(launcher, "Calculation.AddLow()");
+            LogPrinter.Print(owner, "Calculation.AddLow()");
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
 
-            ToDraw.DrawDotWrapper(launcher, pointIndex, barIndex, price, Brushes.Red);
-            ToDraw.DrawTextWrapper(launcher, pointIndex, barIndex, price, -15);
+            ToDraw.DrawDotWrapper(owner, pointIndex, barIndex, price, Brushes.Red);
+            ToDraw.DrawTextWrapper(owner, pointIndex, barIndex, price, -15);
         }
 
         private void AddUnknow(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
-            LogPrinter.Print(launcher, "Calculation.AddUnknow()");
+            LogPrinter.Print(owner, "Calculation.AddUnknow()");
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
 
-            ToDraw.DrawDotWrapper(launcher, pointIndex, barIndex, price, Brushes.Gray);
+            ToDraw.DrawDotWrapper(owner, pointIndex, barIndex, price, Brushes.Gray);
         }
 
         private void UpdateHigh(double price, int barIndex)
         {
-            LogPrinter.Print(launcher, "Calculation.UpdateHigh()");
+            LogPrinter.Print(owner, "Calculation.UpdateHigh()");
 
             Point temp = points[points.Count - 1];
 
@@ -258,13 +258,13 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             points[points.Count - 1] = temp;
 
-            ToDraw.DrawDotWrapper(launcher, temp.PointIndex, barIndex, price, Brushes.Green);
-            ToDraw.DrawTextWrapper(launcher, temp.PointIndex, barIndex, price, 15);
+            ToDraw.DrawDotWrapper(owner, temp.PointIndex, barIndex, price, Brushes.Green);
+            ToDraw.DrawTextWrapper(owner, temp.PointIndex, barIndex, price, 15);
         }
 
         private void UpdateLow(double price, int barIndex)
         {
-            LogPrinter.Print(launcher, "Calculation.UpdateLow()");
+            LogPrinter.Print(owner, "Calculation.UpdateLow()");
 
             Point temp = points[points.Count - 1];
 
@@ -273,8 +273,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             points[points.Count - 1] = temp;
 
-            ToDraw.DrawDotWrapper(launcher, temp.PointIndex, barIndex, price, Brushes.Red);
-            ToDraw.DrawTextWrapper(launcher, temp.PointIndex, barIndex,price, -15);
+            ToDraw.DrawDotWrapper(owner, temp.PointIndex, barIndex, price, Brushes.Red);
+            ToDraw.DrawTextWrapper(owner, temp.PointIndex, barIndex,price, -15);
         }
 
         // Miscellaneous
