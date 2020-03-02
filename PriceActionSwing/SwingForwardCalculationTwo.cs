@@ -2,18 +2,16 @@
 {
     class SwingForwardCalculationTwo : Calculation
     {
-        public SwingForwardCalculationTwo(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher) : base(launcher) { }
-
         protected override CalculationData CalculateEachBarSwingPoint()
         {
-            LogPrinter.Print("SwingForwardCalculationOne.CalculateEachBarSwingPoint()");
+            LogPrinter.Print(launcher, "SwingForwardCalculationOne.CalculateEachBarSwingPoint()");
 
             return DefaultLogicCalculation();
         }
 
         protected override CalculationData CalculateEachTickSwing()
         {
-            LogPrinter.Print("SwingForwardCalculationOne.CalculateEachTickSwing()");
+            LogPrinter.Print(launcher, "SwingForwardCalculationOne.CalculateEachTickSwing()");
 
             return DefaultLogicCalculation();
         }

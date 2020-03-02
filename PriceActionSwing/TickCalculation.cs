@@ -2,19 +2,17 @@
 {
     public class TickCalculation : Calculation
     {
-        public TickCalculation(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher) : base(launcher) { }
-
         protected override CalculationData CalculateEachBarSwingPoint()
         {
-            LogPrinter.Print("TickCalculation.CalculateEachBarSwingPoint()");
+            LogPrinter.Print(launcher, "TickCalculation.CalculateEachBarSwingPoint()");
 
             bool isRising = highs[0] > highs[1];
             bool isFalling = lows[0] < lows[1];
-            LogPrinter.Print("isRising : " + isRising + ", isFalling: " + isFalling);
+            LogPrinter.Print(launcher, "isRising : " + isRising + ", isFalling: " + isFalling);
             
             bool isOverHighStrength = highs[0] > (LastLow().Price + (launcher.Strength * launcher.TickSize));
             bool isOverLowStrength = lows[0] < (LastHigh().Price - (launcher.Strength * launcher.TickSize));
-            LogPrinter.Print("isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
+            LogPrinter.Print(launcher, "isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
 
             if (isRising && isOverHighStrength)
                 return new CalculationData(true, highs[0], launcher.CurrentBar, Point.SideSwing.High);

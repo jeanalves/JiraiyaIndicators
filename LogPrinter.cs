@@ -5,15 +5,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public static class LogPrinter
     {
-        private static NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher;
         private static int lastBarIndex = 0;
 
-        public static void SetLauncher(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher)
-        {
-            LogPrinter.launcher = launcher;
-        }
-
-        public static void Print(object text)
+        public static void Print(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher, object text)
         {
             if (launcher.CurrentBar != lastBarIndex || launcher.CurrentBar == 0)
                 Code.Output.Process(launcher.CurrentBar + " " + text, PrintTo.OutputTab1);
@@ -23,7 +17,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             lastBarIndex = launcher.CurrentBar;
         }
 
-        public static  void PrintError(object text)
+        public static  void PrintError(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing launcher, object text)
         {
             Draw.TextFixed(launcher, "Error", text.ToString(), TextPosition.BottomRight);
         }
