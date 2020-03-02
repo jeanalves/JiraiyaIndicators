@@ -107,7 +107,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         protected virtual CalculationData CalculateFirstSwingPoint()
         {
-            launcher.PrintLog("Virtual Calculation.CalculateFirstSwingPoint()");
+            LogPrinter.Print("Virtual Calculation.CalculateFirstSwingPoint()");
 
             Point.SideSwing sideSwing = launcher.Close.GetValueAt(0) > launcher.Open.GetValueAt(0) ?
                 Point.SideSwing.Low : Point.SideSwing.High;
@@ -135,7 +135,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         protected virtual CalculationData CalculateEachTickSwing()
         {
-            launcher.PrintLog("virtual Calculation.CalculateEachTickSwing()");
+            LogPrinter.Print("virtual Calculation.CalculateEachTickSwing()");
 
             return new CalculationData(false);
         }
@@ -222,7 +222,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void AddHigh(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
-            launcher.PrintLog("Calculation.AddHigh()");
+            LogPrinter.Print("Calculation.AddHigh()");
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
 
@@ -232,7 +232,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void AddLow(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
-            launcher.PrintLog("Calculation.AddLow()");
+            LogPrinter.Print("Calculation.AddLow()");
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
 
@@ -242,7 +242,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void AddUnknow(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
         {
-            launcher.PrintLog("Calculation.AddUnknow()");
+            LogPrinter.Print("Calculation.AddUnknow()");
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
 
@@ -251,7 +251,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void UpdateHigh(double price, int barIndex)
         {
-            launcher.PrintLog("Calculation.UpdateHigh()");
+            LogPrinter.Print("Calculation.UpdateHigh()");
 
             Point temp = points[points.Count - 1];
 
@@ -266,7 +266,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void UpdateLow(double price, int barIndex)
         {
-            launcher.PrintLog("Calculation.UpdateLow()");
+            LogPrinter.Print("Calculation.UpdateLow()");
 
             Point temp = points[points.Count - 1];
 

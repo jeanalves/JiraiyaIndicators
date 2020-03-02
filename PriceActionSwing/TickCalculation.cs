@@ -6,15 +6,15 @@
 
         protected override CalculationData CalculateEachBarSwingPoint()
         {
-            launcher.PrintLog("TickCalculation.CalculateEachBarSwingPoint()");
+            LogPrinter.Print("TickCalculation.CalculateEachBarSwingPoint()");
 
             bool isRising = highs[0] > highs[1];
             bool isFalling = lows[0] < lows[1];
-            launcher.PrintLog("isRising : " + isRising + ", isFalling: " + isFalling);
+            LogPrinter.Print("isRising : " + isRising + ", isFalling: " + isFalling);
             
             bool isOverHighStrength = highs[0] > (LastLow().Price + (launcher.Strength * launcher.TickSize));
             bool isOverLowStrength = lows[0] < (LastHigh().Price - (launcher.Strength * launcher.TickSize));
-            launcher.PrintLog("isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
+            LogPrinter.Print("isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
 
             if (isRising && isOverHighStrength)
                 return new CalculationData(true, highs[0], launcher.CurrentBar, Point.SideSwing.High);

@@ -6,7 +6,7 @@
 
         protected override CalculationData CalculateFirstSwingPoint()
         {
-            launcher.PrintLog("SwingForwardCalculationOne.CalculateFirstSwingPoint()");
+            LogPrinter.Print("SwingForwardCalculationOne.CalculateFirstSwingPoint()");
 
             double highCandidateValue = highs.GetValueAt(0);
             double lowCandidateValue = lows.GetValueAt(0);
@@ -15,7 +15,7 @@
 
             if (launcher.CurrentBar == launcher.Strength)
             {
-                launcher.PrintLog("Testing the high values to find the highest one");
+                LogPrinter.Print("Testing the high values to find the highest one");
                 // Test the high values to find the highest one
                 for (int i = 0; i < launcher.Strength; i++)
                 {
@@ -23,11 +23,11 @@
                     {
                         highCandidateValue = highs.GetValueAt(i);
                         highCandidateIndex = i;
-                        launcher.PrintLog("High index : " + i);
+                        LogPrinter.Print("High index : " + i);
                     }
                 }
 
-                launcher.PrintLog("Testing the low values to find the lowest one");
+                LogPrinter.Print("Testing the low values to find the lowest one");
                 // Test the low values to find the lowest one
                 for (int i = 0; i < launcher.Strength; i++)
                 {
@@ -35,34 +35,34 @@
                     {
                         lowCandidateValue = lows.GetValueAt(i);
                         lowCandidateIndex = i;
-                        launcher.PrintLog("Low index : " + i);
+                        LogPrinter.Print("Low index : " + i);
                     }
                 }
 
                 if (highCandidateIndex < lowCandidateIndex)
                 {
-                    launcher.PrintLog("Add high," +
+                    LogPrinter.Print("Add high," +
                         " highCandidateValue: " + highCandidateValue +
                         ", highCandidateIndex: " + highCandidateIndex);
                     return new CalculationData(true, highCandidateValue, highCandidateIndex, Point.SideSwing.High);
                 }
                 else if (highCandidateIndex > lowCandidateIndex)
                 {
-                    launcher.PrintLog("Add low," +
+                    LogPrinter.Print("Add low," +
                         " lowCandidateValue: " + lowCandidateValue +
                         ", lowCandidateIndex: " + lowCandidateIndex);
                     return new CalculationData(true, lowCandidateValue, lowCandidateIndex, Point.SideSwing.Low);
                 }
                 else if(highCandidateIndex == lowCandidateIndex)
                 {
-                    launcher.PrintLog("Error: The two indexes are equal.");
+                    LogPrinter.Print("Error: The two indexes are equal.");
                     LogPrinter.PrintError("Error: The two indexes are equal. " +
                         "High bar index: " + highCandidateIndex + " Low bar index: " + lowCandidateIndex);
                     return new CalculationData(true, 0, 0, Point.SideSwing.Unknow);
                 }
                 else
                 {
-                    launcher.PrintLog("Error: No point was found");
+                    LogPrinter.Print("Error: No point was found");
                     LogPrinter.PrintError("Error: No point was found");
                 }
             }
@@ -72,7 +72,7 @@
 
         protected override CalculationData CalculateEachBarSwingPoint()
         {
-            launcher.PrintLog("SwingForwardCalculationOne.CalculateEachBarSwingPoint()");
+            LogPrinter.Print("SwingForwardCalculationOne.CalculateEachBarSwingPoint()");
 
             bool isRising= true;
             bool isFalling = true;
@@ -84,7 +84,7 @@
 
             int initForIndex = launcher.CurrentBar - (int)launcher.Strength;
 
-            launcher.PrintLog("isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
+            LogPrinter.Print("isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
 
             // High calculation
             for (int i = initForIndex; i < launcher.CurrentBar; i++)
@@ -96,7 +96,7 @@
                 if (swingLowCandidateValue > lows.GetValueAt(i))
                     isFalling = false;
 
-            launcher.PrintLog("isRising : " + isRising + ", isFalling : " + isFalling);
+            LogPrinter.Print("isRising : " + isRising + ", isFalling : " + isFalling);
 
             if (isRising && isOverHighStrength)
                 return new CalculationData(true, swingHighCandidateValue, launcher.CurrentBar, Point.SideSwing.High);
@@ -108,7 +108,7 @@
 
         protected override CalculationData CalculateEachTickSwing()
         {
-            launcher.PrintLog("SwingForwardCalculationOne.CalculateEachTickSwing()");
+            LogPrinter.Print("SwingForwardCalculationOne.CalculateEachTickSwing()");
             return base.CalculateEachTickSwing();
         }
     }

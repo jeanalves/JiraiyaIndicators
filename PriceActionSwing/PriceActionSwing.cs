@@ -78,11 +78,6 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
             }
 		}
 
-        public void PrintLog(object text)
-        {
-            LogPrinter.Print(text);
-        }
-
         #region Properties
 
         [NinjaScriptProperty]

@@ -6,14 +6,14 @@
 
         protected override CalculationData CalculateEachBarSwingPoint()
         {
-            launcher.PrintLog("SwingForwardCalculationOne.CalculateEachBarSwingPoint()");
+            LogPrinter.Print("SwingForwardCalculationOne.CalculateEachBarSwingPoint()");
 
             return DefaultLogicCalculation();
         }
 
         protected override CalculationData CalculateEachTickSwing()
         {
-            launcher.PrintLog("SwingForwardCalculationOne.CalculateEachTickSwing()");
+            LogPrinter.Print("SwingForwardCalculationOne.CalculateEachTickSwing()");
 
             return DefaultLogicCalculation();
         }
