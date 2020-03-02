@@ -56,14 +56,14 @@
                 else if(highCandidateIndex == lowCandidateIndex)
                 {
                     launcher.PrintLog("Error: The two indexes are equal.");
-                    launcher.PrintError("Error: The two indexes are equal. " +
+                    LogPrinter.PrintError("Error: The two indexes are equal. " +
                         "High bar index: " + highCandidateIndex + " Low bar index: " + lowCandidateIndex);
                     return new CalculationData(true, 0, 0, Point.SideSwing.Unknow);
                 }
                 else
                 {
                     launcher.PrintLog("Error: No point was found");
-                    launcher.PrintError("Error: No point was found");
+                    LogPrinter.PrintError("Error: No point was found");
                 }
             }
 

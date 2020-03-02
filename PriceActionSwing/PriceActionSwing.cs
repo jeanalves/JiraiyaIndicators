@@ -15,7 +15,6 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         private TickCalculation tickCalculation;
         private SwingForwardCalculationOne swingForwardCalculationOne;
         private SwingForwardCalculationTwo swingForwardCalculationTwo;
-        private Log log;
 
 		protected override void OnStateChange()
 		{
@@ -45,7 +44,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 tickCalculation = new TickCalculation(this);
                 swingForwardCalculationOne = new SwingForwardCalculationOne(this);
                 swingForwardCalculationTwo = new SwingForwardCalculationTwo(this);
-                log = new Log(this);
+                LogPrinter.SetLauncher(this);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
                 Code.Output.Reset(PrintTo.OutputTab1);
@@ -81,12 +80,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 
         public void PrintLog(object text)
         {
-            log.Print(text);
-        }
-
-        public void PrintError(object text)
-        {
-            Draw.TextFixed(this, "Error", text.ToString(), TextPosition.BottomRight);
+            LogPrinter.Print(text);
         }
 
         #region Properties
