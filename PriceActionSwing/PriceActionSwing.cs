@@ -41,10 +41,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			}
             else if (State == State.DataLoaded)
             {
-                tickCalculation = new TickCalculation(this);
-                swingForwardCalculationOne = new SwingForwardCalculationOne(this);
-                swingForwardCalculationTwo = new SwingForwardCalculationTwo(this);
-                LogPrinter.SetLauncher(this);
+                SetChartOwner(this);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
                 Code.Output.Reset(PrintTo.OutputTab1);
@@ -77,6 +74,14 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 Code.Output.Process(CurrentBar + "    " + e.ToString(), PrintTo.OutputTab2);
             }
 		}
+
+        public void SetChartOwner(PriceActionSwing owner)
+        {
+            tickCalculation = new TickCalculation(owner);
+            swingForwardCalculationOne = new SwingForwardCalculationOne(owner);
+            swingForwardCalculationTwo = new SwingForwardCalculationTwo(owner);
+            LogPrinter.SetLauncher(owner);
+        }
 
         #region Properties
 
