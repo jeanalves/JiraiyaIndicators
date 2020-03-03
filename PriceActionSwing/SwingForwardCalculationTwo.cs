@@ -4,14 +4,14 @@
     {
         protected override CalculationData CalculateEachBarSwingPoint()
         {
-            LogPrinter.Print(owner, "SwingForwardCalculationOne.CalculateEachBarSwingPoint()");
+            LogPrinter.Print(ninjaScriptBase, "SwingForwardCalculationOne.CalculateEachBarSwingPoint()");
 
             return DefaultLogicCalculation();
         }
 
         protected override CalculationData CalculateEachTickSwing()
         {
-            LogPrinter.Print(owner, "SwingForwardCalculationOne.CalculateEachTickSwing()");
+            LogPrinter.Print(ninjaScriptBase, "SwingForwardCalculationOne.CalculateEachTickSwing()");
 
             return DefaultLogicCalculation();
         }
@@ -40,7 +40,7 @@
             // Calculates if the current high value is a new swing
             if (newHigh)
             {
-                for (int i = 1; i < owner.Strength + 1; i++)
+                for (int i = 1; i < priceActionSwing.Strength + 1; i++)
                 {
                     if (highs[0] <= highs[i])
                     {
@@ -53,7 +53,7 @@
             // Calculates if the current low value is a new swing
             if (newLow)
             {
-                for (int i = 1; i < owner.Strength + 1; i++)
+                for (int i = 1; i < priceActionSwing.Strength + 1; i++)
                 {
                     if (lows[0] >= lows[i])
                     {
@@ -67,20 +67,20 @@
             {
                 if (LastSideTrend() == Point.SideSwing.High)
                 {
-                    return new CalculationData(true, highs[0], owner.CurrentBar, Point.SideSwing.High);
+                    return new CalculationData(true, highs[0], priceActionSwing.CurrentBar, Point.SideSwing.High);
                 }
                 else
                 {
-                    return new CalculationData(true, lows[0], owner.CurrentBar, Point.SideSwing.Low);
+                    return new CalculationData(true, lows[0], priceActionSwing.CurrentBar, Point.SideSwing.Low);
                 }
             }
             else if (newHigh)
             {
-                return new CalculationData(true, highs[0], owner.CurrentBar, Point.SideSwing.High);
+                return new CalculationData(true, highs[0], priceActionSwing.CurrentBar, Point.SideSwing.High);
             }
             else if (newLow)
             {
-                return new CalculationData(true, lows[0], owner.CurrentBar, Point.SideSwing.Low);
+                return new CalculationData(true, lows[0], priceActionSwing.CurrentBar, Point.SideSwing.Low);
             }
             return new CalculationData(false);
         }
