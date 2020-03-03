@@ -1,11 +1,12 @@
-﻿using NinjaTrader.NinjaScript.DrawingTools;
+﻿using NinjaTrader.NinjaScript;
+using NinjaTrader.NinjaScript.DrawingTools;
 using System.Windows.Media;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public static class ToDraw
     {
-        public static void DrawDotWrapper(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner,
+        public static void DrawDotWrapper(NinjaScriptBase owner,
                                           int pointIndex,
                                           int barIndex,
                                           double price,
@@ -16,7 +17,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                         dotColor).OutlineBrush = Brushes.Transparent;
         }
 
-        public static void DrawTextWrapper(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner,
+        public static void DrawTextWrapper(NinjaScriptBase owner,
                                            int pointIndex,
                                            int barIndex,
                                            double price,
@@ -28,7 +29,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                         Brushes.Transparent, Brushes.Transparent, 100);
         }
 
-        public static void DrawZigZagWrapper(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner,
+        public static void DrawZigZagWrapper(NinjaScriptBase owner,
                                              int pointIndex,
                                              int barIndex1,
                                              double price1,
@@ -41,7 +42,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                 Brushes.White, Gui.DashStyleHelper.Solid, 3);
         }
 
-        private static int ConvertBarIndexToBarsAgo(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner, int barIndex)
+        private static int ConvertBarIndexToBarsAgo(NinjaScriptBase owner, int barIndex)
         {
             return (barIndex - owner.CurrentBar) < 0 ? (barIndex - owner.CurrentBar) * -1 : barIndex - owner.CurrentBar;
         }

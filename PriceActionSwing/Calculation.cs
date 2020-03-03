@@ -6,7 +6,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public abstract partial class Calculation
     {
-        protected readonly NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner = OwnerReference.Owner;
+        protected readonly NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner = OwnerReference.PriceActionSwing;
         protected Series<double> highs;
         protected Series<double> lows;
         protected List<Point> points = new List<Point>();

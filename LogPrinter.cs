@@ -7,7 +7,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
     {
         private static int lastBarIndex = 0;
 
-        public static void Print(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner, object text)
+        public static void Print(NinjaScriptBase owner, object text)
         {
             if (owner.CurrentBar != lastBarIndex || owner.CurrentBar == 0)
                 Code.Output.Process(owner.CurrentBar + " " + text, PrintTo.OutputTab1);
@@ -17,7 +17,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             lastBarIndex = owner.CurrentBar;
         }
 
-        public static  void PrintError(NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing owner, object text)
+        public static  void PrintError(NinjaScriptBase owner, object text)
         {
             Draw.TextFixed(owner, "Error", text.ToString(), TextPosition.BottomRight);
         }

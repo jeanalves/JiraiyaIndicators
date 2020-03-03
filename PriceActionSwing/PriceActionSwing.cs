@@ -40,8 +40,11 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			}
             else if (State == State.DataLoaded)
             {
+                // Required reference to acess some indicator informations
+                OwnerReference.PriceActionSwing = this;
+
                 // Required reference to control chart graphical elements
-                OwnerReference.Owner = this;
+                OwnerReference.NinjaScriptBase = this;
 
                 tickCalculation = new TickCalculation();
                 swingForwardCalculationOne = new SwingForwardCalculationOne();
