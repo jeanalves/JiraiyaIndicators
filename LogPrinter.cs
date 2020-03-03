@@ -10,9 +10,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         public static void Print(NinjaScriptBase owner, object text)
         {
             if (owner.CurrentBar != lastBarIndex || owner.CurrentBar == 0)
-                Code.Output.Process(owner.CurrentBar + " " + text, PrintTo.OutputTab1);
-            else
+            {
+                Code.Output.Process(owner.CurrentBar + " " + owner.ToString(), PrintTo.OutputTab1);
                 Code.Output.Process(GetStringSpace(owner.CurrentBar) + " " + text, PrintTo.OutputTab1);
+            }
+            else
+            {
+                Code.Output.Process(GetStringSpace(owner.CurrentBar) + " " + text, PrintTo.OutputTab1);
+            }
 
             lastBarIndex = owner.CurrentBar;
         }
