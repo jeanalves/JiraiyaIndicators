@@ -1,7 +1,7 @@
 ﻿using NinjaTrader.NinjaScript;
 using NinjaTrader.NinjaScript.DrawingTools;
 
-namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
+namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
 {
     public static class LogPrinter
     {

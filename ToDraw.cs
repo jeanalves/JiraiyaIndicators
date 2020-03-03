@@ -2,7 +2,7 @@
 using NinjaTrader.NinjaScript.DrawingTools;
 using System.Windows.Media;
 
-namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
+namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
 {
     public static class ToDraw
     {
