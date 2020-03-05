@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
-    public abstract partial class Calculation
+    public abstract class Calculation
     {
         protected readonly NinjaScript.Indicators.JiraiyaIndicators.PriceActionSwing priceActionSwing = OwnerReference.PriceActionSwing;
         protected readonly NinjaScriptBase ninjaScriptBase = OwnerReference.NinjaScriptBase;
