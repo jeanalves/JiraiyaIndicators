@@ -1,6 +1,5 @@
 ﻿using NinjaTrader.NinjaScript;
 using System.Collections.Generic;
-using System.Windows.Media;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {

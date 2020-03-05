@@ -1,30 +1,54 @@
 ﻿using NinjaTrader.NinjaScript;
 using NinjaTrader.NinjaScript.DrawingTools;
+using System.Collections.Generic;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
 {
     public static class LogPrinter
     {
         private static int lastBarIndex = 0;
+        private static readonly List<NinjaScriptBase> invisibleIndicator = new List<NinjaScriptBase>();
 
         public static void Print(NinjaScriptBase owner, object text)
         {
-            if (owner.CurrentBar != lastBarIndex || owner.CurrentBar == 0)
+            if (!IsInvisible(owner))
             {
-                Code.Output.Process(owner.CurrentBar + " " + owner.ToString(), PrintTo.OutputTab1);
-                Code.Output.Process(GetStringSpace(owner.CurrentBar) + " " + text, PrintTo.OutputTab1);
-            }
-            else
-            {
-                Code.Output.Process(GetStringSpace(owner.CurrentBar) + " " + text, PrintTo.OutputTab1);
-            }
+                if (owner.CurrentBar != lastBarIndex || owner.CurrentBar == 0)
+                {
+                    Code.Output.Process(owner.CurrentBar + " " + owner.ToString(), PrintTo.OutputTab1);
+                    Code.Output.Process(GetStringSpace(owner.CurrentBar) + " " + text, PrintTo.OutputTab1);
+                }
+                else
+                {
+                    Code.Output.Process(GetStringSpace(owner.CurrentBar) + " " + text, PrintTo.OutputTab1);
+                }
 
-            lastBarIndex = owner.CurrentBar;
+                lastBarIndex = owner.CurrentBar;
+            }
         }
 
-        public static  void PrintError(NinjaScriptBase owner, object text)
+        public static void PrintError(NinjaScriptBase owner, object text)
         {
             Draw.TextFixed(owner, "Error", text.ToString(), TextPosition.BottomRight);
+        }
+
+        public static void SetIndicatorAsInvisible(NinjaScriptBase ninjaScriptBase)
+        {
+            invisibleIndicator.Add(ninjaScriptBase);
+        }
+
+        private static bool IsInvisible(NinjaScriptBase ninjaScriptBase)
+        {
+            foreach(NinjaScriptBase nsb in invisibleIndicator)
+            {
+                if (nsb == ninjaScriptBase)
+                {
+                    return true;
+                }
+                break;
+            }
+
+            return false;
         }
 
         private static string GetStringSpace(object text)

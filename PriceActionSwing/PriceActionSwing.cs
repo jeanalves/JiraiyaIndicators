@@ -34,7 +34,8 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 CalculationType                             = CalculationTypeList.SwingForwardOne;
 				Strength					                = 5;
 				UseHighLow					                = true;
-			}
+                ShowLog                                     = true;
+            }
 			else if (State == State.Configure)
 			{
 			}
@@ -42,9 +43,13 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
             {
                 // Required reference to acess some indicator informations
                 OwnerReference.PriceActionSwing = this;
-
                 // Required reference to control chart graphical elements
                 OwnerReference.NinjaScriptBase = this;
+
+                if (!ShowLog)
+                {
+                    LogPrinter.SetIndicatorAsInvisible(this);
+                }
 
                 tickCalculation = new TickCalculation();
                 swingForwardCalculationOne = new SwingForwardCalculationOne();
@@ -96,9 +101,13 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 		{ get; set; }
 
 		[NinjaScriptProperty]
-		[Display(Name="UseHighLow", Order=2, GroupName="Parameters")]
+		[Display(Name="Use HighLow", Order=2, GroupName="Parameters")]
 		public bool UseHighLow
 		{ get; set; }
+
+        [Display(Name ="Show log in output window", Order = 3, GroupName = "Parameters")]
+        public bool ShowLog
+        { get; set; }
 
         /// <summary>
         /// This propertie returns the list data off zigzag points
@@ -143,7 +152,6 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 return null;
             }
         }
-
 
         #endregion
     }
