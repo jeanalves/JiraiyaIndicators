@@ -191,7 +191,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             if (points.Count > 1)
             {
-                ToDraw.DrawZigZagWrapper(ninjaScriptBase, points[points.Count - 2].PointIndex,
+                DrawWrapper.DrawZigZag(ninjaScriptBase, points[points.Count - 2].PointIndex,
                     points[points.Count - 2].BarIndex, points[points.Count - 2].Price,
                     points[points.Count -1].BarIndex, points[points.Count -1].Price);
             }
@@ -225,8 +225,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
 
-            ToDraw.DrawDotWrapper(ninjaScriptBase, pointIndex, barIndex, price, Brushes.Green);
-            ToDraw.DrawTextWrapper(ninjaScriptBase, pointIndex, barIndex, price, 15);
+            DrawWrapper.DrawDot(ninjaScriptBase, pointIndex, barIndex, price, Brushes.Green);
+            DrawWrapper.DrawText(ninjaScriptBase, pointIndex, barIndex, price, 15);
         }
 
         private void AddLow(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
@@ -235,8 +235,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
 
-            ToDraw.DrawDotWrapper(ninjaScriptBase, pointIndex, barIndex, price, Brushes.Red);
-            ToDraw.DrawTextWrapper(ninjaScriptBase, pointIndex, barIndex, price, -15);
+            DrawWrapper.DrawDot(ninjaScriptBase, pointIndex, barIndex, price, Brushes.Red);
+            DrawWrapper.DrawText(ninjaScriptBase, pointIndex, barIndex, price, -15);
         }
 
         private void AddUnknow(double price, int barIndex, int pointIndex, Point.SideSwing sideSwing)
@@ -245,7 +245,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             points.Add(new Point(price, barIndex, pointIndex, sideSwing));
 
-            ToDraw.DrawDotWrapper(ninjaScriptBase, pointIndex, barIndex, price, Brushes.Gray);
+            DrawWrapper.DrawDot(ninjaScriptBase, pointIndex, barIndex, price, Brushes.Gray);
         }
 
         private void UpdateHigh(double price, int barIndex)
@@ -259,8 +259,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             points[points.Count - 1] = temp;
 
-            ToDraw.DrawDotWrapper(ninjaScriptBase, temp.PointIndex, barIndex, price, Brushes.Green);
-            ToDraw.DrawTextWrapper(ninjaScriptBase, temp.PointIndex, barIndex, price, 15);
+            DrawWrapper.DrawDot(ninjaScriptBase, temp.PointIndex, barIndex, price, Brushes.Green);
+            DrawWrapper.DrawText(ninjaScriptBase, temp.PointIndex, barIndex, price, 15);
         }
 
         private void UpdateLow(double price, int barIndex)
@@ -274,8 +274,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             points[points.Count - 1] = temp;
 
-            ToDraw.DrawDotWrapper(ninjaScriptBase, temp.PointIndex, barIndex, price, Brushes.Red);
-            ToDraw.DrawTextWrapper(ninjaScriptBase, temp.PointIndex, barIndex,price, -15);
+            DrawWrapper.DrawDot(ninjaScriptBase, temp.PointIndex, barIndex, price, Brushes.Red);
+            DrawWrapper.DrawText(ninjaScriptBase, temp.PointIndex, barIndex,price, -15);
         }
 
         // Miscellaneous
