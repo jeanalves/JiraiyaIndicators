@@ -29,7 +29,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
                         Brushes.Transparent, Brushes.Transparent, 100);
         }
 
-        public static void DrawZigZag(NinjaScriptBase owner,
+        public static void DrawLine(NinjaScriptBase owner,
                                              int pointIndex,
                                              int barIndex1,
                                              double price1,

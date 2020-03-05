@@ -132,13 +132,13 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 switch (CalculationType)
                 {
                     case CalculationTypeList.Tick:
-                        return tickCalculation.GetLastPoint();
+                        return tickCalculation.GetLastPoint(0);
 
                     case CalculationTypeList.SwingForwardOne:
-                        return swingForwardCalculationOne.GetLastPoint();
+                        return swingForwardCalculationOne.GetLastPoint(0);
 
                     case CalculationTypeList.SwingForwardTwo:
-                        return swingForwardCalculationTwo.GetLastPoint();
+                        return swingForwardCalculationTwo.GetLastPoint(0);
                 }
                 return null;
             }
