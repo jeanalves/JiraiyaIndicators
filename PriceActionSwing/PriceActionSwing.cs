@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 //This namespace holds Indicators in this folder and is required. Do not change it. 
 namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 {
-	public class PriceActionSwing : Indicator
+	public partial class PriceActionSwing : Indicator
 	{
         private TickCalculation tickCalculation;
         private SwingForwardCalculationOne swingForwardCalculationOne;
@@ -86,18 +86,6 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 Code.Output.Process(CurrentBar + "    " + e.ToString(), PrintTo.OutputTab2);
             }
 		}
-
-        public void OnPointCalculationUpdate(int pointsCount, Point pointOne, Point pointTwo)
-        {
-            // Every time a new point event happens, it will be drawn in this method
-            SwingDrawing.DrawPoint(pointTwo);
-
-            if (pointsCount > 1)
-            {
-                // Every time a new point event happens, it will be drawn in this method
-                SwingDrawing.DrawZigZag(pointOne, pointTwo);
-            }
-        }
 
         #region Properties
 
