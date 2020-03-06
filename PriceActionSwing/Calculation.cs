@@ -188,14 +188,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                     break;
             }
 
-            if (points.Count > 1)
-            {   
-                // Every time a new point event happens, it will be drawn in this method
-                SwingDrawing.DrawZigZag(GetLastPoint(1), GetLastPoint(0));
-            }
-
-            // Every time a new point event happens, it will be drawn in this method
-            SwingDrawing.DrawPoint(GetLastPoint(0));
+            priceActionSwing.OnPointCalculationUpdate(points.Count, GetLastPoint(1), GetLastPoint(0));
         }
 
         private void DefaultAddUpdatePointsManagement(CalculationData calculationData)
