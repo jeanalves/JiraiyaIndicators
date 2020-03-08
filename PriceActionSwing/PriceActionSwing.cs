@@ -117,6 +117,8 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         public List<Point> PointsList
         {   get
             {
+                Update();
+
                 switch (CalculationType)
                 {
                     case CalculationTypeList.Tick:
@@ -138,6 +140,8 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         {
             get
             {
+                Update();
+
                 switch (CalculationType)
                 {
                     case CalculationTypeList.Tick:
