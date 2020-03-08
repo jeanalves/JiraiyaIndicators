@@ -56,20 +56,17 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         public double LastPrice()
         {
-            return points[points.Count - 1].Price;
+            return points.Count < 0 ? 0 : points[points.Count - 1].Price;
         }
 
         public Point LastHigh()
         {
-            if (points.Count > 0)
+            for (int i = points.Count - 1; i > 0; i--)
             {
-                for (int i = points.Count - 1; i > 0; i--)
-                    if (points[i].CurrentSideSwing == Point.SideSwing.High)
-                        return points[i];
-            }
-            else if (points.Count == 0)
-            {
-                throw new System.Exception();
+                if (points[i].CurrentSideSwing == Point.SideSwing.High)
+                {
+                    return points[i];
+                }
             }
 
             return points[points.Count - 1];
@@ -77,15 +74,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         public Point LastLow()
         {
-            if (points.Count > 0)
+            for (int i = points.Count - 1; i > 0; i--)
             {
-                for (int i = points.Count - 1; i > 0; i--)
-                    if (points[i].CurrentSideSwing == Point.SideSwing.Low)
-                        return points[i];
-            }
-            else if (points.Count == 0)
-            {
-                throw new System.Exception();
+                if (points[i].CurrentSideSwing == Point.SideSwing.Low)
+                {
+                    return points[i];
+                }
             }
 
             return points[points.Count - 1];
@@ -98,7 +92,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         public Point GetLastPoint(int pointsAgo)
         {
-            return points[(points.Count - 1) - pointsAgo];
+            return points.Count < pointsAgo + 1 ? null : points[(points.Count - 1) - pointsAgo];
         }
 
         // Protected (methods)
