@@ -1,4 +1,4 @@
-﻿namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
+﻿namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwingOLD
 {
     class SwingForwardCalculationTwo : Calculation
     {

@@ -1,5 +1,5 @@
 ﻿using NinjaTrader.Custom.Indicators.JiraiyaIndicators;
-using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
+using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwingOLD;
 
 namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 {

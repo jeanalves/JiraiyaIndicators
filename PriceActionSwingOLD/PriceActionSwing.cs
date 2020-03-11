@@ -1,5 +1,5 @@
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators;
-using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
+using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwingOLD;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +20,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			if (State == State.SetDefaults)
 			{
 				Description									= @"Enter the description for your new custom Indicator here.";
-				Name										= "PriceActionSwing";
+				Name										= "PriceActionSwingOLD";
 				Calculate									= Calculate.OnEachTick;
 				IsOverlay									= true;
 				DisplayInDataBox							= false;

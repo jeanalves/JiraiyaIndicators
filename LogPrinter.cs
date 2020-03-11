@@ -32,16 +32,16 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             Draw.TextFixed(owner, "Error", text.ToString(), TextPosition.BottomRight);
         }
 
-        public static void SetIndicatorAsInvisible(NinjaScriptBase ninjaScriptBase)
+        public static void SetIndicatorAsInvisible(NinjaScriptBase owner)
         {
-            invisibleIndicator.Add(ninjaScriptBase);
+            invisibleIndicator.Add(owner);
         }
 
-        private static bool IsInvisible(NinjaScriptBase ninjaScriptBase)
+        private static bool IsInvisible(NinjaScriptBase owner)
         {
             foreach(NinjaScriptBase nsb in invisibleIndicator)
             {
-                if (nsb == ninjaScriptBase)
+                if (nsb == owner)
                 {
                     return true;
                 }
