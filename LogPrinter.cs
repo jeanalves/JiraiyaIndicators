@@ -32,6 +32,15 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             Draw.TextFixed(owner, "Error", text.ToString(), TextPosition.BottomRight);
         }
 
+        /// <summary>
+        /// Clear the all tabs of output window.
+        /// </summary>
+        public static void ResetOuputTabs()
+        {
+            Code.Output.Reset(PrintTo.OutputTab1);
+            Code.Output.Reset(PrintTo.OutputTab2);
+        }
+
         public static void SetIndicatorAsInvisible(NinjaScriptBase owner)
         {
             invisibleIndicator.Add(owner);

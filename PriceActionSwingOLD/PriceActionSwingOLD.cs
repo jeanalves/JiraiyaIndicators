@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 //This namespace holds Indicators in this folder and is required. Do not change it. 
 namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 {
-	public partial class PriceActionSwing : Indicator
+	public partial class PriceActionSwingOLD : Indicator
 	{
         private TickCalculation tickCalculation;
         private SwingForwardCalculationOne swingForwardCalculationOne;
@@ -31,7 +31,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 				ScaleJustification							= NinjaTrader.Gui.Chart.ScaleJustification.Right;
 				IsSuspendedWhileInactive					= true;
 
-                CalculationType                             = CalculationTypeList.SwingForwardOne;
+                CalculationType                             = CalculationTypeList.Tick;
 				Strength					                = 5;
 				UseHighLow					                = true;
                 ShowLog                                     = true;
@@ -54,10 +54,6 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 tickCalculation = new TickCalculation();
                 swingForwardCalculationOne = new SwingForwardCalculationOne();
                 swingForwardCalculationTwo = new SwingForwardCalculationTwo();
-
-                // Everytime the F5 key is pressed automatically will clear the output window.
-                Code.Output.Reset(PrintTo.OutputTab1);
-                Code.Output.Reset(PrintTo.OutputTab2);
             }
         }
 
@@ -70,7 +66,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                     case CalculationTypeList.Tick:
                         tickCalculation.Calculate();
                         break;
-
+                        /*
                     case CalculationTypeList.SwingForwardOne:
                         swingForwardCalculationOne.Calculate();
                         break;
@@ -78,6 +74,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                     case CalculationTypeList.SwingForwardTwo:
                         swingForwardCalculationTwo.Calculate();
                         break;
+                        */
                 }
                 
             }
@@ -123,12 +120,13 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 {
                     case CalculationTypeList.Tick:
                         return tickCalculation.GetPointsList();
-
+                        /*
                     case CalculationTypeList.SwingForwardOne:
                         return swingForwardCalculationOne.GetPointsList();
 
                     case CalculationTypeList.SwingForwardTwo:
-                        return swingForwardCalculationTwo.GetPointsList();                        
+                        return swingForwardCalculationTwo.GetPointsList();       
+                        */
                 }
                 return null;
             }
@@ -146,12 +144,13 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 {
                     case CalculationTypeList.Tick:
                         return tickCalculation.GetLastPoint(0);
-
+                        /*
                     case CalculationTypeList.SwingForwardOne:
                         return swingForwardCalculationOne.GetLastPoint(0);
 
                     case CalculationTypeList.SwingForwardTwo:
                         return swingForwardCalculationTwo.GetLastPoint(0);
+                        */
                 }
                 return null;
             }
@@ -161,32 +160,25 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
     }
 }
 
-public enum CalculationTypeList
-{
-    Tick,
-    SwingForwardOne,
-    SwingForwardTwo
-}
-
 #region NinjaScript generated code. Neither change nor remove.
 
 namespace NinjaTrader.NinjaScript.Indicators
 {
 	public partial class Indicator : NinjaTrader.Gui.NinjaScript.IndicatorRenderBase
 	{
-		private JiraiyaIndicators.PriceActionSwing[] cachePriceActionSwing;
-		public JiraiyaIndicators.PriceActionSwing PriceActionSwing(CalculationTypeList calculationType, double strength, bool useHighLow)
+		private JiraiyaIndicators.PriceActionSwingOLD[] cachePriceActionSwingOLD;
+		public JiraiyaIndicators.PriceActionSwingOLD PriceActionSwingOLD(CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return PriceActionSwing(Input, calculationType, strength, useHighLow);
+			return PriceActionSwingOLD(Input, calculationType, strength, useHighLow);
 		}
 
-		public JiraiyaIndicators.PriceActionSwing PriceActionSwing(ISeries<double> input, CalculationTypeList calculationType, double strength, bool useHighLow)
+		public JiraiyaIndicators.PriceActionSwingOLD PriceActionSwingOLD(ISeries<double> input, CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			if (cachePriceActionSwing != null)
-				for (int idx = 0; idx < cachePriceActionSwing.Length; idx++)
-					if (cachePriceActionSwing[idx] != null && cachePriceActionSwing[idx].CalculationType == calculationType && cachePriceActionSwing[idx].Strength == strength && cachePriceActionSwing[idx].UseHighLow == useHighLow && cachePriceActionSwing[idx].EqualsInput(input))
-						return cachePriceActionSwing[idx];
-			return CacheIndicator<JiraiyaIndicators.PriceActionSwing>(new JiraiyaIndicators.PriceActionSwing(){ CalculationType = calculationType, Strength = strength, UseHighLow = useHighLow }, input, ref cachePriceActionSwing);
+			if (cachePriceActionSwingOLD != null)
+				for (int idx = 0; idx < cachePriceActionSwingOLD.Length; idx++)
+					if (cachePriceActionSwingOLD[idx] != null && cachePriceActionSwingOLD[idx].CalculationType == calculationType && cachePriceActionSwingOLD[idx].Strength == strength && cachePriceActionSwingOLD[idx].UseHighLow == useHighLow && cachePriceActionSwingOLD[idx].EqualsInput(input))
+						return cachePriceActionSwingOLD[idx];
+			return CacheIndicator<JiraiyaIndicators.PriceActionSwingOLD>(new JiraiyaIndicators.PriceActionSwingOLD(){ CalculationType = calculationType, Strength = strength, UseHighLow = useHighLow }, input, ref cachePriceActionSwingOLD);
 		}
 	}
 }
@@ -195,14 +187,14 @@ namespace NinjaTrader.NinjaScript.MarketAnalyzerColumns
 {
 	public partial class MarketAnalyzerColumn : MarketAnalyzerColumnBase
 	{
-		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwing(CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwingOLD PriceActionSwingOLD(CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return indicator.PriceActionSwing(Input, calculationType, strength, useHighLow);
+			return indicator.PriceActionSwingOLD(Input, calculationType, strength, useHighLow);
 		}
 
-		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwing(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwingOLD PriceActionSwingOLD(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return indicator.PriceActionSwing(input, calculationType, strength, useHighLow);
+			return indicator.PriceActionSwingOLD(input, calculationType, strength, useHighLow);
 		}
 	}
 }
@@ -211,14 +203,14 @@ namespace NinjaTrader.NinjaScript.Strategies
 {
 	public partial class Strategy : NinjaTrader.Gui.NinjaScript.StrategyRenderBase
 	{
-		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwing(CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwingOLD PriceActionSwingOLD(CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return indicator.PriceActionSwing(Input, calculationType, strength, useHighLow);
+			return indicator.PriceActionSwingOLD(Input, calculationType, strength, useHighLow);
 		}
 
-		public Indicators.JiraiyaIndicators.PriceActionSwing PriceActionSwing(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.PriceActionSwingOLD PriceActionSwingOLD(ISeries<double> input , CalculationTypeList calculationType, double strength, bool useHighLow)
 		{
-			return indicator.PriceActionSwing(input, calculationType, strength, useHighLow);
+			return indicator.PriceActionSwingOLD(input, calculationType, strength, useHighLow);
 		}
 	}
 }

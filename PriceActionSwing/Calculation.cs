@@ -9,8 +9,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         protected Series<double> lows;
         protected List<Point> points = new List<Point>();
 
-        private readonly NinjaScriptBase owner;
-        private readonly PriceActionSwing priceActionSwing;
+        protected readonly NinjaScriptBase owner;
+        protected readonly PriceActionSwing priceActionSwing;
 
         protected Calculation(NinjaScriptBase owner, PriceActionSwing priceActionSwing)
         {

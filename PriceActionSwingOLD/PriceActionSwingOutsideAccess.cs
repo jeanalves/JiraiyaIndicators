@@ -3,7 +3,7 @@ using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwingOLD;
 
 namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 {
-    public partial class PriceActionSwing
+    public partial class PriceActionSwingOLD
     {
         public void OnPointCalculationUpdate(int pointsCount, Point pointOne, Point pointTwo)
         {

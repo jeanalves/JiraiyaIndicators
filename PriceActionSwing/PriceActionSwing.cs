@@ -1,16 +1,48 @@
-﻿using NinjaTrader.NinjaScript;
+using NinjaTrader.NinjaScript;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class PriceActionSwing
     {
-        public NinjaScriptBase owner;
+        private readonly NinjaScriptBase owner;
+        private readonly SwingForwardCalculation swingForwardCalculationTwo;
 
+        public CalculationTypeList CalculationType { get; set; }
+        public double Strength { get; set; }
         public bool UseHighLow { get; set; }
+        public bool ShowLog { get; set; }
 
-        public PriceActionSwing(NinjaScriptBase owner)
+        public PriceActionSwing(NinjaScriptBase owner, CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
         {
             this.owner = owner;
+            swingForwardCalculationTwo = new SwingForwardCalculation(owner, this);
+
+            CalculationType = calculationType;
+            Strength = strength;
+            UseHighLow = useHighLow;
+            ShowLog = showLog;
+
+            if (!ShowLog)
+            {
+                LogPrinter.SetIndicatorAsInvisible(owner);
+            }
+
+            //Everytime the F5 key is pressed automatically will clear the output window.
+            LogPrinter.ResetOuputTabs();
+        }
+
+        public void Calculate()
+        {
+            switch (CalculationType)
+            {
+                case CalculationTypeList.Tick:
+                    //tickCalculation.Calculate();
+                    break;
+
+                case CalculationTypeList.SwingForward:
+                    swingForwardCalculationTwo.Calculate();
+                    break;
+            }
         }
 
         public void OnPointCalculationUpdate(int pointsCount, Point pointOne, Point pointTwo)
@@ -25,4 +57,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             }
         }
     }
+}
+
+public enum CalculationTypeList
+{
+    Tick,
+    SwingForward
 }
