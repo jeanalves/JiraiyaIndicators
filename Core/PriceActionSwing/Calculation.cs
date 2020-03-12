@@ -5,6 +5,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public abstract class Calculation
     {
+        // Fields
+
         protected Series<double> highs;
         protected Series<double> lows;
         protected List<Point> points = new List<Point>();
