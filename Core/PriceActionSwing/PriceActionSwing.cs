@@ -6,7 +6,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
     {
         private readonly NinjaScriptBase owner;
         private readonly TickCalculation tickCalculation;
-        private readonly SwingForwardCalculation swingForwardCalculationTwo;
+        private readonly SwingForwardCalculation swingForwardCalculation;
 
         public CalculationTypeList CalculationType { get; set; }
         public double Strength { get; set; }
@@ -17,7 +17,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             this.owner = owner;
             tickCalculation = new TickCalculation(owner, this);
-            swingForwardCalculationTwo = new SwingForwardCalculation(owner, this);
+            swingForwardCalculation = new SwingForwardCalculation(owner, this);
 
             CalculationType = calculationType;
             Strength = strength;
@@ -33,18 +33,20 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             LogPrinter.ResetOuputTabs();
         }
 
-        public void Calculate()
+        public Calculation Calculate()
         {
             switch (CalculationType)
             {
                 case CalculationTypeList.Tick:
                     tickCalculation.Calculate();
-                    break;
+                    return tickCalculation;
 
                 case CalculationTypeList.SwingForward:
-                    swingForwardCalculationTwo.Calculate();
-                    break;
+                    swingForwardCalculation.Calculate();
+                    return swingForwardCalculation;
             }
+
+            return null;
         }
 
         public void OnPointCalculationUpdate(int pointsCount, Point pointOne, Point pointTwo)

@@ -94,7 +94,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             return points;
         }
 
-        public Point GetLastPoint(int pointsAgo)
+        public Point GetPoint(int pointsAgo)
         {
             return points.Count < pointsAgo + 1 ? null : points[(points.Count - 1) - pointsAgo];
         }
@@ -186,7 +186,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                     break;
             }
 
-            priceActionSwing.OnPointCalculationUpdate(points.Count, GetLastPoint(1), GetLastPoint(0));
+            priceActionSwing.OnPointCalculationUpdate(points.Count, GetPoint(1), GetPoint(0));
         }
 
         private void DefaultAddUpdatePointsManagement(CalculationData calculationData)
