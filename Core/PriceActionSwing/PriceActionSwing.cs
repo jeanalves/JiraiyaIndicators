@@ -5,6 +5,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
     public class PriceActionSwing
     {
         private readonly NinjaScriptBase owner;
+        private readonly TickCalculation tickCalculation;
         private readonly SwingForwardCalculation swingForwardCalculationTwo;
 
         public CalculationTypeList CalculationType { get; set; }
@@ -15,6 +16,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         public PriceActionSwing(NinjaScriptBase owner, CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
         {
             this.owner = owner;
+            tickCalculation = new TickCalculation(owner, this);
             swingForwardCalculationTwo = new SwingForwardCalculation(owner, this);
 
             CalculationType = calculationType;
@@ -36,7 +38,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             switch (CalculationType)
             {
                 case CalculationTypeList.Tick:
-                    //tickCalculation.Calculate();
+                    tickCalculation.Calculate();
                     break;
 
                 case CalculationTypeList.SwingForward:
