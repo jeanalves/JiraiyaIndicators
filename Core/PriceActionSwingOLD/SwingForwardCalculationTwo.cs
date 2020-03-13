@@ -23,7 +23,7 @@
 
             // For a new swing high in an uptrend, Highs[BarsInProgress][0] must be 
             // greater than the current swing high
-            if (LastSideTrend() == Point.SideSwing.High)
+            if (LastSideTrend() == Point.SidePoint.High)
             {
                 if (LastHigh().Price > highs[0])
                     newHigh = false;
@@ -31,7 +31,7 @@
 
             // For a new swing low in a downtrend, Lows[BarsInProgress][0] must be 
             // smaller than the current swing low
-            if (LastSideTrend() == Point.SideSwing.Low)
+            if (LastSideTrend() == Point.SidePoint.Low)
             {
                 if (LastLow().Price < lows[0])
                     newLow = false;
@@ -65,22 +65,22 @@
 
             if (newHigh && newLow)
             {
-                if (LastSideTrend() == Point.SideSwing.High)
+                if (LastSideTrend() == Point.SidePoint.High)
                 {
-                    return new CalculationData(true, highs[0], priceActionSwing.CurrentBar, Point.SideSwing.High);
+                    return new CalculationData(true, highs[0], priceActionSwing.CurrentBar, Point.SidePoint.High);
                 }
                 else
                 {
-                    return new CalculationData(true, lows[0], priceActionSwing.CurrentBar, Point.SideSwing.Low);
+                    return new CalculationData(true, lows[0], priceActionSwing.CurrentBar, Point.SidePoint.Low);
                 }
             }
             else if (newHigh)
             {
-                return new CalculationData(true, highs[0], priceActionSwing.CurrentBar, Point.SideSwing.High);
+                return new CalculationData(true, highs[0], priceActionSwing.CurrentBar, Point.SidePoint.High);
             }
             else if (newLow)
             {
-                return new CalculationData(true, lows[0], priceActionSwing.CurrentBar, Point.SideSwing.Low);
+                return new CalculationData(true, lows[0], priceActionSwing.CurrentBar, Point.SidePoint.Low);
             }
             return new CalculationData(false);
         }

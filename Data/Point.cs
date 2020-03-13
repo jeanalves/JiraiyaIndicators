@@ -5,9 +5,9 @@
         public double Price { get; set; }
         public int BarIndex { get; set; }
         public int PointIndex { get; private set; }
-        public SideSwing CurrentSideSwing { get; private set; }
+        public SidePoint CurrentSideSwing { get; private set; }
 
-        public Point(double price, int barIndex, int pointIndex, SideSwing currentSideSwing)
+        public Point(double price, int barIndex, int pointIndex, SidePoint currentSideSwing)
         {
             Price = price;
             BarIndex = barIndex;
@@ -15,7 +15,7 @@
             CurrentSideSwing = currentSideSwing;
         }
 
-        public enum SideSwing
+        public enum SidePoint
         {
             High,
             Low,

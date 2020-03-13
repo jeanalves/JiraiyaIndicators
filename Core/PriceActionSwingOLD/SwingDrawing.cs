@@ -8,21 +8,21 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwingOLD
         {
             switch(point.CurrentSideSwing)
             {
-                case Point.SideSwing.High:
+                case Point.SidePoint.High:
                     DrawWrapper.DrawDot(OwnerReference.NinjaScriptBase, point.PointIndex, 
                                         point.BarIndex, point.Price, Brushes.Green);
                     DrawWrapper.DrawText(OwnerReference.NinjaScriptBase, point.PointIndex, 
                                          point.BarIndex, point.Price, 15);
                     break;
 
-                case Point.SideSwing.Low:
+                case Point.SidePoint.Low:
                     DrawWrapper.DrawDot(OwnerReference.NinjaScriptBase, point.PointIndex,
                                         point.BarIndex, point.Price, Brushes.Red);
                     DrawWrapper.DrawText(OwnerReference.NinjaScriptBase, point.PointIndex,
                                          point.BarIndex, point.Price, -15);
                     break;
 
-                case Point.SideSwing.Unknow:
+                case Point.SidePoint.Unknow:
                     DrawWrapper.DrawDot(OwnerReference.NinjaScriptBase, point.PointIndex,
                                         point.BarIndex, point.Price, Brushes.Gray);
                     break;

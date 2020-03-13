@@ -42,21 +42,21 @@
                     LogPrinter.Print(ninjaScriptBase, "Add high," +
                         " highCandidateValue: " + highCandidateValue +
                         ", highCandidateIndex: " + highCandidateIndex);
-                    return new CalculationData(true, highCandidateValue, highCandidateIndex, Point.SideSwing.High);
+                    return new CalculationData(true, highCandidateValue, highCandidateIndex, Point.SidePoint.High);
                 }
                 else if (highCandidateIndex > lowCandidateIndex)
                 {
                     LogPrinter.Print(ninjaScriptBase, "Add low," +
                         " lowCandidateValue: " + lowCandidateValue +
                         ", lowCandidateIndex: " + lowCandidateIndex);
-                    return new CalculationData(true, lowCandidateValue, lowCandidateIndex, Point.SideSwing.Low);
+                    return new CalculationData(true, lowCandidateValue, lowCandidateIndex, Point.SidePoint.Low);
                 }
                 else if(highCandidateIndex == lowCandidateIndex)
                 {
                     LogPrinter.Print(ninjaScriptBase, "Error: The two indexes are equal.");
                     LogPrinter.PrintError(ninjaScriptBase, "Error: The two indexes are equal. " +
                         "High bar index: " + highCandidateIndex + " Low bar index: " + lowCandidateIndex);
-                    return new CalculationData(true, 0, 0, Point.SideSwing.Unknow);
+                    return new CalculationData(true, 0, 0, Point.SidePoint.Unknow);
                 }
                 else
                 {
@@ -97,9 +97,9 @@
             LogPrinter.Print(ninjaScriptBase, "isRising : " + isRising + ", isFalling : " + isFalling);
 
             if (isRising && isOverHighStrength)
-                return new CalculationData(true, swingHighCandidateValue, priceActionSwing.CurrentBar, Point.SideSwing.High);
+                return new CalculationData(true, swingHighCandidateValue, priceActionSwing.CurrentBar, Point.SidePoint.High);
             if (isFalling && isOverLowStrength)
-                return new CalculationData(true, swingLowCandidateValue, priceActionSwing.CurrentBar, Point.SideSwing.Low);
+                return new CalculationData(true, swingLowCandidateValue, priceActionSwing.CurrentBar, Point.SidePoint.Low);
 
             return new CalculationData(false);
         }

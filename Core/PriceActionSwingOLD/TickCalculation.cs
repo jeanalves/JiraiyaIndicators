@@ -15,9 +15,9 @@
             LogPrinter.Print(ninjaScriptBase, "isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
 
             if (isRising && isOverHighStrength)
-                return new CalculationData(true, highs[0], priceActionSwing.CurrentBar, Point.SideSwing.High);
+                return new CalculationData(true, highs[0], priceActionSwing.CurrentBar, Point.SidePoint.High);
             if (isFalling && isOverLowStrength)
-                return new CalculationData(true, lows[0], priceActionSwing.CurrentBar, Point.SideSwing.Low);
+                return new CalculationData(true, lows[0], priceActionSwing.CurrentBar, Point.SidePoint.Low);
             
             return new CalculationData(false);
         }
