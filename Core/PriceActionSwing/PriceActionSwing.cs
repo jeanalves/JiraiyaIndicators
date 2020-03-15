@@ -9,6 +9,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         private readonly NinjaScriptBase owner;
         private readonly TickCalculation tickCalculation;
         private readonly SwingForwardCalculation swingForwardCalculation;
+        private readonly SwingForwardCalculationOld swingForwardCalculationOld;
 
         // Initialization
 
@@ -22,6 +23,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             tickCalculation = new TickCalculation(owner, this);
             swingForwardCalculation = new SwingForwardCalculation(owner, this);
+            swingForwardCalculationOld = new SwingForwardCalculationOld(owner, this);
 
             if (!ShowLog)
             {
@@ -44,6 +46,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                 case CalculationTypeList.SwingForward:
                     swingForwardCalculation.Calculate();
                     return swingForwardCalculation;
+
+                case CalculationTypeList.SwingForwardOld:
+                    swingForwardCalculation.Calculate();
+                    return swingForwardCalculationOld;
             }
 
             return null;
@@ -73,5 +79,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 public enum CalculationTypeList
 {
     Tick,
-    SwingForward
+    SwingForward,
+    SwingForwardOld
 }
