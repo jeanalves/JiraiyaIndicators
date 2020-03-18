@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
 {
-    public static class LogPrinter
+    public class LogPrinter
     {
-        private static int lastBarIndex = 0;
-        private static readonly List<NinjaScriptBase> invisibleIndicator = new List<NinjaScriptBase>();
+        private int lastBarIndex = 0;
+        private readonly List<NinjaScriptBase> invisibleIndicator = new List<NinjaScriptBase>();
 
-        public static void Print(NinjaScriptBase owner, object text)
+        public void Print(NinjaScriptBase owner, object text)
         {
             if (!IsInvisible(owner))
             {
@@ -27,7 +27,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             }
         }
 
-        public static void PrintError(NinjaScriptBase owner, object text)
+        public void PrintError(NinjaScriptBase owner, object text)
         {
             if (!IsInvisible(owner))
             {
@@ -38,18 +38,18 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
         /// <summary>
         /// Clear the all tabs of output window.
         /// </summary>
-        public static void ResetOuputTabs()
+        public void ResetOuputTabs()
         {
             Code.Output.Reset(PrintTo.OutputTab1);
             Code.Output.Reset(PrintTo.OutputTab2);
         }
 
-        public static void SetIndicatorAsInvisible(NinjaScriptBase owner)
+        public void SetIndicatorAsInvisible(NinjaScriptBase owner)
         {
             invisibleIndicator.Add(owner);
         }
 
-        private static bool IsInvisible(NinjaScriptBase owner)
+        private bool IsInvisible(NinjaScriptBase owner)
         {
             foreach(NinjaScriptBase nsb in invisibleIndicator)
             {
@@ -63,7 +63,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             return false;
         }
 
-        private static string GetStringSpace(object text)
+        private string GetStringSpace(object text)
         {
             // The multiplication number was found doing 7 divided by 3,
             // this means that each number printed equals to 2.3333333333 spaces.

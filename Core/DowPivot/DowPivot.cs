@@ -9,16 +9,16 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Initialization
 
-        public DowPivot(NinjaScriptBase owner, bool showLog)
+        public DowPivot(NinjaScriptBase owner, LogPrinter logPrinter ,bool showLog)
         {
             this.owner = owner;
             ShowLog = showLog;
 
-            priceActionSwing = new PriceActionSwing.PriceActionSwing(owner, CalculationTypeList.SwingForward, 2, true, false);
+            priceActionSwing = new PriceActionSwing.PriceActionSwing(owner, logPrinter ,CalculationTypeList.SwingForward, 2, true, false);
 
             if (!ShowLog)
             {
-                LogPrinter.SetIndicatorAsInvisible(owner);
+                logPrinter.SetIndicatorAsInvisible(owner);
             }
         }
 

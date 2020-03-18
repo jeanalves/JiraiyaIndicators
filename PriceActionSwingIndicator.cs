@@ -8,6 +8,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 {
 	public class PriceActionSwingIndicator : Indicator
 	{
+        LogPrinter logPrinter;
         PriceActionSwing priceActionSwing;
 
 		protected override void OnStateChange()
@@ -33,10 +34,11 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			}
 			else if (State == State.Configure)
 			{
-                priceActionSwing = new PriceActionSwing(this, CalculationType, Strength, UseHighLow, ShowLog);
+                logPrinter = new LogPrinter();
+                priceActionSwing = new PriceActionSwing(this, logPrinter ,CalculationType, Strength, UseHighLow, ShowLog);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
-                LogPrinter.ResetOuputTabs();
+                logPrinter.ResetOuputTabs();
             }
 		}
 

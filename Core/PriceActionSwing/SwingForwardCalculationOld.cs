@@ -4,11 +4,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class SwingForwardCalculationOld : Calculation
     {
-        public SwingForwardCalculationOld(NinjaScriptBase owner, PriceActionSwing priceActionSwing) : base(owner, priceActionSwing) { }
+        public SwingForwardCalculationOld(NinjaScriptBase owner, LogPrinter logPrinter, PriceActionSwing priceActionSwing) : base(owner, logPrinter, priceActionSwing) { }
 
         protected override CalculationData CalculateFirstSwingPoint()
         {
-            LogPrinter.Print(owner, "SwingForwardCalculationOld.CalculateFirstSwingPoint()");
+            logPrinter.Print(owner, "SwingForwardCalculationOld.CalculateFirstSwingPoint()");
 
             double highCandidateValue = highs.GetValueAt(0);
             double lowCandidateValue = lows.GetValueAt(0);
@@ -17,7 +17,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             if (owner.CurrentBar == priceActionSwing.Strength)
             {
-                LogPrinter.Print(owner, "Testing the high values to find the highest one");
+                logPrinter.Print(owner, "Testing the high values to find the highest one");
                 // Test the high values to find the highest one
                 for (int i = 0; i < priceActionSwing.Strength; i++)
                 {
@@ -25,11 +25,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                     {
                         highCandidateValue = highs.GetValueAt(i);
                         highCandidateIndex = i;
-                        LogPrinter.Print(owner, "High index : " + i);
+                        logPrinter.Print(owner, "High index : " + i);
                     }
                 }
 
-                LogPrinter.Print(owner, "Testing the low values to find the lowest one");
+                logPrinter.Print(owner, "Testing the low values to find the lowest one");
                 // Test the low values to find the lowest one
                 for (int i = 0; i < priceActionSwing.Strength; i++)
                 {
@@ -37,35 +37,35 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                     {
                         lowCandidateValue = lows.GetValueAt(i);
                         lowCandidateIndex = i;
-                        LogPrinter.Print(owner, "Low index : " + i);
+                        logPrinter.Print(owner, "Low index : " + i);
                     }
                 }
 
                 if (highCandidateIndex < lowCandidateIndex)
                 {
-                    LogPrinter.Print(owner, "Add high," +
+                    logPrinter.Print(owner, "Add high," +
                         " highCandidateValue: " + highCandidateValue +
                         ", highCandidateIndex: " + highCandidateIndex);
                     return new CalculationData(true, highCandidateValue, highCandidateIndex, Point.SidePoint.High);
                 }
                 else if (highCandidateIndex > lowCandidateIndex)
                 {
-                    LogPrinter.Print(owner, "Add low," +
+                    logPrinter.Print(owner, "Add low," +
                         " lowCandidateValue: " + lowCandidateValue +
                         ", lowCandidateIndex: " + lowCandidateIndex);
                     return new CalculationData(true, lowCandidateValue, lowCandidateIndex, Point.SidePoint.Low);
                 }
                 else if(highCandidateIndex == lowCandidateIndex)
                 {
-                    LogPrinter.Print(owner, "Error: The two indexes are equal.");
-                    LogPrinter.PrintError(owner, "Error: The two indexes are equal. " +
+                    logPrinter.Print(owner, "Error: The two indexes are equal.");
+                    logPrinter.PrintError(owner, "Error: The two indexes are equal. " +
                         "High bar index: " + highCandidateIndex + " Low bar index: " + lowCandidateIndex);
                     return new CalculationData(true, 0, 0, Point.SidePoint.Unknow);
                 }
                 else
                 {
-                    LogPrinter.Print(owner, "Error: No point was found");
-                    LogPrinter.PrintError(owner, "Error: No point was found");
+                    logPrinter.Print(owner, "Error: No point was found");
+                    logPrinter.PrintError(owner, "Error: No point was found");
                 }
             }
 
@@ -74,7 +74,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         protected override CalculationData CalculateEachBarSwingPoint()
         {
-            LogPrinter.Print(owner, "SwingForwardCalculationOld.CalculateEachBarSwingPoint()");
+            logPrinter.Print(owner, "SwingForwardCalculationOld.CalculateEachBarSwingPoint()");
 
             bool isRising= true;
             bool isFalling = true;
@@ -86,7 +86,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             int initForIndex = owner.CurrentBar - (int)priceActionSwing.Strength;
 
-            LogPrinter.Print(owner, "isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
+            logPrinter.Print(owner, "isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
 
             // High calculation
             for (int i = initForIndex; i < owner.CurrentBar; i++)
@@ -98,7 +98,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                 if (swingLowCandidateValue > lows.GetValueAt(i))
                     isFalling = false;
 
-            LogPrinter.Print(owner, "isRising : " + isRising + ", isFalling : " + isFalling);
+            logPrinter.Print(owner, "isRising : " + isRising + ", isFalling : " + isFalling);
 
             if (isRising && isOverHighStrength)
                 return new CalculationData(true, swingHighCandidateValue, owner.CurrentBar, Point.SidePoint.High);
@@ -110,7 +110,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         protected override CalculationData CalculateEachTickSwing()
         {
-            LogPrinter.Print(owner, "SwingForwardCalculationOld.CalculateEachTickSwing()");
+            logPrinter.Print(owner, "SwingForwardCalculationOld.CalculateEachTickSwing()");
             return base.CalculateEachTickSwing();
         }
     }
