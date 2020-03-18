@@ -29,7 +29,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
 
         public static void PrintError(NinjaScriptBase owner, object text)
         {
-            Draw.TextFixed(owner, "Error", text.ToString(), TextPosition.BottomRight);
+            if (!IsInvisible(owner))
+            {
+                Draw.TextFixed(owner, "Error", text.ToString(), TextPosition.BottomRight);
+            }
         }
 
         /// <summary>

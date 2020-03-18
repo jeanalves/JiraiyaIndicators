@@ -29,9 +29,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             {
                 LogPrinter.SetIndicatorAsInvisible(owner);
             }
-
-            // Everytime the F5 key is pressed automatically will clear the output window.
-            LogPrinter.ResetOuputTabs();
         }
 
         // Public (methods)

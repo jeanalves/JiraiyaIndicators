@@ -1,4 +1,5 @@
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot;
+using NinjaTrader.Custom.Indicators.JiraiyaIndicators;
 
 //This namespace holds Indicators in this folder and is required. Do not change it. 
 namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
@@ -31,6 +32,9 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
             else if(State == State.DataLoaded)
             {
                 dowPivot = new DowPivot(this, true);
+
+                // Everytime the F5 key is pressed automatically will clear the output window.
+                LogPrinter.ResetOuputTabs();
             }
 		}
 
