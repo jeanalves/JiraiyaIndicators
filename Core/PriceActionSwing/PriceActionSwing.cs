@@ -7,6 +7,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
     {
         // Fields
 
+        public LogPrinter logPrinter = new LogPrinter();
+
         private readonly NinjaScriptBase owner;
         private readonly TickCalculation tickCalculation;
         private readonly SwingForwardCalculation swingForwardCalculation;
@@ -14,7 +16,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         // Initialization
 
-        public PriceActionSwing(NinjaScriptBase owner, LogPrinter logPrinter ,CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
+        public PriceActionSwing(NinjaScriptBase owner, CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
         {
             this.owner = owner;
             tickCalculation = new TickCalculation(owner, logPrinter, this);

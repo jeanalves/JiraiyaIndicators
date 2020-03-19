@@ -38,7 +38,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
         /// <summary>
         /// Clear the all tabs of output window.
         /// </summary>
-        public void ResetOuputTabs()
+        public static void ResetOuputTabs()
         {
             Code.Output.Reset(PrintTo.OutputTab1);
             Code.Output.Reset(PrintTo.OutputTab2);
