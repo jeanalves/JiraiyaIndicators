@@ -1,4 +1,5 @@
 using NinjaTrader.NinjaScript;
+using System.Collections.Generic;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
@@ -16,14 +17,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         public PriceActionSwing(NinjaScriptBase owner, LogPrinter logPrinter ,CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
         {
             this.owner = owner;
+            tickCalculation = new TickCalculation(owner, logPrinter, this);
+            swingForwardCalculation = new SwingForwardCalculation(owner, logPrinter, this);
+            swingForwardCalculationOld = new SwingForwardCalculationOld(owner, logPrinter, this);
+
             CalculationType = calculationType;
             Strength = strength;
             UseHighLow = useHighLow;
             ShowLog = showLog;
-
-            tickCalculation = new TickCalculation(owner, logPrinter, this);
-            swingForwardCalculation = new SwingForwardCalculation(owner, logPrinter, this);
-            swingForwardCalculationOld = new SwingForwardCalculationOld(owner, logPrinter, this);
 
             if (!ShowLog)
             {
@@ -32,6 +33,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         }
 
         // Public (methods)
+
         public Calculation Calculate()
         {
             switch (CalculationType)
@@ -64,12 +66,33 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             }
         }
 
+        public Point GetPoint(int pointsAgo)
+        {
+            return Calculate().GetPoint(pointsAgo);
+        }
+
         // Properties
 
-        public CalculationTypeList CalculationType { get; set; }
-        public double Strength { get; set; }
-        public bool UseHighLow { get; set; }
-        public bool ShowLog { get; set; }
+        public CalculationTypeList CalculationType { get; private set; }
+        public double Strength { get; private set; }
+        public bool UseHighLow { get; private set; }
+        public bool ShowLog { get; private set; }
+
+        public List<Point> GetPointsList
+        {
+            get
+            {
+                return Calculate().GetPointsList();
+            }
+        }
+
+        public Point GetLastPoint
+        {
+            get
+            {
+                return Calculate().GetPoint(0);
+            }
+        }
     }
 }
 
