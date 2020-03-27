@@ -6,8 +6,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
     {
         // Fields
 
-        public LogPrinter logPrinter = new LogPrinter();
-
         private readonly NinjaScriptBase owner;
         private readonly PriceActionSwing.PriceActionSwing priceActionSwing;
 
@@ -22,7 +20,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
             if (!ShowLog)
             {
-                logPrinter.SetIndicatorAsInvisible(owner);
+                //logPrinter.SetIndicatorAsInvisible(owner);
             }
         }
 

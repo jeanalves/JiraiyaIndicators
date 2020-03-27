@@ -4,18 +4,18 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class SwingForwardCalculation : Calculation
     {
-        public SwingForwardCalculation(NinjaScriptBase owner, LogPrinter logPrinter, PriceActionSwing priceActionSwing) : base(owner, logPrinter, priceActionSwing) { }
+        public SwingForwardCalculation(NinjaScriptBase owner, PriceActionSwing priceActionSwing) : base(owner, priceActionSwing) { }
 
         protected override CalculationData CalculateEachBarSwingPoint()
         {
-            logPrinter.Print(owner, "SwingForwardCalculation.CalculateEachBarSwingPoint()");
+            //logPrinter.Print(owner, "SwingForwardCalculation.CalculateEachBarSwingPoint()");
 
             return DefaultLogicCalculation();
         }
 
         protected override CalculationData CalculateEachTickSwing()
         {
-            logPrinter.Print(owner, "SwingForwardCalculation.CalculateEachTickSwing()");
+            //logPrinter.Print(owner, "SwingForwardCalculation.CalculateEachTickSwing()");
 
             return DefaultLogicCalculation();
         }
