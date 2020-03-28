@@ -1,22 +1,23 @@
-﻿using NinjaTrader.NinjaScript;
+﻿using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
+using NinjaTrader.NinjaScript;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 {
-    public class DowPivot
+    public class DowPivotClass
     {
         // Fields
 
         private readonly NinjaScriptBase owner;
-        private readonly PriceActionSwing.PriceActionSwing priceActionSwing;
+        private readonly PriceActionSwingClass priceActionSwingClass;
 
         // Initialization
 
-        public DowPivot(NinjaScriptBase owner, bool showLog)
+        public DowPivotClass(NinjaScriptBase owner, bool showLog)
         {
             this.owner = owner;
             ShowLog = showLog;
 
-            priceActionSwing = new PriceActionSwing.PriceActionSwing(owner, CalculationTypeList.SwingForward, 2, true, true);
+            priceActionSwingClass = new PriceActionSwingClass(owner, CalculationTypeList.SwingForward, 2, true, true);
 
             if (!ShowLog)
             {
@@ -28,7 +29,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         public void Calculate()
         {
-            var unused = priceActionSwing.GetPoint(5);
+            var unused = priceActionSwingClass.GetPoint(5);
         }
 
         // Properties

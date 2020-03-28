@@ -4,7 +4,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class TickCalculation : Calculation
     {
-        public TickCalculation(NinjaScriptBase owner, PriceActionSwing priceActionSwing) : base(owner, priceActionSwing) { }
+        public TickCalculation(NinjaScriptBase owner, PriceActionSwingClass priceActionSwingClass) : base(owner, priceActionSwingClass) { }
 
         protected override CalculationData CalculateEachBarSwingPoint()
         {
@@ -14,8 +14,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             bool isFalling = lows[0] < lows[1];
             //logPrinter.Print(owner, "isRising : " + isRising + ", isFalling: " + isFalling);
             
-            bool isOverHighStrength = highs[0] > (LastLow().Price + (priceActionSwing.Strength * owner.TickSize));
-            bool isOverLowStrength = lows[0] < (LastHigh().Price - (priceActionSwing.Strength * owner.TickSize));
+            bool isOverHighStrength = highs[0] > (LastLow().Price + (priceActionSwingClass.Strength * owner.TickSize));
+            bool isOverLowStrength = lows[0] < (LastHigh().Price - (priceActionSwingClass.Strength * owner.TickSize));
             //logPrinter.Print(owner, "isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
 
             if (isRising && isOverHighStrength)

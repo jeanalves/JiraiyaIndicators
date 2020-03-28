@@ -4,7 +4,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class SwingForwardCalculation : Calculation
     {
-        public SwingForwardCalculation(NinjaScriptBase owner, PriceActionSwing priceActionSwing) : base(owner, priceActionSwing) { }
+        public SwingForwardCalculation(NinjaScriptBase owner, PriceActionSwingClass priceActionSwingClass) : base(owner, priceActionSwingClass) { }
 
         protected override CalculationData CalculateEachBarSwingPoint()
         {
@@ -44,7 +44,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             // Calculates if the current high value is a new swing
             if (newHigh)
             {
-                for (int i = 1; i < priceActionSwing.Strength + 1; i++)
+                for (int i = 1; i < priceActionSwingClass.Strength + 1; i++)
                 {
                     if (highs[0] <= highs[i])
                     {
@@ -57,7 +57,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             // Calculates if the current low value is a new swing
             if (newLow)
             {
-                for (int i = 1; i < priceActionSwing.Strength + 1; i++)
+                for (int i = 1; i < priceActionSwingClass.Strength + 1; i++)
                 {
                     if (lows[0] >= lows[i])
                     {

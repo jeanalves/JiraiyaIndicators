@@ -4,7 +4,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
     public class SwingForwardCalculationOld : Calculation
     {
-        public SwingForwardCalculationOld(NinjaScriptBase owner, PriceActionSwing priceActionSwing) : base(owner, priceActionSwing) { }
+        public SwingForwardCalculationOld(NinjaScriptBase owner, PriceActionSwingClass priceActionSwingClass) : base(owner, priceActionSwingClass) { }
 
         protected override CalculationData CalculateFirstSwingPoint()
         {
@@ -15,11 +15,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             int highCandidateIndex = 0;
             int lowCandidateIndex = 0;
 
-            if (owner.CurrentBar == priceActionSwing.Strength)
+            if (owner.CurrentBar == priceActionSwingClass.Strength)
             {
                 //logPrinter.Print(owner, "Testing the high values to find the highest one");
                 // Test the high values to find the highest one
-                for (int i = 0; i < priceActionSwing.Strength; i++)
+                for (int i = 0; i < priceActionSwingClass.Strength; i++)
                 {
                     if (highs.GetValueAt(i) > highCandidateValue)
                     {
@@ -31,7 +31,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
                 //logPrinter.Print(owner, "Testing the low values to find the lowest one");
                 // Test the low values to find the lowest one
-                for (int i = 0; i < priceActionSwing.Strength; i++)
+                for (int i = 0; i < priceActionSwingClass.Strength; i++)
                 {
                     if (lows.GetValueAt(i) < lowCandidateValue)
                     {
@@ -84,13 +84,13 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             bool isRising= true;
             bool isFalling = true;
-            bool isOverHighStrength = (owner.CurrentBar - LastLow().BarIndex) >= priceActionSwing.Strength;
-            bool isOverLowStrength = (owner.CurrentBar - LastHigh().BarIndex) >= priceActionSwing.Strength;
+            bool isOverHighStrength = (owner.CurrentBar - LastLow().BarIndex) >= priceActionSwingClass.Strength;
+            bool isOverLowStrength = (owner.CurrentBar - LastHigh().BarIndex) >= priceActionSwingClass.Strength;
 
             double swingHighCandidateValue = highs[0];
             double swingLowCandidateValue = lows[0];
 
-            int initForIndex = owner.CurrentBar - (int)priceActionSwing.Strength;
+            int initForIndex = owner.CurrentBar - (int)priceActionSwingClass.Strength;
 
             //logPrinter.Print(owner, "isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
 

@@ -12,14 +12,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         protected List<Point> points = new List<Point>();
 
         protected readonly NinjaScriptBase owner;
-        protected readonly PriceActionSwing priceActionSwing;
+        protected readonly PriceActionSwingClass priceActionSwingClass;
 
         // Initialization
 
-        protected Calculation(NinjaScriptBase owner, PriceActionSwing priceActionSwing)
+        protected Calculation(NinjaScriptBase owner, PriceActionSwingClass priceActionSwingClass)
         {
             this.owner = owner;
-            this.priceActionSwing = priceActionSwing;
+            this.priceActionSwingClass = priceActionSwingClass;
 
             highs = new Series<double>(owner);
             lows = new Series<double>(owner);
@@ -110,7 +110,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             Point.SidePoint sideSwing = owner.Close.GetValueAt(0) > owner.Open.GetValueAt(0) ?
                 Point.SidePoint.Low : Point.SidePoint.High;
 
-            if (priceActionSwing.UseHighLow)
+            if (priceActionSwingClass.UseHighLow)
             {
                 switch (sideSwing)
                 {
@@ -142,7 +142,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void SetValues()
         {
-            if (priceActionSwing.UseHighLow)
+            if (priceActionSwingClass.UseHighLow)
             {
                 highs[0] = owner.High[0];
                 lows[0] = owner.Low[0];
@@ -188,7 +188,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                     break;
             }
 
-            priceActionSwing.OnPointCalculationUpdate(points.Count, GetPoint(1), GetPoint(0));
+            priceActionSwingClass.OnPointCalculationUpdate(points.Count, GetPoint(1), GetPoint(0));
         }
 
         private void DefaultAddUpdatePointsManagement(CalculationData calculationData)

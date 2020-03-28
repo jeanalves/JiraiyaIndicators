@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
-    public class PriceActionSwing
+    public class PriceActionSwingClass
     {
         // Fields
 
@@ -14,7 +14,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         // Initialization
 
-        public PriceActionSwing(NinjaScriptBase owner, CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
+        public PriceActionSwingClass(NinjaScriptBase owner, CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
         {
             this.owner = owner;
             tickCalculation = new TickCalculation(owner, this);

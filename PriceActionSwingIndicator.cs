@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using NinjaTrader.Custom.Indicators.JiraiyaIndicators;
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
 
 //This namespace holds Indicators in this folder and is required. Do not change it. 
@@ -8,7 +7,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 {
 	public class PriceActionSwingIndicator : Indicator
 	{
-        PriceActionSwing priceActionSwing;
+        PriceActionSwingClass priceActionSwing;
 
 		protected override void OnStateChange()
 		{
@@ -33,7 +32,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			}
 			else if (State == State.Configure)
 			{
-                priceActionSwing = new PriceActionSwing(this, CalculationType, Strength, UseHighLow, ShowLog);
+                priceActionSwing = new PriceActionSwingClass(this, CalculationType, Strength, UseHighLow, ShowLog);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
                 // LogPrinter.ResetOuputTabs();
