@@ -32,43 +32,54 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             }
         }
 
+        public void Calculate()
+        {
+            GetChosenCalculationObject().Calculate();
+
+            // Every time a new point event happens, it will be drawn in this 3 lines code
+            if (GetChosenCalculationObject().CalcData.isNewSwing)
+            {
+                OnPointCalculationUpdate();
+            }
+        }
+
         // Public (methods)
 
-        public Calculation Calculate()
+        public Point GetPoint(int pointsAgo)
+        {
+            return GetChosenCalculationObject().GetPoint(pointsAgo);
+        }
+
+        // Private (methods)
+
+        private void OnPointCalculationUpdate()
+        {
+            SwingDrawing.DrawPoint(owner, GetChosenCalculationObject().GetPoint(0));
+
+            // Test if there is more than two points to be able in draw a line
+            if (GetChosenCalculationObject().GetPointsList().Count > 1)
+            {
+                SwingDrawing.DrawZigZag(owner,
+                                        GetChosenCalculationObject().GetPoint(1),
+                                        GetChosenCalculationObject().GetPoint(0));
+            }
+        }
+
+        private Calculation GetChosenCalculationObject()
         {
             switch (CalculationType)
             {
                 case CalculationTypeList.Tick:
-                    tickCalculation.Calculate();
                     return tickCalculation;
 
                 case CalculationTypeList.SwingForward:
-                    swingForwardCalculation.Calculate();
                     return swingForwardCalculation;
 
                 case CalculationTypeList.SwingForwardOld:
-                    swingForwardCalculation.Calculate();
                     return swingForwardCalculationOld;
             }
 
             return null;
-        }
-
-        public void OnPointCalculationUpdate(int pointsCount, Point pointOne, Point pointTwo)
-        {
-            // Every time a new point event happens, it will be drawn in this method
-            SwingDrawing.DrawPoint(owner, pointTwo);
-
-            if (pointsCount > 1)
-            {
-                // Every time a new point event happens, it will be drawn in this method
-                SwingDrawing.DrawZigZag(owner, pointOne, pointTwo);
-            }
-        }
-
-        public Point GetPoint(int pointsAgo)
-        {
-            return Calculate().GetPoint(pointsAgo);
         }
 
         // Properties
@@ -82,7 +93,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             get
             {
-                return Calculate().GetPointsList();
+                return GetChosenCalculationObject().GetPointsList();
             }
         }
 
@@ -90,7 +101,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             get
             {
-                return Calculate().GetPoint(0);
+                return GetChosenCalculationObject().GetPoint(0);
             }
         }
     }

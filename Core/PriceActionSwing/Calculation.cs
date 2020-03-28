@@ -14,6 +14,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         protected readonly NinjaScriptBase owner;
         protected readonly PriceActionSwingClass priceActionSwingClass;
 
+        CalculationData calculationData = new CalculationData(false);
+        CalculationStage calculationStage = CalculationStage.FirstPoint;
+
         // Initialization
 
         protected Calculation(NinjaScriptBase owner, PriceActionSwingClass priceActionSwingClass)
@@ -29,8 +32,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             SetValues();
 
-            CalculationData calculationData = new CalculationData(false);
-            CalculationStage calculationStage = CalculationStage.FirstPoint;
+            calculationData = new CalculationData(false);
 
             if (points.Count == 0)
             {
@@ -187,8 +189,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
                     break;
             }
-
-            priceActionSwingClass.OnPointCalculationUpdate(points.Count, GetPoint(1), GetPoint(0));
         }
 
         private void DefaultAddUpdatePointsManagement(CalculationData calculationData)
@@ -258,9 +258,27 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             points[points.Count - 1] = temp;
         }
 
+        // Properties
+
+        public CalculationData CalcData
+        {
+            get
+            {
+                return calculationData;
+            }
+        }
+
+        public CalculationStage CalcStage
+        {
+            get
+            {
+                return calculationStage;
+            }
+        }
+
         // Miscellaneous
 
-        protected struct CalculationData
+        public struct CalculationData
         {
             public bool isNewSwing;
             public double price;
@@ -298,7 +316,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             }
         }
 
-        private enum CalculationStage
+        public enum CalculationStage
         {
             FirstPoint,
             EachBarSwingPoint,
