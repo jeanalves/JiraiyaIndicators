@@ -14,8 +14,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         protected readonly NinjaScriptBase owner;
         protected readonly PriceActionSwingClass priceActionSwingClass;
 
-        CalculationData calculationData = new CalculationData(false);
-        CalculationStage calculationStage = CalculationStage.FirstPoint;
+        private CalculationData calculationData = new CalculationData(false);
+        private CalculationStage calculationStage = CalculationStage.FirstPoint;
 
         // Initialization
 
@@ -45,13 +45,13 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             }
             else if (owner.State == State.Realtime)
             {
-                calculationData = CalculateEachTickSwing();
+                calculationData = CalculateEachTickSwingPoint();
                 calculationStage = CalculationStage.EachTickSwingPoint;
             }
 
             if (calculationData.isNewSwing)
             {
-                AddUpdatePoints(calculationData, calculationStage);
+                AddOrUpdatePointsIfNewSwing(calculationData, calculationStage);
             }
         }
 
@@ -133,7 +133,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         protected abstract CalculationData CalculateEachBarSwingPoint();
 
-        protected virtual CalculationData CalculateEachTickSwing()
+        protected virtual CalculationData CalculateEachTickSwingPoint()
         {
             //logPrinter.Print(owner, "virtual Calculation.CalculateEachTickSwing()");
 
@@ -156,7 +156,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             }
         }
 
-        private void AddUpdatePoints(CalculationData calculationData, CalculationStage calculationStage)
+        private void AddOrUpdatePointsIfNewSwing(CalculationData calculationData, CalculationStage calculationStage)
         {
             switch (calculationStage)
             {

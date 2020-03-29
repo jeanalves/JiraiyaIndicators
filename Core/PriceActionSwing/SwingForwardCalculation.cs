@@ -13,7 +13,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             return DefaultLogicCalculation();
         }
 
-        protected override CalculationData CalculateEachTickSwing()
+        protected override CalculationData CalculateEachTickSwingPoint()
         {
             //logPrinter.Print(owner, "SwingForwardCalculation.CalculateEachTickSwing()");
 

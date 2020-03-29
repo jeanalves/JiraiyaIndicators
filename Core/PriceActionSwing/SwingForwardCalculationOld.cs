@@ -114,10 +114,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             return new CalculationData(false);
         }
 
-        protected override CalculationData CalculateEachTickSwing()
+        protected override CalculationData CalculateEachTickSwingPoint()
         {
             //logPrinter.Print(owner, "SwingForwardCalculationOld.CalculateEachTickSwing()");
-            return base.CalculateEachTickSwing();
+            return base.CalculateEachTickSwingPoint();
         }
     }
 }
