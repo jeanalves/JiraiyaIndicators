@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-04-02T18:58:57.592Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" etag="nyBRZw9ID5xdIlu6aLUi" version="12.9.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-04-16T18:05:58.881Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36" etag="Avg6Cl1kxGX5trX4BOyR" version="12.9.13" type="github" pages="2">
   <diagram id="Fy2HfYQQaQ6EMwLZordq" name="Page-1">
-    <mxGraphModel dx="1822" dy="1162" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1654" pageHeight="1169" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1631" dy="1100" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1654" pageHeight="1169" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -345,7 +345,7 @@
         <mxCell id="fPNTmjn9pd60Ij1Y-FJk-12" value="+CalculationData(isNewSwing : bool)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="fPNTmjn9pd60Ij1Y-FJk-4" vertex="1">
           <mxGeometry y="196" width="260" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="0r7TK91oGUDoyeQTB4Md-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.763;entryY=1.022;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="O_61zwk5EEJ6vkBen8N2-17" target="7CBWycC-ObVPVQWf6ARU-29">
+        <mxCell id="0r7TK91oGUDoyeQTB4Md-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.763;entryY=1.022;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" parent="1" source="O_61zwk5EEJ6vkBen8N2-17" target="7CBWycC-ObVPVQWf6ARU-29" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1251" y="434" />
@@ -353,7 +353,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="0r7TK91oGUDoyeQTB4Md-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;endArrow=none;endFill=0;entryX=-0.006;entryY=0.061;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="O_61zwk5EEJ6vkBen8N2-17" target="O_61zwk5EEJ6vkBen8N2-21">
+        <mxCell id="0r7TK91oGUDoyeQTB4Md-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;endArrow=none;endFill=0;entryX=-0.006;entryY=0.061;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="O_61zwk5EEJ6vkBen8N2-17" target="O_61zwk5EEJ6vkBen8N2-21" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1326" y="447" />
@@ -444,6 +444,29 @@
         </mxCell>
         <mxCell id="O_61zwk5EEJ6vkBen8N2-16" value="- UpdateLow()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="O_61zwk5EEJ6vkBen8N2-2" vertex="1">
           <mxGeometry y="324" width="410.5" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="bjD549p1PCLBpHkMkns_" name="Page-2">
+    <mxGraphModel dx="862" dy="490" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="ifSUxkFmeYUrtrqtUim3-0" />
+        <mxCell id="ifSUxkFmeYUrtrqtUim3-1" parent="ifSUxkFmeYUrtrqtUim3-0" />
+        <mxCell id="ifSUxkFmeYUrtrqtUim3-7" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="ifSUxkFmeYUrtrqtUim3-1">
+          <mxGeometry x="286" y="184" width="360" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="ifSUxkFmeYUrtrqtUim3-3" value="Calculate Pivots" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="ifSUxkFmeYUrtrqtUim3-1">
+          <mxGeometry x="370" y="219" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ifSUxkFmeYUrtrqtUim3-4" value="Show Pivots" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="ifSUxkFmeYUrtrqtUim3-1">
+          <mxGeometry x="471" y="329" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ifSUxkFmeYUrtrqtUim3-5" value="Swing result" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="ifSUxkFmeYUrtrqtUim3-1">
+          <mxGeometry x="370" y="422" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ifSUxkFmeYUrtrqtUim3-6" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;" vertex="1" parent="ifSUxkFmeYUrtrqtUim3-1">
+          <mxGeometry x="228" y="318" width="30" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
