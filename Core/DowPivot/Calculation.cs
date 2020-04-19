@@ -27,7 +27,15 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Protected (methods)
 
-        
+        protected virtual CalculationData CalculateEachBarMatrixPoints()
+        {
+            return new CalculationData(false);
+        }
+
+        protected virtual CalculationData CalculateEachTickMatrixPoint()
+        {
+            return new CalculationData(false);
+        }
 
         // Miscellaneous
         
