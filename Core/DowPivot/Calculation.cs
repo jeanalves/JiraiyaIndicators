@@ -25,11 +25,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         }
 
+        // Protected (methods)
+
+        
+
         // Miscellaneous
         
         private enum CalculationStage
         {
-            FirstPoint,
             EachBarSwingPoint,
             EachTickSwingPoint
         }
