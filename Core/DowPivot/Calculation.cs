@@ -41,6 +41,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         
         private enum CalculationStage
         {
+            FirstPoint,
             EachBarSwingPoint,
             EachTickSwingPoint
         }
