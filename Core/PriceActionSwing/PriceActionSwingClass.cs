@@ -47,6 +47,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         public Point GetPoint(int pointsAgo)
         {
+            GetChosenCalculationObject().Calculate();
             return GetChosenCalculationObject().GetPoint(pointsAgo);
         }
 
@@ -93,16 +94,20 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             get
             {
+                GetChosenCalculationObject().Calculate();
                 return GetChosenCalculationObject().GetPointsList();
             }
+            private set { }
         }
 
         public Point GetLastPoint
         {
             get
             {
+                GetChosenCalculationObject().Calculate();
                 return GetChosenCalculationObject().GetPoint(0);
             }
+            private set { }
         }
     }
 }
