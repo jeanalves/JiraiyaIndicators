@@ -3,47 +3,61 @@ using System.Collections.Generic;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 {
-    public class Calculation
+    public abstract class Calculation
     {
         // Fields
 
-        protected List<Pivot> pivotList = new List<Pivot>();
-
         protected readonly NinjaScriptBase owner;
-        protected readonly LogPrinter logPrinter;
+
+        protected List<MatrixPoints> matrixPoints = new List<MatrixPoints>();
+        protected CalculationData currentCalculationData = new CalculationData(false);
 
         // Initialization
 
-        protected Calculation(NinjaScriptBase owner, LogPrinter logPrinter)
+        protected Calculation(NinjaScriptBase owner)
         {
             this.owner = owner;
-            this.logPrinter = logPrinter;
         }
 
         public void Calculate()
         {
+            currentCalculationData = OnNewUpdateEvent();
 
+            if(currentCalculationData.isNewMatrixPoints)
+            {
+                AddOrUpdateIfNewMatrixPoints();
+            }
         }
 
         // Protected (methods)
 
-        protected virtual CalculationData CalculateEachBarMatrixPoints()
-        {
-            return new CalculationData(false);
-        }
+        protected abstract CalculationData OnNewUpdateEvent();
 
-        protected virtual CalculationData CalculateEachTickMatrixPoint()
+        // Private (methods)
+
+        private void AddOrUpdateIfNewMatrixPoints()
         {
-            return new CalculationData(false);
+
         }
 
         // Miscellaneous
-        
-        private enum CalculationStage
+
+        public struct CalculationData
         {
-            FirstPoint,
-            EachBarSwingPoint,
-            EachTickSwingPoint
+            public bool isNewMatrixPoints;
+            public MatrixPoints currentMatrixPoint;
+
+            public CalculationData(bool isNewMatrixPoints)
+            {
+                this.isNewMatrixPoints = isNewMatrixPoints;
+                this.currentMatrixPoint = null;
+            }
+
+            public CalculationData(bool isNewMatrixPoints, MatrixPoints currentMatrixPoint)
+            {
+                this.isNewMatrixPoints = isNewMatrixPoints;
+                this.currentMatrixPoint = currentMatrixPoint;
+            }
         }
     }
 }
