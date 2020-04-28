@@ -15,10 +15,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
 
         public void AddPoint(Point point)
         {
-            PointList.Add(point);
+            pointsList.Add(point);
         }
 
-        public List<Point> PointList
+        public List<Point> PointsList
         {
             get
             {

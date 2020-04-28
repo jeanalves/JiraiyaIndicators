@@ -1,3 +1,4 @@
+using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
 using NinjaTrader.NinjaScript;
 using System.Collections.Generic;
 
@@ -9,7 +10,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         protected readonly NinjaScriptBase owner;
 
-        protected List<MatrixPoints> matrixPoints = new List<MatrixPoints>();
+        protected List<MatrixPoints> matrixPointsList = new List<MatrixPoints>();
         protected CalculationData currentCalculationData = new CalculationData(false);
 
         // Initialization
@@ -19,9 +20,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             this.owner = owner;
         }
 
-        public void Calculate()
+        public void Calculate(PriceActionSwingClass priceActionSwingClass)
         {
-            currentCalculationData = OnNewUpdateEvent();
+            currentCalculationData = OnNewUpdateEvent(priceActionSwingClass);
 
             if(currentCalculationData.isNewMatrixPoints)
             {
@@ -31,7 +32,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Protected (methods)
 
-        protected abstract CalculationData OnNewUpdateEvent();
+        protected abstract CalculationData OnNewUpdateEvent(PriceActionSwingClass priceActionSwingClass);
 
         // Private (methods)
 
