@@ -26,7 +26,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
             if(currentCalculationData.isNewMatrixPoints)
             {
-                AddOrUpdateIfNewMatrixPoints();
+                AddOrUpdateIfNewMatrixPoints(currentCalculationData);
             }
         }
 
@@ -36,9 +36,18 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Private (methods)
 
-        private void AddOrUpdateIfNewMatrixPoints()
+        private void AddOrUpdateIfNewMatrixPoints(CalculationData calculationData)
         {
+            // Add long pivot
+            if (calculationData.currentMatrixPoint.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
+            {
 
+            }
+            // Add short pivot
+            else if (calculationData.currentMatrixPoint.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
+            {
+
+            }
         }
 
         // Miscellaneous
