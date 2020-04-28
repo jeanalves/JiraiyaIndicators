@@ -31,7 +31,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			}
             else if(State == State.DataLoaded)
             {
-                dowPivot = new DowPivotClass(this, true);
+                dowPivot = new DowPivotClass(this);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
                 LogPrinter.ResetOuputTabs();
