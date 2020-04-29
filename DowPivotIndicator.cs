@@ -34,7 +34,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 dowPivot = new DowPivotClass(this);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
-                LogPrinter.ResetOuputTabs();
+                // LogPrinter.ResetOuputTabs();
             }
 		}
 
