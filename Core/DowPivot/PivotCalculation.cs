@@ -24,13 +24,13 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
             if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
             {
-                isNewMatrixPoints = matrixPoints.PointsList[3].Price > matrixPoints.PointsList[1].Price &&
-                                    matrixPoints.PointsList[2].Price > matrixPoints.PointsList[0].Price;
+                isNewMatrixPoints = matrixPoints.PointsList[3].Price < matrixPoints.PointsList[1].Price &&
+                                    matrixPoints.PointsList[2].Price < matrixPoints.PointsList[0].Price;
             }
             else if(matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
             {
-                isNewMatrixPoints = matrixPoints.PointsList[3].Price < matrixPoints.PointsList[1].Price &&
-                                    matrixPoints.PointsList[2].Price < matrixPoints.PointsList[0].Price;
+                isNewMatrixPoints = matrixPoints.PointsList[3].Price > matrixPoints.PointsList[1].Price &&
+                                    matrixPoints.PointsList[2].Price > matrixPoints.PointsList[0].Price;
             }
 
             return isNewMatrixPoints == true ? new CalculationData(true, matrixPoints) : new CalculationData(false);
