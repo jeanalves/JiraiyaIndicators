@@ -9,6 +9,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         private readonly NinjaScriptBase owner;
         private readonly PriceActionSwingClass priceActionSwingClass;
+        private readonly PivotCalculation pivotCalculation;
 
         // Initialization
 
@@ -17,6 +18,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             this.owner = owner;
 
             priceActionSwingClass = new PriceActionSwingClass(owner, CalculationTypeList.SwingForward, 2, true, true);
+            pivotCalculation = new PivotCalculation(owner);
 
             /*
             if (!ShowLog)
@@ -30,7 +32,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         public void Calculate()
         {
-            var unused = priceActionSwingClass.GetPoint(5);
+            priceActionSwingClass.Calculate();
+            pivotCalculation.Calculate(priceActionSwingClass);
         }
     }
 }
