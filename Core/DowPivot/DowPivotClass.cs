@@ -17,7 +17,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         {
             this.owner = owner;
 
-            priceActionSwingClass = new PriceActionSwingClass(owner, CalculationTypeList.SwingForward, 2, true, true);
+            priceActionSwingClass = new PriceActionSwingClass(owner, CalculationTypeList.SwingForward, 5, true, true);
             pivotCalculation = new PivotCalculation(owner);
 
             /*
@@ -34,6 +34,29 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         {
             priceActionSwingClass.Calculate();
             pivotCalculation.Calculate(priceActionSwingClass);
+
+            if(pivotCalculation.CalcData.isNewMatrixPoints)
+            {
+                OnCalculationUpdate(pivotCalculation);
+            }
+        }
+
+        // Private (methods)
+
+        private void OnCalculationUpdate(Calculation chosenCalculationObject)
+        {
+            switch(chosenCalculationObject.CalcData.currentMatrixPoints.trendSideSignal)
+            {
+                case MatrixPoints.WhichTrendSideSignal.Bullish:
+                    // Enter a long signal
+                    break;
+
+                case MatrixPoints.WhichTrendSideSignal.Bearish:
+                    // Enter a short signal
+                    break;
+            }
+
+            Drawing.DrawPivot(owner, chosenCalculationObject.GetMatrixPoints(0));
         }
     }
 }
