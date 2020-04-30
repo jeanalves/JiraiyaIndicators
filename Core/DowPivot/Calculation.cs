@@ -30,6 +30,13 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             }
         }
 
+        // Public (methods)
+
+        public MatrixPoints GetMatrixPoints(int matrixPointsAgo)
+        {
+            return matrixPointsList.Count < matrixPointsAgo + 1 ? null : matrixPointsList[(matrixPointsList.Count - 1) - matrixPointsAgo];
+        }
+
         // Protected (methods)
 
         protected abstract CalculationData OnNewUpdateEvent(PriceActionSwingClass priceActionSwingClass);
@@ -38,15 +45,32 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         private void AddOrUpdateIfNewMatrixPoints(CalculationData calculationData)
         {
-            // Add long pivot
-            if (calculationData.currentMatrixPoint.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
+            // Add long pivot if the first point was an low
+            if (calculationData.currentMatrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
             {
-
+                matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList, MatrixPoints.WhichTrendSideSignal.Bullish));
             }
-            // Add short pivot
-            else if (calculationData.currentMatrixPoint.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
+            // Add short pivot if the first point was an high
+            else if (calculationData.currentMatrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
             {
+                matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList, MatrixPoints.WhichTrendSideSignal.Bearish));
+            }
+            // Update long pivot
+            if (calculationData.currentMatrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low &&
+                calculationData.currentMatrixPoints.PointsList[0].Price > matrixPointsList[matrixPointsList.Count -1].PointsList[0].Price)
+            {
+                //matrixPointsList[matrixPointsList.Count - 1] = calculationData.currentMatrixPoint;
+            }
 
+        }
+
+        // Properties
+
+        public CalculationData CalcData
+        {
+            get
+            {
+                return currentCalculationData;
             }
         }
 
@@ -55,18 +79,18 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         public struct CalculationData
         {
             public bool isNewMatrixPoints;
-            public MatrixPoints currentMatrixPoint;
+            public MatrixPoints currentMatrixPoints;
 
             public CalculationData(bool isNewMatrixPoints)
             {
                 this.isNewMatrixPoints = isNewMatrixPoints;
-                this.currentMatrixPoint = null;
+                this.currentMatrixPoints = null;
             }
 
             public CalculationData(bool isNewMatrixPoints, MatrixPoints currentMatrixPoint)
             {
                 this.isNewMatrixPoints = isNewMatrixPoints;
-                this.currentMatrixPoint = currentMatrixPoint;
+                this.currentMatrixPoints = currentMatrixPoint;
             }
         }
     }
