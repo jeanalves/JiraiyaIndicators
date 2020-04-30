@@ -10,14 +10,17 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         private readonly NinjaScriptBase owner;
         private readonly PriceActionSwingClass priceActionSwingClass;
         private readonly PivotCalculation pivotCalculation;
+        private readonly TrendCalculation trendCalculation;
 
         // Initialization
 
-        public DowPivotClass(NinjaScriptBase owner)
+        public DowPivotClass(NinjaScriptBase owner, CalculationTypeListDowPivot calculationTypeList)
         {
             this.owner = owner;
+            CalculationType = calculationTypeList;
 
             priceActionSwingClass = new PriceActionSwingClass(owner, CalculationTypeList.SwingForward, 5, true, true);
+            trendCalculation = new TrendCalculation(owner);
             pivotCalculation = new PivotCalculation(owner);
 
             /*
@@ -33,11 +36,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         public void Calculate()
         {
             priceActionSwingClass.Calculate();
-            pivotCalculation.Calculate(priceActionSwingClass);
+            GetChosenCalculationObject().Calculate(priceActionSwingClass);
 
-            if(pivotCalculation.CalcData.isNewMatrixPoints)
+
+            if (GetChosenCalculationObject().CalcData.isNewMatrixPoints)
             {
-                OnCalculationUpdate(pivotCalculation);
+                OnCalculationUpdate(GetChosenCalculationObject());
             }
         }
 
@@ -45,6 +49,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         private void OnCalculationUpdate(Calculation chosenCalculationObject)
         {
+            // Code used for Pivots signals and Trend Signals
             switch(chosenCalculationObject.CalcData.currentMatrixPoints.trendSideSignal)
             {
                 case MatrixPoints.WhichTrendSideSignal.Bullish:
@@ -58,5 +63,28 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
             Drawing.DrawPivot(owner, chosenCalculationObject.GetMatrixPoints(0));
         }
+
+        private Calculation GetChosenCalculationObject()
+        {
+            switch(CalculationType)
+            {
+                case CalculationTypeListDowPivot.Trend:
+                    return trendCalculation;
+                case CalculationTypeListDowPivot.Pivot:
+                    return pivotCalculation;
+            }
+
+            return null;
+        }
+
+        // Properties
+
+        public CalculationTypeListDowPivot CalculationType { get; private set; }
     }
+}
+
+public enum CalculationTypeListDowPivot
+{
+    Trend,
+    Pivot
 }
