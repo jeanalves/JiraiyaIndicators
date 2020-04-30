@@ -39,7 +39,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             // Every time a new point event happens, it will be drawn in this 3 lines code
             if (GetChosenCalculationObject().CalcData.isNewSwing)
             {
-                OnPointCalculationUpdate();
+                OnPointCalculationUpdate(GetChosenCalculationObject());
             }
         }
 
@@ -53,16 +53,16 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         // Private (methods)
 
-        private void OnPointCalculationUpdate()
+        private void OnPointCalculationUpdate(Calculation ChosenCalculationObject)
         {
-            SwingDrawing.DrawPoint(owner, GetChosenCalculationObject().GetPoint(0));
+            SwingDrawing.DrawPoint(owner, ChosenCalculationObject.GetPoint(0));
 
             // Test if there is more than two points to be able in draw a line
-            if (GetChosenCalculationObject().GetPointsList().Count > 1)
+            if (ChosenCalculationObject.GetPointsList().Count > 1)
             {
                 SwingDrawing.DrawZigZag(owner,
-                                        GetChosenCalculationObject().GetPoint(1),
-                                        GetChosenCalculationObject().GetPoint(0));
+                                        ChosenCalculationObject.GetPoint(1),
+                                        ChosenCalculationObject.GetPoint(0));
             }
         }
 
