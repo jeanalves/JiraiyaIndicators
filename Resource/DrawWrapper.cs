@@ -36,10 +36,24 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
                                              int barIndex0,
                                              double price0)
         {
-            Draw.Line(owner, "Line " + pointIndex, false,
+            Draw.Line(owner, "Line type 1" + pointIndex, false,
                 ConvertBarIndexToBarsAgo(owner, barIndex1), price1,
                 ConvertBarIndexToBarsAgo(owner, barIndex0), price0,
                 Brushes.White, Gui.DashStyleHelper.Solid, 3);
+        }
+
+        public static void DrawLine(NinjaScriptBase owner,
+                                             int pointIndex,
+                                             int barIndex1,
+                                             double price1,
+                                             int barIndex0,
+                                             double price0,
+                                             Brush color)
+        {
+            Draw.Line(owner, "Line type 2" + pointIndex, false,
+                ConvertBarIndexToBarsAgo(owner, barIndex1), price1,
+                ConvertBarIndexToBarsAgo(owner, barIndex0), price0,
+                color, Gui.DashStyleHelper.Solid, 3);
         }
 
         private static int ConvertBarIndexToBarsAgo(NinjaScriptBase owner, int barIndex)
