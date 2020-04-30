@@ -5,12 +5,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
     public class MatrixPoints
     {
         private readonly List<Point> pointsList = new List<Point>();
+        public WhichTrendSideSignal trendSideSignal;
 
         public MatrixPoints() { }
 
-        public MatrixPoints(List<Point> pointsList)
+        public MatrixPoints(List<Point> pointsList, WhichTrendSideSignal trendSideSignal)
         {
             this.pointsList = pointsList;
+            this.trendSideSignal = trendSideSignal;
         }
 
         public void AddPoint(Point point)
@@ -24,6 +26,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             {
                 return pointsList;
             }
+        }
+
+        public enum WhichTrendSideSignal
+        {
+            Bullish,
+            Bearish,
+            Both,
+            None
         }
     }
 }
