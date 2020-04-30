@@ -45,16 +45,23 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         private void AddOrUpdateIfNewMatrixPoints(CalculationData calculationData)
         {
-            // Add long pivot if the first point was an low
-            if (calculationData.currentMatrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
+            switch(calculationData.currentMatrixPoints.trendSideSignal)
             {
-                matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList, MatrixPoints.WhichTrendSideSignal.Bullish));
+                // Add long pattern if the first point was an low
+                case MatrixPoints.WhichTrendSideSignal.Bullish:
+                    matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList,
+                                                          MatrixPoints.WhichTrendSideSignal.Bullish,
+                                                          calculationData.currentMatrixPoints.graphicPatternType));
+                    break;
+
+                // Add short pattern if the first point was an high
+                case MatrixPoints.WhichTrendSideSignal.Bearish:
+                    matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList,
+                                                          MatrixPoints.WhichTrendSideSignal.Bearish,
+                                                          calculationData.currentMatrixPoints.graphicPatternType));
+                    break;
             }
-            // Add short pivot if the first point was an high
-            else if (calculationData.currentMatrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
-            {
-                matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList, MatrixPoints.WhichTrendSideSignal.Bearish));
-            }
+
             // Update long pivot
             if (calculationData.currentMatrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low &&
                 calculationData.currentMatrixPoints.PointsList[0].Price > matrixPointsList[matrixPointsList.Count -1].PointsList[0].Price)

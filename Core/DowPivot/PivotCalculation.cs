@@ -33,6 +33,21 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                                     matrixPoints.PointsList[2].Price > matrixPoints.PointsList[0].Price;
             }
 
+            if (isNewMatrixPoints)
+            {
+                if (isNewMatrixPoints)
+                {
+                    if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
+                    {
+                        matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bullish;
+                    }
+                    else if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
+                    {
+                        matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bearish;
+                    }
+                }
+            }
+
             return isNewMatrixPoints == true ? new CalculationData(true, matrixPoints) : new CalculationData(false);
         }
     }

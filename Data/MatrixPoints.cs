@@ -6,13 +6,15 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
     {
         private readonly List<Point> pointsList = new List<Point>();
         public WhichTrendSideSignal trendSideSignal;
+        public GraphicPatternType graphicPatternType;
 
         public MatrixPoints() { }
 
-        public MatrixPoints(List<Point> pointsList, WhichTrendSideSignal trendSideSignal)
+        public MatrixPoints(List<Point> pointsList, WhichTrendSideSignal trendSideSignal, GraphicPatternType graphicPatternType)
         {
             this.pointsList = pointsList;
             this.trendSideSignal = trendSideSignal;
+            this.graphicPatternType = graphicPatternType;
         }
 
         public void AddPoint(Point point)
@@ -34,6 +36,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             Bearish,
             Both,
             None
+        }
+
+        public enum GraphicPatternType
+        {
+            Trend,
+            Pivot
         }
     }
 }

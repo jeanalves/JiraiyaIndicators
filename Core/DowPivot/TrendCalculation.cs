@@ -10,6 +10,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         protected override CalculationData OnNewUpdateEvent(PriceActionSwingClass priceActionSwingClass)
         {
             MatrixPoints matrixPoints = new MatrixPoints();
+            matrixPoints.graphicPatternType = MatrixPoints.GraphicPatternType.Trend;
+
             bool isNewMatrixPoints = true;
 
             if(priceActionSwingClass.GetPoint(3) == null)
@@ -31,6 +33,18 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             {
                 isNewMatrixPoints = matrixPoints.PointsList[3].Price > matrixPoints.PointsList[1].Price &&
                                     matrixPoints.PointsList[2].Price > matrixPoints.PointsList[0].Price;
+            }
+
+            if (isNewMatrixPoints)
+            {
+                if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
+                {
+                    matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bullish;
+                }
+                else if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
+                {
+                    matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bearish;
+                }
             }
 
             return isNewMatrixPoints == true ? new CalculationData(true, matrixPoints) : new CalculationData(false);
