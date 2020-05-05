@@ -14,12 +14,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Initialization
 
-        public DowPivotClass(NinjaScriptBase owner, CalculationTypeListDowPivot calculationTypeList)
+        public DowPivotClass(NinjaScriptBase owner, CalculationTypeListDowPivot calculationTypeList, double strength)
         {
             this.owner = owner;
             CalculationType = calculationTypeList;
 
-            priceActionSwingClass = new PriceActionSwingClass(owner, CalculationTypeList.SwingForward, 5, true, true);
+            priceActionSwingClass = new PriceActionSwingClass(owner, CalculationTypeList.SwingForward, strength, true, true);
             trendCalculation = new TrendCalculation(owner);
             pivotCalculation = new PivotCalculation(owner);
 

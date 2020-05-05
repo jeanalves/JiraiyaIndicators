@@ -26,13 +26,15 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 				//Disable this property if your indicator requires custom values that cumulate with each new market data event. 
 				//See Help Guide for additional information.
 				IsSuspendedWhileInactive					= true;
+                CalculationType                             = CalculationTypeListDowPivot.Pivot;
+                Strength                                    = 2;
 			}
 			else if (State == State.Configure)
 			{
 			}
             else if(State == State.DataLoaded)
             {
-                dowPivot = new DowPivotClass(this, CalculationType);
+                dowPivot = new DowPivotClass(this, CalculationType, Strength);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
                 // LogPrinter.ResetOuputTabs();
@@ -49,6 +51,10 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         [Display(Name = "Calculation type", Order = 0, GroupName = "Parameters")]
         public CalculationTypeListDowPivot CalculationType
         { get; set; }
+
+        [NinjaScriptProperty]
+        [Display(Name = "Strengh", Order = 1, GroupName = "Parameters")]
+        public double Strength { get; set; }
         #endregion
     }
 }
@@ -60,18 +66,18 @@ namespace NinjaTrader.NinjaScript.Indicators
 	public partial class Indicator : NinjaTrader.Gui.NinjaScript.IndicatorRenderBase
 	{
 		private JiraiyaIndicators.DowPivotIndicator[] cacheDowPivotIndicator;
-		public JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(CalculationTypeListDowPivot calculationType)
+		public JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(CalculationTypeListDowPivot calculationType, double strength)
 		{
-			return DowPivotIndicator(Input, calculationType);
+			return DowPivotIndicator(Input, calculationType, strength);
 		}
 
-		public JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(ISeries<double> input, CalculationTypeListDowPivot calculationType)
+		public JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(ISeries<double> input, CalculationTypeListDowPivot calculationType, double strength)
 		{
 			if (cacheDowPivotIndicator != null)
 				for (int idx = 0; idx < cacheDowPivotIndicator.Length; idx++)
-					if (cacheDowPivotIndicator[idx] != null && cacheDowPivotIndicator[idx].CalculationType == calculationType && cacheDowPivotIndicator[idx].EqualsInput(input))
+					if (cacheDowPivotIndicator[idx] != null && cacheDowPivotIndicator[idx].CalculationType == calculationType && cacheDowPivotIndicator[idx].Strength == strength && cacheDowPivotIndicator[idx].EqualsInput(input))
 						return cacheDowPivotIndicator[idx];
-			return CacheIndicator<JiraiyaIndicators.DowPivotIndicator>(new JiraiyaIndicators.DowPivotIndicator(){ CalculationType = calculationType }, input, ref cacheDowPivotIndicator);
+			return CacheIndicator<JiraiyaIndicators.DowPivotIndicator>(new JiraiyaIndicators.DowPivotIndicator(){ CalculationType = calculationType, Strength = strength }, input, ref cacheDowPivotIndicator);
 		}
 	}
 }
@@ -80,14 +86,14 @@ namespace NinjaTrader.NinjaScript.MarketAnalyzerColumns
 {
 	public partial class MarketAnalyzerColumn : MarketAnalyzerColumnBase
 	{
-		public Indicators.JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(CalculationTypeListDowPivot calculationType)
+		public Indicators.JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(CalculationTypeListDowPivot calculationType, double strength)
 		{
-			return indicator.DowPivotIndicator(Input, calculationType);
+			return indicator.DowPivotIndicator(Input, calculationType, strength);
 		}
 
-		public Indicators.JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(ISeries<double> input , CalculationTypeListDowPivot calculationType)
+		public Indicators.JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(ISeries<double> input , CalculationTypeListDowPivot calculationType, double strength)
 		{
-			return indicator.DowPivotIndicator(input, calculationType);
+			return indicator.DowPivotIndicator(input, calculationType, strength);
 		}
 	}
 }
@@ -96,14 +102,14 @@ namespace NinjaTrader.NinjaScript.Strategies
 {
 	public partial class Strategy : NinjaTrader.Gui.NinjaScript.StrategyRenderBase
 	{
-		public Indicators.JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(CalculationTypeListDowPivot calculationType)
+		public Indicators.JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(CalculationTypeListDowPivot calculationType, double strength)
 		{
-			return indicator.DowPivotIndicator(Input, calculationType);
+			return indicator.DowPivotIndicator(Input, calculationType, strength);
 		}
 
-		public Indicators.JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(ISeries<double> input , CalculationTypeListDowPivot calculationType)
+		public Indicators.JiraiyaIndicators.DowPivotIndicator DowPivotIndicator(ISeries<double> input , CalculationTypeListDowPivot calculationType, double strength)
 		{
-			return indicator.DowPivotIndicator(input, calculationType);
+			return indicator.DowPivotIndicator(input, calculationType, strength);
 		}
 	}
 }
