@@ -5,6 +5,18 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 {
     public class PivotCalculation : Calculation
     {
+        //----Bearish----|---Bullish---
+        //----1----------|----------4--
+        //-----\---3-----|-----2---/---
+        //------\-/-\----|----/-\-/----
+        //-------2---\---|---/---3-----
+        //------------4--|--1----------
+
+        const int firstPoint = 3;
+        const int secondPoint = 2;
+        const int thirdPoint = 1;
+        const int fourthPoint = 0;
+
         public PivotCalculation(NinjaScriptBase owner) : base(owner) { }
 
         protected override CalculationData OnNewUpdateEvent(PriceActionSwingClass priceActionSwingClass)
@@ -12,40 +24,31 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             MatrixPoints matrixPoints = new MatrixPoints();
             bool isNewMatrixPoints = true;
 
-            if(priceActionSwingClass.GetPoint(3) == null)
+            if (priceActionSwingClass.GetPoint(firstPoint) == null)
             {
                 return new CalculationData(false);
             }
 
-            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(0));
-            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(1));
-            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(2));
-            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(3));
+            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(fourthPoint));
+            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(thirdPoint));
+            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(secondPoint));
+            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(firstPoint));
 
-            if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
+            // Test a long pivot
+            if (matrixPoints.PointsList[firstPoint].CurrentSideSwing == Point.SidePoint.Low)
             {
-                isNewMatrixPoints = matrixPoints.PointsList[3].Price < matrixPoints.PointsList[1].Price &&
-                                    matrixPoints.PointsList[2].Price < matrixPoints.PointsList[0].Price;
-            }
-            else if(matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
-            {
-                isNewMatrixPoints = matrixPoints.PointsList[3].Price > matrixPoints.PointsList[1].Price &&
-                                    matrixPoints.PointsList[2].Price > matrixPoints.PointsList[0].Price;
-            }
+                matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bullish;
 
-            if (isNewMatrixPoints)
+                isNewMatrixPoints = matrixPoints.PointsList[firstPoint].Price < matrixPoints.PointsList[thirdPoint].Price &&
+                                    matrixPoints.PointsList[secondPoint].Price < matrixPoints.PointsList[fourthPoint].Price;
+            }
+            // Test a short pivot
+            else if (matrixPoints.PointsList[firstPoint].CurrentSideSwing == Point.SidePoint.High)
             {
-                if (isNewMatrixPoints)
-                {
-                    if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
-                    {
-                        matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bullish;
-                    }
-                    else if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
-                    {
-                        matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bearish;
-                    }
-                }
+                matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bearish;
+
+                isNewMatrixPoints = matrixPoints.PointsList[firstPoint].Price > matrixPoints.PointsList[thirdPoint].Price &&
+                                    matrixPoints.PointsList[secondPoint].Price > matrixPoints.PointsList[fourthPoint].Price;
             }
 
             return isNewMatrixPoints == true ? new CalculationData(true, matrixPoints) : new CalculationData(false);
