@@ -19,7 +19,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         public PivotCalculation(NinjaScriptBase owner) : base(owner) { }
 
-        protected override CalculationData OnNewUpdateEvent(PriceActionSwingClass priceActionSwingClass)
+        protected override CalculationData OnCalculationRequest(PriceActionSwingClass priceActionSwingClass)
         {
             MatrixPoints matrixPoints = new MatrixPoints();
             bool isNewMatrixPoints = true;

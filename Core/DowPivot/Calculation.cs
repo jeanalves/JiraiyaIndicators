@@ -22,7 +22,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         public void Calculate(PriceActionSwingClass priceActionSwingClass)
         {
-            currentCalculationData = OnNewUpdateEvent(priceActionSwingClass);
+            currentCalculationData = OnCalculationRequest(priceActionSwingClass);
 
             if(currentCalculationData.isNewMatrixPoints)
             {
@@ -39,7 +39,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Protected (methods)
 
-        protected abstract CalculationData OnNewUpdateEvent(PriceActionSwingClass priceActionSwingClass);
+        protected abstract CalculationData OnCalculationRequest(PriceActionSwingClass priceActionSwingClass);
 
         // Private (methods)
 
