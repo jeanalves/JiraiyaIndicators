@@ -43,7 +43,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 		{
             try
             {
-                priceActionSwing.Calculate();
+                priceActionSwing.Compute();
             }
             catch (Exception e)
             {

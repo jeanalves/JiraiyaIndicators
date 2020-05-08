@@ -33,9 +33,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Public (methods)
 
-        public void Calculate()
+        public void Compute()
         {
-            priceActionSwingClass.Calculate();
+            priceActionSwingClass.Compute();
             GetChosenCalculationObject().Calculate(priceActionSwingClass);
 
 

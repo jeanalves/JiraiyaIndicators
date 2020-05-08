@@ -32,7 +32,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             }
         }
 
-        public void Calculate()
+        public void Compute()
         {
             GetChosenCalculationObject().Calculate();
 

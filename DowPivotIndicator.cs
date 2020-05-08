@@ -43,7 +43,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 
 		protected override void OnBarUpdate()
 		{
-            dowPivot.Calculate();
+            dowPivot.Compute();
 		}
 
         #region Properties
