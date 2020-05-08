@@ -39,7 +39,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             // Every time a new point event happens, it will be drawn in this 3 lines code
             if (GetChosenCalculationObject().CalcData.isNewSwing)
             {
-                OnPointCalculationUpdate(GetChosenCalculationObject());
+                OnCalculationUpdate(GetChosenCalculationObject());
             }
         }
 
@@ -53,7 +53,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         // Private (methods)
 
-        private void OnPointCalculationUpdate(Calculation ChosenCalculationObject)
+        private void OnCalculationUpdate(Calculation ChosenCalculationObject)
         {
             SwingDrawing.DrawPoint(owner, ChosenCalculationObject.GetPoint(0));
 
