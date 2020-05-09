@@ -10,7 +10,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             {
                 case MatrixPoints.WhichTrendSideSignal.Bullish:
                     DrawWrapper.DrawLine(owner,
-                                         matrixPoints.PointsList[3].PointIndex,
+                                         matrixPoints.PointsList[3].Index,
                                          matrixPoints.PointsList[3].BarIndex,
                                          matrixPoints.PointsList[3].Price,
                                          matrixPoints.PointsList[2].BarIndex,
@@ -18,7 +18,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                                          System.Windows.Media.Brushes.Green);
 
                     DrawWrapper.DrawLine(owner,
-                                         matrixPoints.PointsList[2].PointIndex,
+                                         matrixPoints.PointsList[2].Index,
                                          matrixPoints.PointsList[2].BarIndex,
                                          matrixPoints.PointsList[2].Price,
                                          matrixPoints.PointsList[1].BarIndex,
@@ -26,7 +26,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                                          System.Windows.Media.Brushes.Green);
 
                     DrawWrapper.DrawLine(owner,
-                                         matrixPoints.PointsList[1].PointIndex,
+                                         matrixPoints.PointsList[1].Index,
                                          matrixPoints.PointsList[1].BarIndex,
                                          matrixPoints.PointsList[1].Price,
                                          matrixPoints.PointsList[0].BarIndex,
@@ -36,7 +36,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
                 case MatrixPoints.WhichTrendSideSignal.Bearish:
                     DrawWrapper.DrawLine(owner,
-                                         matrixPoints.PointsList[3].PointIndex,
+                                         matrixPoints.PointsList[3].Index,
                                          matrixPoints.PointsList[3].BarIndex,
                                          matrixPoints.PointsList[3].Price,
                                          matrixPoints.PointsList[2].BarIndex,
@@ -44,7 +44,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                                          System.Windows.Media.Brushes.Red);
 
                     DrawWrapper.DrawLine(owner,
-                                         matrixPoints.PointsList[2].PointIndex,
+                                         matrixPoints.PointsList[2].Index,
                                          matrixPoints.PointsList[2].BarIndex,
                                          matrixPoints.PointsList[2].Price,
                                          matrixPoints.PointsList[1].BarIndex,
@@ -52,7 +52,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                                          System.Windows.Media.Brushes.Red);
 
                     DrawWrapper.DrawLine(owner,
-                                         matrixPoints.PointsList[1].PointIndex,
+                                         matrixPoints.PointsList[1].Index,
                                          matrixPoints.PointsList[1].BarIndex,
                                          matrixPoints.PointsList[1].Price,
                                          matrixPoints.PointsList[0].BarIndex,

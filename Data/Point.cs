@@ -2,16 +2,16 @@
 {
     public class Point
     {
+        public int Index { get; private set; }
         public double Price { get; set; }
         public int BarIndex { get; set; }
-        public int PointIndex { get; private set; }
         public SidePoint CurrentSideSwing { get; private set; }
 
-        public Point(double price, int barIndex, int pointIndex, SidePoint currentSideSwing)
+        public Point(int index, double price, int barIndex, SidePoint currentSideSwing)
         {
+            Index = index;
             Price = price;
             BarIndex = barIndex;
-            PointIndex = pointIndex;
             CurrentSideSwing = currentSideSwing;
         }
 
