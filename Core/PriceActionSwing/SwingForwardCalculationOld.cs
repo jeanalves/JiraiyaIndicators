@@ -6,9 +6,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
     {
         public SwingForwardCalculationOld(NinjaScriptBase owner, PriceActionSwingClass priceActionSwingClass) : base(owner, priceActionSwingClass) { }
 
-        protected override CalculationData CalculateFirstSwingPoint()
+        protected override CalculationData OnCalculationOfFirstSwingPointRequest()
         {
-            //logPrinter.Print(owner, "SwingForwardCalculationOld.CalculateFirstSwingPoint()");
+            //logPrinter.Print(owner, "SwingForwardCalculationOld.OnCalculationOfFirstSwingPointRequest()");
 
             double highCandidateValue = highs.GetValueAt(0);
             double lowCandidateValue = lows.GetValueAt(0);
@@ -78,9 +78,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             return new CalculationData(false);
         }
 
-        protected override CalculationData CalculateEachBarSwingPoint()
+        protected override CalculationData OnCalculationOfEachBarSwingPointRequest()
         {
-            //logPrinter.Print(owner, "SwingForwardCalculationOld.CalculateEachBarSwingPoint()");
+            //logPrinter.Print(owner, "SwingForwardCalculationOld.OnCalculationOfEachBarSwingPointRequest()");
 
             bool isRising= true;
             bool isFalling = true;
@@ -114,10 +114,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             return new CalculationData(false);
         }
 
-        protected override CalculationData CalculateEachTickSwingPoint()
+        protected override CalculationData OnCalculationOFEachTickSwingPointRequest()
         {
             //logPrinter.Print(owner, "SwingForwardCalculationOld.CalculateEachTickSwing()");
-            return base.CalculateEachTickSwingPoint();
+            return base.OnCalculationOFEachTickSwingPointRequest();
         }
     }
 }

@@ -36,16 +36,16 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             if (points.Count == 0)
             {
-                calculationData = CalculateFirstSwingPoint();
+                calculationData = OnCalculationOfFirstSwingPointRequest();
             }
             else if (owner.State == State.Historical)
             {
-                calculationData = CalculateEachBarSwingPoint();
+                calculationData = OnCalculationOfEachBarSwingPointRequest();
                 calculationStage = CalculationStage.EachBarSwingPoint;
             }
             else if (owner.State == State.Realtime)
             {
-                calculationData = CalculateEachTickSwingPoint();
+                calculationData = OnCalculationOFEachTickSwingPointRequest();
                 calculationStage = CalculationStage.EachTickSwingPoint;
             }
 
@@ -105,9 +105,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         // Protected (methods)
 
-        protected virtual CalculationData CalculateFirstSwingPoint()
+        protected virtual CalculationData OnCalculationOfFirstSwingPointRequest()
         {
-            //logPrinter.Print(owner, "Virtual Calculation.CalculateFirstSwingPoint()");
+            //logPrinter.Print(owner, "Virtual Calculation.OnCalculationOfFirstSwingPointRequest()");
 
             Point.SidePoint sideSwing = owner.Close.GetValueAt(0) > owner.Open.GetValueAt(0) ?
                 Point.SidePoint.Low : Point.SidePoint.High;
@@ -131,9 +131,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             return new CalculationData(false);
         }
 
-        protected abstract CalculationData CalculateEachBarSwingPoint();
+        protected abstract CalculationData OnCalculationOfEachBarSwingPointRequest();
 
-        protected virtual CalculationData CalculateEachTickSwingPoint()
+        protected virtual CalculationData OnCalculationOFEachTickSwingPointRequest()
         {
             //logPrinter.Print(owner, "virtual Calculation.CalculateEachTickSwing()");
 

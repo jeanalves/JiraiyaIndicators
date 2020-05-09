@@ -6,9 +6,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
     {
         public TickCalculation(NinjaScriptBase owner, PriceActionSwingClass priceActionSwingClass) : base(owner, priceActionSwingClass) { }
 
-        protected override CalculationData CalculateEachBarSwingPoint()
+        protected override CalculationData OnCalculationOfEachBarSwingPointRequest()
         {
-            //logPrinter.Print(owner, "TickCalculation.CalculateEachBarSwingPoint()");
+            //logPrinter.Print(owner, "TickCalculation.OnCalculationOfEachBarSwingPointRequest()");
 
             bool isRising = highs[0] > highs[1];
             bool isFalling = lows[0] < lows[1];
