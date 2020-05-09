@@ -3,7 +3,7 @@ using NinjaTrader.NinjaScript;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 {
-    public class DowPivotClass
+    public class DowTheoryClass
     {
         // Fields
 
@@ -14,7 +14,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Initialization
 
-        public DowPivotClass(NinjaScriptBase owner, CalculationTypeListDowPivot calculationTypeList, double strength)
+        public DowTheoryClass(NinjaScriptBase owner, CalculationTypeListDowTheory calculationTypeList, double strength)
         {
             this.owner = owner;
             CalculationType = calculationTypeList;
@@ -68,9 +68,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         {
             switch(CalculationType)
             {
-                case CalculationTypeListDowPivot.Trend:
+                case CalculationTypeListDowTheory.Trend:
                     return trendCalculation;
-                case CalculationTypeListDowPivot.Pivot:
+                case CalculationTypeListDowTheory.Pivot:
                     return pivotCalculation;
             }
 
@@ -79,11 +79,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Properties
 
-        public CalculationTypeListDowPivot CalculationType { get; private set; }
+        public CalculationTypeListDowTheory CalculationType { get; private set; }
     }
 }
 
-public enum CalculationTypeListDowPivot
+public enum CalculationTypeListDowTheory
 {
     Trend,
     Pivot
