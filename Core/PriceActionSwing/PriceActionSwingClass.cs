@@ -55,12 +55,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void OnCalculationUpdate(Calculation ChosenCalculationObject)
         {
-            SwingDrawing.DrawPoint(owner, ChosenCalculationObject.GetPoint(0));
+            Drawing.DrawPoint(owner, ChosenCalculationObject.GetPoint(0));
 
             // Test if there is more than two points to be able in draw a line
             if (ChosenCalculationObject.GetPointsList().Count > 1)
             {
-                SwingDrawing.DrawZigZag(owner,
+                Drawing.DrawZigZag(owner,
                                         ChosenCalculationObject.GetPoint(1),
                                         ChosenCalculationObject.GetPoint(0));
             }

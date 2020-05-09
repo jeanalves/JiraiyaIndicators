@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
-    public static class SwingDrawing
+    public static class Drawing
     {
         public static void DrawPoint(NinjaScriptBase owner, Point point)
         {
