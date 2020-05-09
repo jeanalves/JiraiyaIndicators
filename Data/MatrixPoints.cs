@@ -10,7 +10,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
         public WhichGraphicPatternType graphicPatternType;
 
         // Initialization
-        public MatrixPoints() { }
+
+        public MatrixPoints(WhichGraphicPatternType graphicPatternType)
+        {
+            this.graphicPatternType = graphicPatternType;
+        }
 
         public MatrixPoints(List<Point> pointsList, int index, WhichTrendSideSignal trendSideSignal, WhichGraphicPatternType graphicPatternType)
         {

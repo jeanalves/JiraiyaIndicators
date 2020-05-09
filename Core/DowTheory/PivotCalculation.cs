@@ -21,7 +21,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         protected override CalculationData OnCalculationRequest(PriceActionSwingClass priceActionSwingClass)
         {
-            MatrixPoints matrixPoints = new MatrixPoints();
+            MatrixPoints matrixPoints = new MatrixPoints(MatrixPoints.WhichGraphicPatternType.Pivot);
+
             bool isNewMatrixPoints = true;
 
             if (priceActionSwingClass.GetPoint(firstPoint) == null)
