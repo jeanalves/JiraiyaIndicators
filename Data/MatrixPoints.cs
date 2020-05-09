@@ -5,22 +5,29 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
     public class MatrixPoints
     {
         private readonly List<Point> pointsList = new List<Point>();
+        public int index;
         public WhichTrendSideSignal trendSideSignal;
-        public GraphicPatternType graphicPatternType;
+        public WhichGraphicPatternType graphicPatternType;
 
+        // Initialization
         public MatrixPoints() { }
 
-        public MatrixPoints(List<Point> pointsList, WhichTrendSideSignal trendSideSignal, GraphicPatternType graphicPatternType)
+        public MatrixPoints(List<Point> pointsList, int index, WhichTrendSideSignal trendSideSignal, WhichGraphicPatternType graphicPatternType)
         {
             this.pointsList = pointsList;
+            this.index = index;
             this.trendSideSignal = trendSideSignal;
             this.graphicPatternType = graphicPatternType;
         }
+
+        // Public (methods)
 
         public void AddPoint(Point point)
         {
             pointsList.Add(point);
         }
+
+        // Properties
 
         public List<Point> PointsList
         {
@@ -28,7 +35,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             {
                 return pointsList;
             }
+
+            private set { }
         }
+
+        // Miscellaneous
 
         public enum WhichTrendSideSignal
         {
@@ -38,7 +49,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             None
         }
 
-        public enum GraphicPatternType
+        public enum WhichGraphicPatternType
         {
             Trend,
             Pivot

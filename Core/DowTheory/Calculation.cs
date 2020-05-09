@@ -50,6 +50,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                 // Add long pattern if the first point was an low
                 case MatrixPoints.WhichTrendSideSignal.Bullish:
                     matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList,
+                                                          matrixPointsList.Count,
                                                           MatrixPoints.WhichTrendSideSignal.Bullish,
                                                           calculationData.currentMatrixPoints.graphicPatternType));
                     break;
@@ -57,6 +58,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                 // Add short pattern if the first point was an high
                 case MatrixPoints.WhichTrendSideSignal.Bearish:
                     matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList,
+                                                          matrixPointsList.Count,
                                                           MatrixPoints.WhichTrendSideSignal.Bearish,
                                                           calculationData.currentMatrixPoints.graphicPatternType));
                     break;
