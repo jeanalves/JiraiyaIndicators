@@ -1,5 +1,6 @@
 ﻿using NinjaTrader.NinjaScript;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 {
@@ -9,7 +10,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         protected Series<double> highs;
         protected Series<double> lows;
-        protected List<Point> points = new List<Point>();
+        protected List<Point> pointsList = new List<Point>();
 
         protected readonly NinjaScriptBase owner;
         protected readonly PriceActionSwingClass priceActionSwingClass;
@@ -34,7 +35,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             calculationData = new CalculationData(false);
 
-            if (points.Count == 0)
+            if (pointsList.Count == 0)
             {
                 calculationData = OnCalculationOfFirstSwingPointRequest();
             }
@@ -59,48 +60,46 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         public Point.SidePoint LastSideTrend()
         {
-            return points[points.Count - 1].CurrentSideSwing;
+            return pointsList[pointsList.Count - 1].CurrentSideSwing;
         }
 
         public double LastPrice()
         {
-            return points.Count < 0 ? 0 : points[points.Count - 1].Price;
+            return pointsList.Count < 0 ? 0 : pointsList[pointsList.Count - 1].Price;
         }
 
         public Point LastHigh()
         {
-            for (int i = points.Count - 1; i > 0; i--)
+            foreach (Point point in pointsList.AsEnumerable().Reverse())
             {
-                if (points[i].CurrentSideSwing == Point.SidePoint.High)
+                if (point.CurrentSideSwing == Point.SidePoint.High)
                 {
-                    return points[i];
+                    return point;
                 }
             }
-
-            return points[points.Count - 1];
+            return null;
         }
 
         public Point LastLow()
-        {
-            for (int i = points.Count - 1; i > 0; i--)
+        { 
+            foreach (Point point in pointsList.AsEnumerable().Reverse())
             {
-                if (points[i].CurrentSideSwing == Point.SidePoint.Low)
+                if (point.CurrentSideSwing == Point.SidePoint.Low)
                 {
-                    return points[i];
+                    return point;
                 }
             }
-
-            return points[points.Count - 1];
+            return null;
         }
 
         public List<Point> GetPointsList()
         {
-            return points;
+            return pointsList;
         }
 
         public Point GetPoint(int pointsAgo)
         {
-            return points.Count < pointsAgo + 1 ? null : points[(points.Count - 1) - pointsAgo];
+            return pointsList.Count < pointsAgo + 1 ? null : pointsList[(pointsList.Count - 1) - pointsAgo];
         }
 
         // Protected (methods)
@@ -164,15 +163,15 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
                     if (calculationData.sideSwing == Point.SidePoint.High)
                     {
-                        AddHigh(calculationData.price, calculationData.barIndex, points.Count, calculationData.sideSwing);
+                        AddHigh(calculationData.price, calculationData.barIndex, pointsList.Count, calculationData.sideSwing);
                     }
                     else if (calculationData.sideSwing == Point.SidePoint.Low)
                     {
-                        AddLow(calculationData.price, calculationData.barIndex, points.Count, calculationData.sideSwing);
+                        AddLow(calculationData.price, calculationData.barIndex, pointsList.Count, calculationData.sideSwing);
                     }
-                    else if (calculationData.sideSwing == Point.SidePoint.Unknow && points.Count == 0)
+                    else if (calculationData.sideSwing == Point.SidePoint.Unknow && pointsList.Count == 0)
                     {
-                        AddUnknow(owner.Open.GetValueAt(0), 0, points.Count, calculationData.sideSwing);
+                        AddUnknow(owner.Open.GetValueAt(0), 0, pointsList.Count, calculationData.sideSwing);
                     }
 
                     break;
@@ -195,11 +194,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             if (calculationData.sideSwing == Point.SidePoint.High && LastSideTrend() != Point.SidePoint.High)
             {
-                AddHigh(calculationData.price, calculationData.barIndex, points.Count, calculationData.sideSwing);
+                AddHigh(calculationData.price, calculationData.barIndex, pointsList.Count, calculationData.sideSwing);
             }
             else if (calculationData.sideSwing == Point.SidePoint.Low && LastSideTrend() != Point.SidePoint.Low)
             {
-                AddLow(calculationData.price, calculationData.barIndex, points.Count, calculationData.sideSwing);
+                AddLow(calculationData.price, calculationData.barIndex, pointsList.Count, calculationData.sideSwing);
             }
             else if (calculationData.sideSwing == Point.SidePoint.High && LastSideTrend() == Point.SidePoint.High &&
                 calculationData.price > LastPrice())
@@ -217,45 +216,45 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             //logPrinter.Print(owner, "Calculation.AddHigh()");
 
-            points.Add(new Point(price, barIndex, pointIndex, sideSwing));
+            pointsList.Add(new Point(price, barIndex, pointIndex, sideSwing));
         }
 
         private void AddLow(double price, int barIndex, int pointIndex, Point.SidePoint sideSwing)
         {
             //logPrinter.Print(owner, "Calculation.AddLow()");
 
-            points.Add(new Point(price, barIndex, pointIndex, sideSwing));
+            pointsList.Add(new Point(price, barIndex, pointIndex, sideSwing));
         }
 
         private void AddUnknow(double price, int barIndex, int pointIndex, Point.SidePoint sideSwing)
         {
             //logPrinter.Print(owner, "Calculation.AddUnknow()");
 
-            points.Add(new Point(price, barIndex, pointIndex, sideSwing));
+            pointsList.Add(new Point(price, barIndex, pointIndex, sideSwing));
         }
 
         private void UpdateHigh(double price, int barIndex)
         {
             //logPrinter.Print(owner, "Calculation.UpdateHigh()");
 
-            Point temp = points[points.Count - 1];
+            Point temp = pointsList[pointsList.Count - 1];
 
             temp.Price = price;
             temp.BarIndex = barIndex;
 
-            points[points.Count - 1] = temp;
+            pointsList[pointsList.Count - 1] = temp;
         }
 
         private void UpdateLow(double price, int barIndex)
         {
             //logPrinter.Print(owner, "Calculation.UpdateLow()");
 
-            Point temp = points[points.Count - 1];
+            Point temp = pointsList[pointsList.Count - 1];
 
             temp.Price = price;
             temp.BarIndex = barIndex;
 
-            points[points.Count - 1] = temp;
+            pointsList[pointsList.Count - 1] = temp;
         }
 
         // Properties
