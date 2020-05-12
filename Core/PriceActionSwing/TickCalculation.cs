@@ -8,15 +8,21 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         protected override CalculationData OnCalculationOfEachBarSwingPointRequest()
         {
-            //logPrinter.Print(owner, "TickCalculation.OnCalculationOfEachBarSwingPointRequest()");
-
             bool isRising = highs[0] > highs[1];
             bool isFalling = lows[0] < lows[1];
-            //logPrinter.Print(owner, "isRising : " + isRising + ", isFalling: " + isFalling);
-            
-            bool isOverHighStrength = highs[0] > (LastLow().Price + (priceActionSwingClass.Strength * owner.TickSize));
-            bool isOverLowStrength = lows[0] < (LastHigh().Price - (priceActionSwingClass.Strength * owner.TickSize));
-            //logPrinter.Print(owner, "isOverHighStrength : " + isOverHighStrength + ", isOverLowStrength : " + isOverLowStrength);
+
+            bool isOverHighStrength = false;
+            bool isOverLowStrength = false;
+
+            if (LastLow() != null)
+            {
+                isOverHighStrength = highs[0] > (LastLow().Price + (priceActionSwingClass.Strength * owner.TickSize));
+            }
+
+            if (LastHigh() != null)
+            {
+                isOverLowStrength = lows[0] < (LastHigh().Price - (priceActionSwingClass.Strength * owner.TickSize));
+            }
 
             if (isRising && isOverHighStrength)
                 return new CalculationData(true, highs[0], owner.CurrentBar, Point.SidePoint.High);
