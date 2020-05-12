@@ -84,8 +84,19 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
             bool isRising= true;
             bool isFalling = true;
-            bool isOverHighStrength = (owner.CurrentBar - LastLow().BarIndex) >= priceActionSwingClass.Strength;
-            bool isOverLowStrength = (owner.CurrentBar - LastHigh().BarIndex) >= priceActionSwingClass.Strength;
+
+            bool isOverHighStrength = false;
+            bool isOverLowStrength = false;
+            
+            if (LastLow() != null)
+            {
+                isOverHighStrength = (owner.CurrentBar - LastLow().BarIndex) >= priceActionSwingClass.Strength;
+            }
+
+            if (LastHigh() != null)
+            {
+                isOverLowStrength = (owner.CurrentBar - LastHigh().BarIndex) >= priceActionSwingClass.Strength;
+            }
 
             double swingHighCandidateValue = highs[0];
             double swingLowCandidateValue = lows[0];
