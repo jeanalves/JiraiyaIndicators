@@ -54,10 +54,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             {
                 case MatrixPoints.WhichTrendSideSignal.Bullish:
                     // Enter a long signal
+                    owner.Value[0] = 1;
                     break;
 
                 case MatrixPoints.WhichTrendSideSignal.Bearish:
                     // Enter a short signal
+                    owner.Value[0] = -1;
                     break;
             }
 

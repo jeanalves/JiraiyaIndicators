@@ -1,5 +1,7 @@
-using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Windows.Media;
+using System.Xml.Serialization;
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot;
 
 //This namespace holds Indicators in this folder and is required. Do not change it. 
@@ -28,6 +30,8 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 				IsSuspendedWhileInactive					= true;
                 CalculationType                             = CalculationTypeListDowTheory.Pivot;
                 Strength                                    = 2;
+
+                AddPlot(Brushes.Transparent, "Long Short Signal");
 			}
 			else if (State == State.Configure)
 			{
@@ -55,6 +59,13 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         [NinjaScriptProperty]
         [Display(Name = "Strengh", Order = 1, GroupName = "Parameters")]
         public double Strength { get; set; }
+
+        [Browsable(false)]
+        [XmlIgnore]
+        public Series<double> LongShortSignal
+        {
+            get { return Values[0]; }
+        }
         #endregion
     }
 }
