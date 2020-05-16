@@ -5,25 +5,25 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
     public class MatrixPoints
     {
         private readonly List<Point> pointsList = new List<Point>();
-        public int index;
-        public bool isThisMatrixSignalInformed;
-        public WhichTrendSideSignal trendSideSignal;
-        public WhichGraphicPatternType graphicPatternType;
+        public int Index { get; private set; }
+        public bool IsThisMatrixSignalInformed { get; set; }
+        public WhichTrendSideSignal TrendSideSignal { get; set; }
+        public WhichGraphicPatternType GraphicPatternType { get; set; }
 
         // Initialization
 
         public MatrixPoints(WhichGraphicPatternType graphicPatternType)
         {
-            this.graphicPatternType = graphicPatternType;
+            GraphicPatternType = graphicPatternType;
         }
 
         public MatrixPoints(List<Point> pointsList, int index, WhichTrendSideSignal trendSideSignal, WhichGraphicPatternType graphicPatternType)
         {
             this.pointsList = pointsList;
-            isThisMatrixSignalInformed = false;
-            this.index = index;
-            this.trendSideSignal = trendSideSignal;
-            this.graphicPatternType = graphicPatternType;
+            IsThisMatrixSignalInformed = false;
+            Index = index;
+            TrendSideSignal = trendSideSignal;
+            GraphicPatternType = graphicPatternType;
         }
 
         // Public (methods)

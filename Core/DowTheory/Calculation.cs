@@ -49,14 +49,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             // reference already passed in the list of points, from MatrixPoints.PointsList
             if (!IsNewMatrixTheSameTheLastOne(calculationData.currentMatrixPoints))
             {
-                switch (calculationData.currentMatrixPoints.trendSideSignal)
+                switch (calculationData.currentMatrixPoints.TrendSideSignal)
                 {
                     // Add long pattern if the first point was an low
                     case MatrixPoints.WhichTrendSideSignal.Bullish:
                         matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList,
                                                               matrixPointsList.Count,
                                                               MatrixPoints.WhichTrendSideSignal.Bullish,
-                                                              calculationData.currentMatrixPoints.graphicPatternType));
+                                                              calculationData.currentMatrixPoints.GraphicPatternType));
                         break;
 
                     // Add short pattern if the first point was an high
@@ -64,7 +64,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                         matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList,
                                                               matrixPointsList.Count,
                                                               MatrixPoints.WhichTrendSideSignal.Bearish,
-                                                              calculationData.currentMatrixPoints.graphicPatternType));
+                                                              calculationData.currentMatrixPoints.GraphicPatternType));
                         break;
                 }
             }

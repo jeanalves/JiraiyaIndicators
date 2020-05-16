@@ -6,7 +6,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
     {
         public static void DrawPivot(NinjaScriptBase owner, MatrixPoints matrixPoints)
         {
-            switch(matrixPoints.trendSideSignal)
+            switch(matrixPoints.TrendSideSignal)
             {
                 case MatrixPoints.WhichTrendSideSignal.Bullish:
                     DrawWrapper.DrawLine(owner,

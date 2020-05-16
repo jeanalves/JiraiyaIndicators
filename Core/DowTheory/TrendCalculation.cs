@@ -38,11 +38,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             {
                 if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.Low)
                 {
-                    matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bullish;
+                    matrixPoints.TrendSideSignal = MatrixPoints.WhichTrendSideSignal.Bullish;
                 }
                 else if (matrixPoints.PointsList[3].CurrentSideSwing == Point.SidePoint.High)
                 {
-                    matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bearish;
+                    matrixPoints.TrendSideSignal = MatrixPoints.WhichTrendSideSignal.Bearish;
                 }
             }
 

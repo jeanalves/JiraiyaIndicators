@@ -12,10 +12,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         //-------2---\---|---/---3-----
         //------------4--|--1----------
 
-        const int firstPoint = 3;
-        const int secondPoint = 2;
-        const int thirdPoint = 1;
-        const int fourthPoint = 0;
+        const int firstPoint    = 3;
+        const int secondPoint   = 2;
+        const int thirdPoint    = 1;
+        const int fourthPoint   = 0;
 
         public PivotCalculation(NinjaScriptBase owner) : base(owner) { }
 
@@ -38,18 +38,24 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             // Test a long pivot
             if (matrixPoints.PointsList[firstPoint].CurrentSideSwing == Point.SidePoint.Low)
             {
-                matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bullish;
-
                 isNewMatrixPoints = matrixPoints.PointsList[firstPoint].Price < matrixPoints.PointsList[thirdPoint].Price &&
                                     matrixPoints.PointsList[secondPoint].Price < matrixPoints.PointsList[fourthPoint].Price;
+
+                if (isNewMatrixPoints)
+                {
+                    matrixPoints.TrendSideSignal = MatrixPoints.WhichTrendSideSignal.Bullish;
+                }
             }
             // Test a short pivot
             else if (matrixPoints.PointsList[firstPoint].CurrentSideSwing == Point.SidePoint.High)
             {
-                matrixPoints.trendSideSignal = MatrixPoints.WhichTrendSideSignal.Bearish;
-
                 isNewMatrixPoints = matrixPoints.PointsList[firstPoint].Price > matrixPoints.PointsList[thirdPoint].Price &&
                                     matrixPoints.PointsList[secondPoint].Price > matrixPoints.PointsList[fourthPoint].Price;
+
+                if (isNewMatrixPoints)
+                {
+                    matrixPoints.TrendSideSignal = MatrixPoints.WhichTrendSideSignal.Bearish;
+                }
             }
 
             return isNewMatrixPoints == true ? new CalculationData(true, matrixPoints) : new CalculationData(false);

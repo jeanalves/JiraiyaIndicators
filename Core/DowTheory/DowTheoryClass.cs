@@ -50,11 +50,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         private void OnCalculationUpdate(Calculation chosenCalculationObject)
         {
             // Code used for Pivots signals and Trend Signals
-            if (!chosenCalculationObject.LastMatrixPoints.isThisMatrixSignalInformed)
+            if (!chosenCalculationObject.LastMatrixPoints.IsThisMatrixSignalInformed)
             {
-                chosenCalculationObject.LastMatrixPoints.isThisMatrixSignalInformed = true;
+                chosenCalculationObject.LastMatrixPoints.IsThisMatrixSignalInformed = true;
 
-                switch (chosenCalculationObject.LastMatrixPoints.trendSideSignal)
+                switch (chosenCalculationObject.LastMatrixPoints.TrendSideSignal)
                 {
                     case MatrixPoints.WhichTrendSideSignal.Bullish:
                         // Enter a long signal
