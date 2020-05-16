@@ -6,6 +6,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
     {
         private readonly List<Point> pointsList = new List<Point>();
         public int index;
+        public bool isThisMatrixSignalInformed;
         public WhichTrendSideSignal trendSideSignal;
         public WhichGraphicPatternType graphicPatternType;
 
@@ -19,6 +20,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
         public MatrixPoints(List<Point> pointsList, int index, WhichTrendSideSignal trendSideSignal, WhichGraphicPatternType graphicPatternType)
         {
             this.pointsList = pointsList;
+            isThisMatrixSignalInformed = false;
             this.index = index;
             this.trendSideSignal = trendSideSignal;
             this.graphicPatternType = graphicPatternType;
@@ -39,8 +41,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             {
                 return pointsList;
             }
-
-            private set { }
         }
 
         // Miscellaneous

@@ -101,6 +101,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             }
         }
 
+        public MatrixPoints LastMatrixPoints
+        {
+            get
+            {
+                return GetMatrixPoints(0);
+            }
+        }
+
         // Miscellaneous
 
         public struct CalculationData
