@@ -1,7 +1,9 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using NinjaTrader.Custom.Indicators.JiraiyaIndicators;
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot;
 
 //This namespace holds Indicators in this folder and is required. Do not change it. 
@@ -9,6 +11,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 {
 	public class DowTheoryIndicator : Indicator
 	{
+        DrawingProperties drawingProperties;
         DowTheoryClass dowTheory;
 
 		protected override void OnStateChange()
@@ -38,7 +41,10 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			}
             else if(State == State.DataLoaded)
             {
-                dowTheory = new DowTheoryClass(this, CalculationType, Strength);
+                drawingProperties = new DrawingProperties(true, Brushes.Black, Brushes.Red, Brushes.White,
+                                                          true, 15, Brushes.White, new Gui.Tools.SimpleFont("Arial", 11), TextAlignment.Center, Brushes.Transparent, Brushes.Transparent, 100,
+                                                          true, Brushes.White, Gui.DashStyleHelper.Solid, 1);
+                dowTheory = new DowTheoryClass(this, drawingProperties, CalculationType, Strength);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
                 // LogPrinter.ResetOuputTabs();

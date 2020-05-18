@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Windows;
 using System.Windows.Media;
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators;
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
@@ -35,10 +36,10 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			}
 			else if (State == State.Configure)
 			{
-                drawingProperties = new DrawingProperties(true, Brushes.Green, Brushes.Red, Brushes.Transparent,
-                                                          true, 15, Brushes.White, new Gui.Tools.SimpleFont("Arial", 11), Brushes.Transparent, Brushes.Transparent, 100,
-                                                          true, Brushes.White, Gui.DashStyleHelper.Solid, 3);
-                priceActionSwing = new PriceActionSwingClass(this, CalculationType, Strength, UseHighLow, ShowLog);
+                drawingProperties = new DrawingProperties(true, Brushes.Black, Brushes.Red, Brushes.White,
+                                                          true, 15, Brushes.White, new Gui.Tools.SimpleFont("Arial", 11), TextAlignment.Center, Brushes.Transparent, Brushes.Transparent, 100,
+                                                          true, Brushes.White, Gui.DashStyleHelper.Solid, 1);
+                priceActionSwing = new PriceActionSwingClass(this, drawingProperties, CalculationType, Strength, UseHighLow, ShowLog);
                 
 
                 // Everytime the F5 key is pressed automatically will clear the output window.

@@ -7,53 +7,57 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
     public static class DrawWrapper
     {
         public static void DrawDot(NinjaScriptBase owner,
-                                          int pointIndex,
-                                          int barIndex,
-                                          double price,
-                                          Brush dotColor)
+                                   DrawingProperties drawingProperties,
+                                   int pointIndex,
+                                   int barIndex,
+                                   double price,
+                                   Brush dotColor)
         {
-            Draw.Dot(owner, ("Dot " + pointIndex), true,
+            Draw.Dot(owner, ("Dot " + pointIndex), drawingProperties.IsDotAutoScale,
                         ConvertBarIndexToBarsAgo(owner, barIndex), price,
-                        dotColor).OutlineBrush = Brushes.Transparent;
+                        dotColor).OutlineBrush = drawingProperties.DotOutlineBrush;
         }
 
         public static void DrawText(NinjaScriptBase owner,
-                                           int pointIndex,
-                                           int barIndex,
-                                           double price,
-                                           int yPixelOffSet)
+                                    DrawingProperties drawingProperties,
+                                    int pointIndex,
+                                    int barIndex,
+                                    double price,
+                                    int yPixelOffSet)
         {
-            Draw.Text(owner, ("Text " + pointIndex), true, pointIndex.ToString(),
-                        ConvertBarIndexToBarsAgo(owner, barIndex), price, yPixelOffSet, Brushes.White,
-                        new Gui.Tools.SimpleFont("Arial", 11), System.Windows.TextAlignment.Center,
-                        Brushes.Transparent, Brushes.Transparent, 100);
+            Draw.Text(owner, ("Text " + pointIndex), drawingProperties.IsTextAutoScale, pointIndex.ToString(),
+                        ConvertBarIndexToBarsAgo(owner, barIndex), price, yPixelOffSet, drawingProperties.TextColor,
+                        drawingProperties.TextSimpleFont, drawingProperties.TextAligmentPropertie,
+                        drawingProperties.TextOutlineBrush, drawingProperties.TextAreaBrush, drawingProperties.TextAreaOpacity);
         }
 
         public static void DrawLine(NinjaScriptBase owner,
-                                             int pointIndex,
-                                             int barIndex1,
-                                             double price1,
-                                             int barIndex0,
-                                             double price0)
+                                    DrawingProperties drawingProperties,
+                                    int pointIndex,
+                                    int barIndex1,
+                                    double price1,
+                                    int barIndex0,
+                                    double price0)
         {
             Draw.Line(owner, "Line type 1" + pointIndex, false,
                 ConvertBarIndexToBarsAgo(owner, barIndex1), price1,
                 ConvertBarIndexToBarsAgo(owner, barIndex0), price0,
-                Brushes.White, Gui.DashStyleHelper.Solid, 3);
+                drawingProperties.LineColor, drawingProperties.LineDashStyle, drawingProperties.LineWidth);
         }
 
-        public static void DrawLine(NinjaScriptBase owner,
-                                             int pointIndex,
-                                             int barIndex1,
-                                             double price1,
-                                             int barIndex0,
-                                             double price0,
-                                             Brush color)
+        public static void DrawPathLine(NinjaScriptBase owner,
+                                        DrawingProperties drawingProperties,
+                                        int pointIndex,
+                                        int barIndex1,
+                                        double price1,
+                                        int barIndex0,
+                                        double price0,
+                                        Brush color)
         {
             Draw.Line(owner, "Line type 2" + pointIndex, false,
                 ConvertBarIndexToBarsAgo(owner, barIndex1), price1,
                 ConvertBarIndexToBarsAgo(owner, barIndex0), price0,
-                color, Gui.DashStyleHelper.Solid, 3);
+                color, drawingProperties.LineDashStyle, drawingProperties.LineWidth);
         }
 
         private static int ConvertBarIndexToBarsAgo(NinjaScriptBase owner, int barIndex)

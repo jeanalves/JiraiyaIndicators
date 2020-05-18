@@ -8,18 +8,20 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         // Fields
 
         private readonly NinjaScriptBase owner;
+        private readonly DrawingProperties drawingProperties;
         private readonly PriceActionSwingClass priceActionSwingClass;
         private readonly PivotCalculation pivotCalculation;
         private readonly TrendCalculation trendCalculation;
 
         // Initialization
 
-        public DowTheoryClass(NinjaScriptBase owner, CalculationTypeListDowTheory calculationTypeList, double strength)
+        public DowTheoryClass(NinjaScriptBase owner, DrawingProperties drawingProperties, CalculationTypeListDowTheory calculationTypeList, double strength)
         {
             this.owner = owner;
+            this.drawingProperties = drawingProperties;
             CalculationType = calculationTypeList;
 
-            priceActionSwingClass = new PriceActionSwingClass(owner, CalculationTypeList.SwingForward, strength, true, true);
+            priceActionSwingClass = new PriceActionSwingClass(owner, drawingProperties, CalculationTypeList.SwingForward, strength, true, true);
             trendCalculation = new TrendCalculation(owner);
             pivotCalculation = new PivotCalculation(owner);
 
@@ -68,7 +70,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                 }
             }
 
-            Drawing.DrawPivot(owner, chosenCalculationObject.GetMatrixPoints(0));
+            Drawing.DrawPivot(owner, drawingProperties, chosenCalculationObject.GetMatrixPoints(0));
         }
 
         private Calculation GetChosenCalculationObject()

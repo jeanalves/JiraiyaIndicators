@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 using NinjaTrader.Gui;
 using NinjaTrader.Gui.Tools;
 
@@ -6,9 +7,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
 {
     public class DrawingProperties
     {
-        public DrawingProperties(bool isDotAutoScale, Brush upDotColor, Brush downDotColor, 
-            Brush dotOutlineBrush, bool isTextAutoScale, int textYPixelOffSet, Brush textColor, 
-            SimpleFont textSimpleFont, Brush textOutlineBrush, Brush textAreaBrush, int textAreaOpacity, 
+        public DrawingProperties(bool isDotAutoScale, Brush upDotColor, Brush downDotColor,
+            Brush dotOutlineBrush, bool isTextAutoScale, int textYPixelOffSet, Brush textColor,
+            SimpleFont textSimpleFont, TextAlignment textAligmentPropertie, Brush textOutlineBrush, Brush textAreaBrush, int textAreaOpacity,
             bool isLineAutoScale, Brush lineColor, DashStyleHelper lineDashStyle, int lineWidth)
         {
             IsDotAutoScale = isDotAutoScale;
@@ -19,6 +20,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
             TextYPixelOffSet = textYPixelOffSet;
             TextColor = textColor;
             TextSimpleFont = textSimpleFont;
+            TextAligmentPropertie = textAligmentPropertie;
             TextOutlineBrush = textOutlineBrush;
             TextAreaBrush = textAreaBrush;
             TextAreaOpacity = textAreaOpacity;
@@ -40,7 +42,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
         public bool IsTextAutoScale { get; set; }
         public int TextYPixelOffSet { get; set; }
         public Brush TextColor { get; set; }
-        public Gui.Tools.SimpleFont TextSimpleFont { get; set; }
+        public SimpleFont TextSimpleFont { get; set; }
+        public TextAlignment TextAligmentPropertie { get; set; }
         public Brush TextOutlineBrush { get; set; }
         public Brush TextAreaBrush { get; set; }
         public int TextAreaOpacity { get; set; }
@@ -49,7 +52,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
 
         public bool IsLineAutoScale { get; set; }
         public Brush LineColor { get; set; }
-        public Gui.DashStyleHelper LineDashStyle { get; set; }
+        public DashStyleHelper LineDashStyle { get; set; }
         public int LineWidth { get; set; }
 
     }

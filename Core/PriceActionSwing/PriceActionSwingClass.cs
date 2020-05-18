@@ -8,15 +8,17 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         // Fields
 
         private readonly NinjaScriptBase owner;
+        private readonly DrawingProperties drawingProperties;
         private readonly TickCalculation tickCalculation;
         private readonly SwingForwardCalculation swingForwardCalculation;
         private readonly SwingForwardCalculationOld swingForwardCalculationOld;
 
         // Initialization
 
-        public PriceActionSwingClass(NinjaScriptBase owner, CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
+        public PriceActionSwingClass(NinjaScriptBase owner, DrawingProperties drawingProperties, CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
         {
             this.owner = owner;
+            this.drawingProperties = drawingProperties;
             tickCalculation = new TickCalculation(owner, this);
             swingForwardCalculation = new SwingForwardCalculation(owner, this);
             swingForwardCalculationOld = new SwingForwardCalculationOld(owner, this);
@@ -55,14 +57,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void OnCalculationUpdate(Calculation ChosenCalculationObject)
         {
-            Drawing.DrawPoint(owner, ChosenCalculationObject.GetPoint(0));
+            Drawing.DrawPoint(owner, ChosenCalculationObject.GetPoint(0), drawingProperties);
 
             // Test if there is more than two points to be able in draw a line
             if (ChosenCalculationObject.GetPointsList().Count > 1)
             {
-                Drawing.DrawZigZag(owner,
-                                        ChosenCalculationObject.GetPoint(1),
-                                        ChosenCalculationObject.GetPoint(0));
+                Drawing.DrawZigZag(owner, drawingProperties,
+                                   ChosenCalculationObject.GetPoint(1),
+                                   ChosenCalculationObject.GetPoint(0));
             }
         }
 
