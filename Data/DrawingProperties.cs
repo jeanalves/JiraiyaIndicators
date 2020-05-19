@@ -7,15 +7,17 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
 {
     public class DrawingProperties
     {
-        public DrawingProperties(bool isDotAutoScale, Brush upDotColor, Brush downDotColor,
-            Brush dotOutlineBrush, bool isTextAutoScale, int textYPixelOffSet, Brush textColor,
-            SimpleFont textSimpleFont, TextAlignment textAligmentPropertie, Brush textOutlineBrush, Brush textAreaBrush, int textAreaOpacity,
-            bool isLineAutoScale, Brush lineColor, DashStyleHelper lineDashStyle, int lineWidth)
+        public DrawingProperties(bool isDotAutoScale, Brush upDotColor, Brush downDotColor, 
+            Brush upDotOutlineColor, Brush downDotOutlineColor, bool isTextAutoScale, 
+            int textYPixelOffSet, Brush textColor, SimpleFont textSimpleFont, 
+            TextAlignment textAligmentPropertie, Brush textOutlineBrush, Brush textAreaBrush, 
+            int textAreaOpacity, bool isLineAutoScale, Brush lineColor, DashStyleHelper lineDashStyle, int lineWidth)
         {
             IsDotAutoScale = isDotAutoScale;
             UpDotColor = upDotColor;
             DownDotColor = downDotColor;
-            DotOutlineBrush = dotOutlineBrush;
+            UpDotOutlineColor = upDotOutlineColor;
+            DownDotOutlineColor = downDotOutlineColor;
             IsTextAutoScale = isTextAutoScale;
             TextYPixelOffSet = textYPixelOffSet;
             TextColor = textColor;
@@ -35,7 +37,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
         public bool IsDotAutoScale { get; set; }
         public Brush UpDotColor { get; set; }
         public Brush DownDotColor { get; set; }
-        public Brush DotOutlineBrush { get; set; }
+        public Brush UpDotOutlineColor { get; set; }
+        public Brush DownDotOutlineColor { get; set; }
 
         // Text properties
 

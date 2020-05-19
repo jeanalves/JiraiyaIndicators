@@ -33,10 +33,19 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 				Strength					                = 2;
 				UseHighLow					                = true;
 				ShowLog					                    = true;
+
+                DotParameters = new DotExpandableParameters()
+                {
+                    IsDotAutoScale = true,
+                    UpDotColor = Brushes.Green,
+                    DowDotColor = Brushes.Red,
+                    UpDotOutlineColor = Brushes.Green,
+                    DownDotOutlineColor = Brushes.Red
+                };
 			}
 			else if (State == State.Configure)
 			{
-                drawingProperties = new DrawingProperties(true, Brushes.Black, Brushes.Red, Brushes.White,
+                drawingProperties = new DrawingProperties(DotParameters.IsDotAutoScale, DotParameters.UpDotColor, DotParameters.DowDotColor, DotParameters.UpDotOutlineColor, DotParameters.DownDotOutlineColor,
                                                           true, 15, Brushes.White, new Gui.Tools.SimpleFont("Arial", 11), TextAlignment.Center, Brushes.Transparent, Brushes.Transparent, 100,
                                                           true, Brushes.White, Gui.DashStyleHelper.Solid, 1);
                 priceActionSwing = new PriceActionSwingClass(this, drawingProperties, CalculationType, Strength, UseHighLow, ShowLog);
@@ -76,8 +85,12 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         public bool UseHighLow
         { get; set; }
 
-        [Display(Name = "Show log in output window", Order = 3, GroupName = "Parameters")]
+        [Display(Name = "Show log on output window", Order = 3, GroupName = "Parameters")]
         public bool ShowLog
+        { get; set; }
+
+        [Display(Name = "Dot parameters", Order = 4, GroupName = "Parameters")]
+        public DotExpandableParameters DotParameters
         { get; set; }
         #endregion
 

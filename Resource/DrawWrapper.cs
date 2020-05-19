@@ -15,7 +15,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
         {
             Draw.Dot(owner, ("Dot " + pointIndex), drawingProperties.IsDotAutoScale,
                         ConvertBarIndexToBarsAgo(owner, barIndex), price,
-                        dotColor).OutlineBrush = drawingProperties.DotOutlineBrush;
+                        dotColor).OutlineBrush = drawingProperties.UpDotOutlineColor;
         }
 
         public static void DrawText(NinjaScriptBase owner,
