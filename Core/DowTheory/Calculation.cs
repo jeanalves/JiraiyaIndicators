@@ -11,7 +11,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         protected readonly NinjaScriptBase owner;
 
         protected List<MatrixPoints> matrixPointsList = new List<MatrixPoints>();
-        protected CalculationData currentCalculationData = new CalculationData(false);
+        protected CalculationData currentCalculationData = new CalculationData();
 
         // Initialization
 
@@ -47,30 +47,30 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         {
             // Here, no code is needed to update the matrix due to the object
             // reference already passed in the list of points, from MatrixPoints.PointsList
-            if (!IsNewMatrixTheSameTheLastOne(calculationData.currentMatrixPoints))
+            if (!IsNewMatrixTheSameTheLastOne(calculationData.pointsList))
             {
-                switch (calculationData.currentMatrixPoints.TrendSideSignal)
+                switch (calculationData.whichTrend)
                 {
                     // Add long pattern if the first point was an low
                     case MatrixPoints.WhichTrendSideSignal.Bullish:
-                        matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList,
+                        matrixPointsList.Add(new MatrixPoints(calculationData.pointsList,
                                                               matrixPointsList.Count,
                                                               MatrixPoints.WhichTrendSideSignal.Bullish,
-                                                              calculationData.currentMatrixPoints.GraphicPatternType));
+                                                              calculationData.whichGraphic));
                         break;
 
                     // Add short pattern if the first point was an high
                     case MatrixPoints.WhichTrendSideSignal.Bearish:
-                        matrixPointsList.Add(new MatrixPoints(calculationData.currentMatrixPoints.PointsList,
+                        matrixPointsList.Add(new MatrixPoints(calculationData.pointsList,
                                                               matrixPointsList.Count,
                                                               MatrixPoints.WhichTrendSideSignal.Bearish,
-                                                              calculationData.currentMatrixPoints.GraphicPatternType));
+                                                              calculationData.whichGraphic));
                         break;
                 }
             }
         }
 
-        private bool IsNewMatrixTheSameTheLastOne(MatrixPoints newMatrixPoints)
+        private bool IsNewMatrixTheSameTheLastOne(List<Point> newPointsList)
         {
             if (matrixPointsList.Count <= 0)
             {
@@ -80,9 +80,9 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             MatrixPoints lastMatrix = matrixPointsList[matrixPointsList.Count - 1];
 
             // Test all points except the last one
-            for (int i = 0; i<= newMatrixPoints.PointsList.Count - 2; i++)
+            for (int i = 0; i<= newPointsList.Count - 2; i++)
             {
-                if (lastMatrix.PointsList[i].Index != newMatrixPoints.PointsList[i].Index)
+                if (lastMatrix.PointsList[i].Index != newPointsList[i].Index)
                 {
                     return false;
                 }
@@ -114,18 +114,16 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         public struct CalculationData
         {
             public bool isNewMatrixPoints;
-            public MatrixPoints currentMatrixPoints;
+            public List<Point> pointsList;
+            public MatrixPoints.WhichTrendSideSignal whichTrend;
+            public MatrixPoints.WhichGraphicPatternType whichGraphic;
 
-            public CalculationData(bool isNewMatrixPoints)
+            public CalculationData(List<Point> pointsList, MatrixPoints.WhichTrendSideSignal whichTrend, MatrixPoints.WhichGraphicPatternType whichGraphic)
             {
-                this.isNewMatrixPoints = isNewMatrixPoints;
-                this.currentMatrixPoints = null;
-            }
-
-            public CalculationData(bool isNewMatrixPoints, MatrixPoints currentMatrixPoint)
-            {
-                this.isNewMatrixPoints = isNewMatrixPoints;
-                this.currentMatrixPoints = currentMatrixPoint;
+                isNewMatrixPoints = true;
+                this.pointsList = pointsList;
+                this.whichTrend = whichTrend;
+                this.whichGraphic = whichGraphic;
             }
         }
     }

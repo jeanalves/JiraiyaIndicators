@@ -41,9 +41,9 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 			}
             else if(State == State.DataLoaded)
             {
-                drawingProperties = new DrawingProperties(true, Brushes.Green, Brushes.Red, Brushes.White, Brushes.White,
+                drawingProperties = new DrawingProperties(true, Brushes.Green, Brushes.Red, Brushes.Transparent, Brushes.White,
                                                           true, 15, Brushes.White, new Gui.Tools.SimpleFont("Arial", 11), TextAlignment.Center, Brushes.Transparent, Brushes.Transparent, 100,
-                                                          true, Brushes.White, Gui.DashStyleHelper.Solid, 1);
+                                                          true, Brushes.White, Gui.DashStyleHelper.Solid, 3);
                 dowTheory = new DowTheoryClass(this, drawingProperties, CalculationType, Strength);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.

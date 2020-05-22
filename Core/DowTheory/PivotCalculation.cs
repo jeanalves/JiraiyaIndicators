@@ -1,5 +1,6 @@
 using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
 using NinjaTrader.NinjaScript;
+using System.Collections.Generic;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 {
@@ -21,44 +22,40 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         protected override CalculationData OnCalculationRequest(PriceActionSwingClass priceActionSwingClass)
         {
-            MatrixPoints matrixPoints = new MatrixPoints(MatrixPoints.WhichGraphicPatternType.Pivot);
+            List<Point> pointsList = new List<Point>();
+            MatrixPoints.WhichTrendSideSignal whichTrend = MatrixPoints.WhichTrendSideSignal.None;
 
             bool isNewMatrixPoints = true;
 
             if (priceActionSwingClass.GetPoint(firstPoint) == null)
             {
-                return new CalculationData(false);
+                return new CalculationData();
             }
 
-            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(fourthPoint));
-            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(thirdPoint));
-            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(secondPoint));
-            matrixPoints.AddPoint(priceActionSwingClass.GetPoint(firstPoint));
+            pointsList.Add(priceActionSwingClass.GetPoint(fourthPoint));
+            pointsList.Add(priceActionSwingClass.GetPoint(thirdPoint));
+            pointsList.Add(priceActionSwingClass.GetPoint(secondPoint));
+            pointsList.Add(priceActionSwingClass.GetPoint(firstPoint));
 
             // Test a long pivot
-            if (matrixPoints.PointsList[firstPoint].CurrentSideSwing == Point.SidePoint.Low)
+            if (pointsList[firstPoint].CurrentSideSwing == Point.SidePoint.Low)
             {
-                isNewMatrixPoints = matrixPoints.PointsList[firstPoint].Price < matrixPoints.PointsList[thirdPoint].Price &&
-                                    matrixPoints.PointsList[secondPoint].Price < matrixPoints.PointsList[fourthPoint].Price;
+                isNewMatrixPoints = pointsList[firstPoint].Price < pointsList[thirdPoint].Price &&
+                                    pointsList[secondPoint].Price < pointsList[fourthPoint].Price;
 
-                if (isNewMatrixPoints)
-                {
-                    matrixPoints.TrendSideSignal = MatrixPoints.WhichTrendSideSignal.Bullish;
-                }
+                whichTrend = MatrixPoints.WhichTrendSideSignal.Bullish;
             }
             // Test a short pivot
-            else if (matrixPoints.PointsList[firstPoint].CurrentSideSwing == Point.SidePoint.High)
+            else if (pointsList[firstPoint].CurrentSideSwing == Point.SidePoint.High)
             {
-                isNewMatrixPoints = matrixPoints.PointsList[firstPoint].Price > matrixPoints.PointsList[thirdPoint].Price &&
-                                    matrixPoints.PointsList[secondPoint].Price > matrixPoints.PointsList[fourthPoint].Price;
+                isNewMatrixPoints = pointsList[firstPoint].Price > pointsList[thirdPoint].Price &&
+                                    pointsList[secondPoint].Price > pointsList[fourthPoint].Price;
 
-                if (isNewMatrixPoints)
-                {
-                    matrixPoints.TrendSideSignal = MatrixPoints.WhichTrendSideSignal.Bearish;
-                }
+                whichTrend = MatrixPoints.WhichTrendSideSignal.Bearish;
             }
 
-            return isNewMatrixPoints == true ? new CalculationData(true, matrixPoints) : new CalculationData(false);
+            return isNewMatrixPoints == true ? new CalculationData(pointsList, whichTrend, MatrixPoints.WhichGraphicPatternType.Pivot) : 
+                new CalculationData();
         }
     }
 }
