@@ -15,7 +15,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         protected readonly NinjaScriptBase owner;
         protected readonly PriceActionSwingClass priceActionSwingClass;
 
-        private CalculationData calculationData = new CalculationData(false);
+        private CalculationData calculationData = new CalculationData();
         private CalculationStage calculationStage = CalculationStage.FirstPoint;
 
         // Initialization
@@ -33,7 +33,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             SetValues();
 
-            calculationData = new CalculationData(false);
+            calculationData = new CalculationData();
 
             if (pointsList.Count == 0)
             {
@@ -116,18 +116,18 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                 switch (sideSwing)
                 {
                     case Point.SidePoint.High:
-                        return new CalculationData(true, owner.High.GetValueAt(0), 0, sideSwing);
+                        return new CalculationData(owner.High.GetValueAt(0), 0, sideSwing);
 
                     case Point.SidePoint.Low:
-                        return new CalculationData(true, owner.Low.GetValueAt(0), 0, sideSwing);
+                        return new CalculationData(owner.Low.GetValueAt(0), 0, sideSwing);
                 }
             }
             else
             {
-                return new CalculationData(true, owner.Open.GetValueAt(0), 0, sideSwing);
+                return new CalculationData(owner.Open.GetValueAt(0), 0, sideSwing);
             }
 
-            return new CalculationData(false);
+            return new CalculationData();
         }
 
         protected abstract CalculationData OnCalculationOfEachBarSwingPointRequest();
@@ -136,7 +136,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         {
             //logPrinter.Print(owner, "virtual Calculation.CalculateEachTickSwing()");
 
-            return new CalculationData(false);
+            return new CalculationData();
         }
 
         // Private (methods)
@@ -284,34 +284,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             public int barIndex;
             public Point.SidePoint sideSwing;
 
-            /// <summary>
-            /// Constructor used to pass informations
-            /// </summary>
-            /// <param name="isNewSwing"></param>
-            /// <param name="price"></param>
-            /// <param name="barIndex"></param>
-            /// <param name="sideSwing"></param>
-            public CalculationData(bool isNewSwing, double price, int barIndex, Point.SidePoint sideSwing)
+            public CalculationData(double price, int barIndex, Point.SidePoint sideSwing)
             {
-                this.isNewSwing = isNewSwing;
+                isNewSwing = true;
                 this.price = price;
                 this.barIndex = barIndex;
                 this.sideSwing = sideSwing;
-            }
-
-            /// <summary>
-            ///  This method constructor should only be used for situations where you do not have data to pass
-            /// </summary>
-            /// <param name="isNewSwing"></param>
-            public CalculationData(bool isNewSwing)
-            {
-                if (isNewSwing)
-                    throw new System.Exception("isNewSwing must be false");
-
-                this.isNewSwing = isNewSwing;
-                price = 0;
-                barIndex = 0;
-                sideSwing = Point.SidePoint.Unknow;
             }
         }
 

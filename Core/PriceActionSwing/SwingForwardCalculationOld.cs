@@ -48,7 +48,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                         " highCandidateValue: " + highCandidateValue +
                         ", highCandidateIndex: " + highCandidateIndex);
                     */
-                    return new CalculationData(true, highCandidateValue, highCandidateIndex, Point.SidePoint.High);
+                    return new CalculationData(highCandidateValue, highCandidateIndex, Point.SidePoint.High);
                 }
                 else if (highCandidateIndex > lowCandidateIndex)
                 {
@@ -57,7 +57,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                         " lowCandidateValue: " + lowCandidateValue +
                         ", lowCandidateIndex: " + lowCandidateIndex);
                     */
-                    return new CalculationData(true, lowCandidateValue, lowCandidateIndex, Point.SidePoint.Low);
+                    return new CalculationData(lowCandidateValue, lowCandidateIndex, Point.SidePoint.Low);
                 }
                 else if(highCandidateIndex == lowCandidateIndex)
                 {
@@ -66,7 +66,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                     logPrinter.PrintError(owner, "Error: The two indexes are equal. " +
                         "High bar index: " + highCandidateIndex + " Low bar index: " + lowCandidateIndex);
                     */
-                    return new CalculationData(true, 0, 0, Point.SidePoint.Unknow);
+                    return new CalculationData(0, 0, Point.SidePoint.Unknow);
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
                 }
             }
 
-            return new CalculationData(false);
+            return new CalculationData();
         }
 
         protected override CalculationData OnCalculationOfEachBarSwingPointRequest()
@@ -118,11 +118,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             //logPrinter.Print(owner, "isRising : " + isRising + ", isFalling : " + isFalling);
 
             if (isRising && isOverHighStrength)
-                return new CalculationData(true, swingHighCandidateValue, owner.CurrentBar, Point.SidePoint.High);
+                return new CalculationData(swingHighCandidateValue, owner.CurrentBar, Point.SidePoint.High);
             if (isFalling && isOverLowStrength)
-                return new CalculationData(true, swingLowCandidateValue, owner.CurrentBar, Point.SidePoint.Low);
+                return new CalculationData(swingLowCandidateValue, owner.CurrentBar, Point.SidePoint.Low);
 
-            return new CalculationData(false);
+            return new CalculationData();
         }
 
         protected override CalculationData OnCalculationOFEachTickSwingPointRequest()

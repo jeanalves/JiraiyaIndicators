@@ -25,11 +25,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             }
 
             if (isRising && isOverHighStrength)
-                return new CalculationData(true, highs[0], owner.CurrentBar, Point.SidePoint.High);
+                return new CalculationData(highs[0], owner.CurrentBar, Point.SidePoint.High);
             if (isFalling && isOverLowStrength)
-                return new CalculationData(true, lows[0], owner.CurrentBar, Point.SidePoint.Low);
+                return new CalculationData(lows[0], owner.CurrentBar, Point.SidePoint.Low);
             
-            return new CalculationData(false);
+            return new CalculationData();
         }
     }
 }
