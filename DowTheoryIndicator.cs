@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Windows;
@@ -56,10 +57,17 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
             }
 		}
 
-		protected override void OnBarUpdate()
-		{
-            dowTheory.Compute();
-		}
+        protected override void OnBarUpdate()
+        {
+            try
+            { 
+                dowTheory.Compute();
+            }
+            catch (Exception e)
+            {
+                Code.Output.Process(CurrentBar + "    " + e.ToString(), PrintTo.OutputTab2);
+            }
+        }
 
         #region Properties
         [NinjaScriptProperty]
