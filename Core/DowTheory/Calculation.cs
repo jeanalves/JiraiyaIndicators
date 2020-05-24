@@ -45,8 +45,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         private void AddOrUpdateIfNewMatrixPoints(CalculationData calculationData)
         {
-            // Here, no code is needed to update the matrix due to the object
-            // reference already passed in the list of points, from MatrixPoints.PointsList
+            // Here, no code is needed to update the matrix due to the Point's object
+            // reference already passed in the list of points, when the last point on
+            // the list is updated the Matrix will already have itself updated. 
+            // So you just need to redraw the pattern on the chart
             if (!IsNewMatrixTheSameTheLastOne(calculationData.pointsList))
             {
                 switch (calculationData.whichTrend)
@@ -111,17 +113,22 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         // Miscellaneous
 
-        public struct CalculationData
+        public class CalculationData
         {
             public bool isNewMatrixPoints;
             public List<Point> pointsList;
             public MatrixPoints.WhichTrendSideSignal whichTrend;
             public MatrixPoints.WhichGraphicPatternType whichGraphic;
 
+            public CalculationData()
+            {
+                isNewMatrixPoints = false;
+            }
+
             public CalculationData(List<Point> pointsList, MatrixPoints.WhichTrendSideSignal whichTrend, MatrixPoints.WhichGraphicPatternType whichGraphic)
             {
                 isNewMatrixPoints = true;
-                this.pointsList = pointsList;
+                this.pointsList = new List<Point>(pointsList);
                 this.whichTrend = whichTrend;
                 this.whichGraphic = whichGraphic;
             }

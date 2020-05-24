@@ -6,52 +6,53 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 {
     public class PivotCalculation : Calculation
     {
-        //----Bearish----|---Bullish---
-        //----1----------|----------4--
-        //-----\---3-----|-----2---/---
-        //------\-/-\----|----/-\-/----
-        //-------2---\---|---/---3-----
-        //------------4--|--1----------
-
-        const int firstPoint    = 3;
-        const int secondPoint   = 2;
-        const int thirdPoint    = 1;
-        const int fourthPoint   = 0;
+        private List<Point> pointsList = new List<Point>();
+        private bool isNewMatrixPoints = true;
+        private MatrixPoints.WhichTrendSideSignal whichTrend = MatrixPoints.WhichTrendSideSignal.None;
 
         public PivotCalculation(NinjaScriptBase owner) : base(owner) { }
 
         protected override CalculationData OnCalculationRequest(PriceActionSwingClass priceActionSwingClass)
         {
-            List<Point> pointsList = new List<Point>();
-            MatrixPoints.WhichTrendSideSignal whichTrend = MatrixPoints.WhichTrendSideSignal.None;
-
-            bool isNewMatrixPoints = true;
-
-            if (priceActionSwingClass.GetPoint(firstPoint) == null)
+            if (priceActionSwingClass.GetPoint(3) == null)
             {
                 return new CalculationData();
             }
 
-            pointsList.Add(priceActionSwingClass.GetPoint(fourthPoint));
-            pointsList.Add(priceActionSwingClass.GetPoint(thirdPoint));
-            pointsList.Add(priceActionSwingClass.GetPoint(secondPoint));
-            pointsList.Add(priceActionSwingClass.GetPoint(firstPoint));
+            pointsList.Clear();
+            isNewMatrixPoints = false;
+
+            //----Bearish----|---Bullish---
+            //----0----------|----------3--
+            //-----\---2-----|-----1---/---
+            //------\-/-\----|----/-\-/----
+            //-------1---\---|---/---2-----
+            //------------3--|--0----------
+
+            pointsList.Add(priceActionSwingClass.GetPoint(3)); // First point or  pointsList[0]
+            pointsList.Add(priceActionSwingClass.GetPoint(2)); // Second point or pointsList[1]
+            pointsList.Add(priceActionSwingClass.GetPoint(1)); // Third point or  pointsList[2]
+            pointsList.Add(priceActionSwingClass.GetPoint(0)); // Fourth point or pointsList[3]
 
             // Test a long pivot
-            if (pointsList[firstPoint].CurrentSideSwing == Point.SidePoint.Low)
+            if (pointsList[0].CurrentSideSwing == Point.SidePoint.Low && whichTrend != MatrixPoints.WhichTrendSideSignal.Bullish)
             {
-                isNewMatrixPoints = pointsList[firstPoint].Price < pointsList[thirdPoint].Price &&
-                                    pointsList[secondPoint].Price < pointsList[fourthPoint].Price;
-
-                whichTrend = MatrixPoints.WhichTrendSideSignal.Bullish;
+                isNewMatrixPoints = pointsList[0].Price < pointsList[2].Price &&
+                                    pointsList[1].Price < pointsList[3].Price;
+                if (isNewMatrixPoints)
+                {
+                    whichTrend = MatrixPoints.WhichTrendSideSignal.Bullish;
+                }
             }
             // Test a short pivot
-            else if (pointsList[firstPoint].CurrentSideSwing == Point.SidePoint.High)
+            else if (pointsList[0].CurrentSideSwing == Point.SidePoint.High && whichTrend != MatrixPoints.WhichTrendSideSignal.Bearish)
             {
-                isNewMatrixPoints = pointsList[firstPoint].Price > pointsList[thirdPoint].Price &&
-                                    pointsList[secondPoint].Price > pointsList[fourthPoint].Price;
-
-                whichTrend = MatrixPoints.WhichTrendSideSignal.Bearish;
+                isNewMatrixPoints = pointsList[0].Price > pointsList[2].Price &&
+                                    pointsList[1].Price > pointsList[3].Price;
+                if (isNewMatrixPoints)
+                {
+                    whichTrend = MatrixPoints.WhichTrendSideSignal.Bearish;
+                }
             }
 
             return isNewMatrixPoints == true ? new CalculationData(pointsList, whichTrend, MatrixPoints.WhichGraphicPatternType.Pivot) : 
