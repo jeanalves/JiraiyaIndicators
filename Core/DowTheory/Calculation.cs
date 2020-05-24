@@ -41,6 +41,27 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
         protected abstract CalculationData OnCalculationRequest(PriceActionSwingClass priceActionSwingClass);
 
+        protected bool IsNewMatrixTheSameTheLastOne(List<Point> newPointsList)
+        {
+            if (matrixPointsList.Count <= 0)
+            {
+                return false;
+            }
+
+            MatrixPoints lastMatrix = matrixPointsList[matrixPointsList.Count - 1];
+
+            // Test all points except the last one
+            for (int i = 0; i <= newPointsList.Count - 2; i++)
+            {
+                if (lastMatrix.PointsList[i].Index != newPointsList[i].Index)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         // Private (methods)
 
         private void AddOrUpdateIfNewMatrixPoints(CalculationData calculationData)
@@ -70,27 +91,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                         break;
                 }
             }
-        }
-
-        private bool IsNewMatrixTheSameTheLastOne(List<Point> newPointsList)
-        {
-            if (matrixPointsList.Count <= 0)
-            {
-                return false;
-            }
-            
-            MatrixPoints lastMatrix = matrixPointsList[matrixPointsList.Count - 1];
-
-            // Test all points except the last one
-            for (int i = 0; i<= newPointsList.Count - 2; i++)
-            {
-                if (lastMatrix.PointsList[i].Index != newPointsList[i].Index)
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         // Properties

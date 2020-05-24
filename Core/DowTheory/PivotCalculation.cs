@@ -35,7 +35,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             pointsList.Add(priceActionSwingClass.GetPoint(0)); // Fourth point or pointsList[3]
 
             // Test a long pivot
-            if (pointsList[0].CurrentSideSwing == Point.SidePoint.Low && whichTrend != MatrixPoints.WhichTrendSideSignal.Bullish)
+            if ((pointsList[0].CurrentSideSwing == Point.SidePoint.Low && whichTrend != MatrixPoints.WhichTrendSideSignal.Bullish) ||
+                (pointsList[0].CurrentSideSwing == Point.SidePoint.Low && IsNewMatrixTheSameTheLastOne(pointsList)))
             {
                 isNewMatrixPoints = pointsList[0].Price < pointsList[2].Price &&
                                     pointsList[1].Price < pointsList[3].Price;
@@ -45,7 +46,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                 }
             }
             // Test a short pivot
-            else if (pointsList[0].CurrentSideSwing == Point.SidePoint.High && whichTrend != MatrixPoints.WhichTrendSideSignal.Bearish)
+            else if ((pointsList[0].CurrentSideSwing == Point.SidePoint.High && whichTrend != MatrixPoints.WhichTrendSideSignal.Bearish) ||
+                     (pointsList[0].CurrentSideSwing == Point.SidePoint.High && IsNewMatrixTheSameTheLastOne(pointsList)))
             {
                 isNewMatrixPoints = pointsList[0].Price > pointsList[2].Price &&
                                     pointsList[1].Price > pointsList[3].Price;
