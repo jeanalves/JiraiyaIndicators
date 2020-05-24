@@ -31,8 +31,13 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 				//Disable this property if your indicator requires custom values that cumulate with each new market data event. 
 				//See Help Guide for additional information.
 				IsSuspendedWhileInactive					= true;
-                CalculationType                             = CalculationTypeListDowTheory.Pivot;
+
+                CalculationTypeDT                           = CalculationTypeListDowTheory.Pivot;
+                CalculationTypePCW                          = CalculationTypeList.SwingForward;
                 Strength                                    = 2;
+                UseHighLow                                  = true;
+                ShowPoints                                  = true;
+                ShowLines                                   = true;
 
                 AddPlot(Brushes.Transparent, "Long Short Signal");
 			}
@@ -44,7 +49,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 drawingProperties = new DrawingProperties(true, Brushes.Green, Brushes.Red, Brushes.Transparent, Brushes.White,
                                                           true, 15, Brushes.White, new Gui.Tools.SimpleFont("Arial", 11), TextAlignment.Center, Brushes.Transparent, Brushes.Transparent, 100,
                                                           true, Brushes.White, Gui.DashStyleHelper.Solid, 3);
-                dowTheory = new DowTheoryClass(this, drawingProperties, CalculationType, Strength);
+                dowTheory = new DowTheoryClass(this, drawingProperties, CalculationTypeDT, CalculationTypePCW, Strength, UseHighLow, ShowPoints, ShowLines);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
                 // LogPrinter.ResetOuputTabs();
@@ -58,13 +63,31 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 
         #region Properties
         [NinjaScriptProperty]
-        [Display(Name = "Calculation type", Order = 0, GroupName = "Parameters")]
-        public CalculationTypeListDowTheory CalculationType
+        [Display(Name = "Dow theory calculation type", Order = 0, GroupName = "Parameters")]
+        public CalculationTypeListDowTheory CalculationTypeDT
         { get; set; }
 
         [NinjaScriptProperty]
-        [Display(Name = "Strengh", Order = 1, GroupName = "Parameters")]
+        [Display(Name = "Price action swing calculation type", Order = 1, GroupName = "Parameters")]
+        public CalculationTypeList CalculationTypePCW
+        { get; set; }
+
+        [NinjaScriptProperty]
+        [Display(Name = "Strengh", Order = 2, GroupName = "Parameters")]
         public double Strength { get; set; }
+
+        [NinjaScriptProperty]
+        [Display(Name = "Use HighLow", Order = 3, GroupName = "Parameters")]
+        public bool UseHighLow
+        { get; set; }
+
+        [Display(Name = "Show points", Order = 4, GroupName = "Parameters")]
+        public bool ShowPoints
+        { get; set; }
+
+        [Display(Name = "Show lines", Order = 5, GroupName = "Parameters")]
+        public bool ShowLines
+        { get; set; }
 
         [Browsable(false)]
         [XmlIgnore]
@@ -83,18 +106,18 @@ namespace NinjaTrader.NinjaScript.Indicators
 	public partial class Indicator : NinjaTrader.Gui.NinjaScript.IndicatorRenderBase
 	{
 		private JiraiyaIndicators.DowTheoryIndicator[] cacheDowTheoryIndicator;
-		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationType, double strength)
+		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
 		{
-			return DowTheoryIndicator(Input, calculationType, strength);
+			return DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
 		}
 
-		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input, CalculationTypeListDowTheory calculationType, double strength)
+		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input, CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
 		{
 			if (cacheDowTheoryIndicator != null)
 				for (int idx = 0; idx < cacheDowTheoryIndicator.Length; idx++)
-					if (cacheDowTheoryIndicator[idx] != null && cacheDowTheoryIndicator[idx].CalculationType == calculationType && cacheDowTheoryIndicator[idx].Strength == strength && cacheDowTheoryIndicator[idx].EqualsInput(input))
+					if (cacheDowTheoryIndicator[idx] != null && cacheDowTheoryIndicator[idx].CalculationTypeDT == calculationTypeDT && cacheDowTheoryIndicator[idx].CalculationTypePCW == calculationTypePCW && cacheDowTheoryIndicator[idx].Strength == strength && cacheDowTheoryIndicator[idx].UseHighLow == useHighLow && cacheDowTheoryIndicator[idx].EqualsInput(input))
 						return cacheDowTheoryIndicator[idx];
-			return CacheIndicator<JiraiyaIndicators.DowTheoryIndicator>(new JiraiyaIndicators.DowTheoryIndicator(){ CalculationType = calculationType, Strength = strength }, input, ref cacheDowTheoryIndicator);
+			return CacheIndicator<JiraiyaIndicators.DowTheoryIndicator>(new JiraiyaIndicators.DowTheoryIndicator(){ CalculationTypeDT = calculationTypeDT, CalculationTypePCW = calculationTypePCW, Strength = strength, UseHighLow = useHighLow }, input, ref cacheDowTheoryIndicator);
 		}
 	}
 }
@@ -103,14 +126,14 @@ namespace NinjaTrader.NinjaScript.MarketAnalyzerColumns
 {
 	public partial class MarketAnalyzerColumn : MarketAnalyzerColumnBase
 	{
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationType, double strength)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
 		{
-			return indicator.DowTheoryIndicator(Input, calculationType, strength);
+			return indicator.DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
 		}
 
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationType, double strength)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
 		{
-			return indicator.DowTheoryIndicator(input, calculationType, strength);
+			return indicator.DowTheoryIndicator(input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
 		}
 	}
 }
@@ -119,14 +142,14 @@ namespace NinjaTrader.NinjaScript.Strategies
 {
 	public partial class Strategy : NinjaTrader.Gui.NinjaScript.StrategyRenderBase
 	{
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationType, double strength)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
 		{
-			return indicator.DowTheoryIndicator(Input, calculationType, strength);
+			return indicator.DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
 		}
 
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationType, double strength)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
 		{
-			return indicator.DowTheoryIndicator(input, calculationType, strength);
+			return indicator.DowTheoryIndicator(input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
 		}
 	}
 }

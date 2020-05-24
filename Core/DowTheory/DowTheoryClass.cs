@@ -13,15 +13,19 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         private readonly PivotCalculation pivotCalculation;
         private readonly TrendCalculation trendCalculation;
 
+        public CalculationTypeListDowTheory CalculationType { get; private set; }
+
         // Initialization
 
-        public DowTheoryClass(NinjaScriptBase owner, DrawingProperties drawingProperties, CalculationTypeListDowTheory calculationTypeList, double strength)
+        public DowTheoryClass(NinjaScriptBase owner, DrawingProperties drawingProperties, CalculationTypeListDowTheory calculationTypeListDT,
+                              CalculationTypeList calculationTypeListPCW, double strength, bool useHighLow, bool showPoints, bool showLines)
         {
             this.owner = owner;
             this.drawingProperties = drawingProperties;
-            CalculationType = calculationTypeList;
+            CalculationType = calculationTypeListDT;
 
-            priceActionSwingClass = new PriceActionSwingClass(owner, drawingProperties, CalculationTypeList.SwingForward, strength, true, true);
+            priceActionSwingClass = new PriceActionSwingClass(owner, drawingProperties, calculationTypeListPCW, strength, 
+                                                              useHighLow, showPoints, showLines);
             trendCalculation = new TrendCalculation(owner);
             pivotCalculation = new PivotCalculation(owner);
 
@@ -85,10 +89,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
             return null;
         }
-
-        // Properties
-
-        public CalculationTypeListDowTheory CalculationType { get; private set; }
     }
 }
 

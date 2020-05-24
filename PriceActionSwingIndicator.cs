@@ -32,7 +32,8 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 CalculationType                             = CalculationTypeList.SwingForward;
 				Strength					                = 2;
 				UseHighLow					                = true;
-				ShowLog					                    = true;
+				ShowPoints					                = true;
+                ShowLines                                   = true;
 
                 DotParameters = new DotExpandableParameters()
                 {
@@ -48,7 +49,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 drawingProperties = new DrawingProperties(DotParameters.IsDotAutoScale, DotParameters.UpDotColor, DotParameters.DowDotColor, DotParameters.UpDotOutlineColor, DotParameters.DownDotOutlineColor,
                                                           true, 15, Brushes.White, new Gui.Tools.SimpleFont("Arial", 11), TextAlignment.Center, Brushes.Transparent, Brushes.Transparent, 100,
                                                           true, Brushes.White, Gui.DashStyleHelper.Solid, 1);
-                priceActionSwing = new PriceActionSwingClass(this, drawingProperties, CalculationType, Strength, UseHighLow, ShowLog);
+                priceActionSwing = new PriceActionSwingClass(this, drawingProperties, CalculationType, Strength, UseHighLow, ShowPoints, ShowLines);
                 
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
@@ -85,11 +86,15 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         public bool UseHighLow
         { get; set; }
 
-        [Display(Name = "Show log on output window", Order = 3, GroupName = "Parameters")]
-        public bool ShowLog
+        [Display(Name = "Show points", Order = 3, GroupName = "Parameters")]
+        public bool ShowPoints
         { get; set; }
 
-        [Display(Name = "Dot parameters", Order = 4, GroupName = "Parameters")]
+        [Display(Name = "Show lines", Order = 4, GroupName = "Parameters")]
+        public bool ShowLines
+        { get; set; }
+
+        [Display(Name = "Dot parameters", Order = 5, GroupName = "Parameters")]
         public DotExpandableParameters DotParameters
         { get; set; }
         #endregion

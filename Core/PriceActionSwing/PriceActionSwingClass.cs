@@ -13,9 +13,16 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         private readonly SwingForwardCalculation swingForwardCalculation;
         private readonly SwingForwardCalculationOld swingForwardCalculationOld;
 
+        public CalculationTypeList CalculationType { get; private set; }
+        public double Strength { get; private set; }
+        public bool UseHighLow { get; private set; }
+        public bool ShowPoints { get; private set; }
+        public bool ShowLines { get; private set; }
+
         // Initialization
 
-        public PriceActionSwingClass(NinjaScriptBase owner, DrawingProperties drawingProperties, CalculationTypeList calculationType, double strength, bool useHighLow, bool showLog)
+        public PriceActionSwingClass(NinjaScriptBase owner, DrawingProperties drawingProperties, CalculationTypeList calculationType,
+                                     double strength, bool useHighLow, bool showPoints, bool showLines)
         {
             this.owner = owner;
             this.drawingProperties = drawingProperties;
@@ -26,12 +33,8 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             CalculationType = calculationType;
             Strength = strength;
             UseHighLow = useHighLow;
-            ShowLog = showLog;
-
-            if (!ShowLog)
-            {
-                //logPrinter.SetIndicatorAsInvisible(owner);
-            }
+            ShowPoints = showPoints;
+            ShowLines = showLines;
         }
 
         public void Compute()
@@ -57,14 +60,20 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         private void OnCalculationUpdate(Calculation ChosenCalculationObject)
         {
-            Drawing.DrawPoint(owner, ChosenCalculationObject.GetPoint(0), drawingProperties);
+            if (ShowPoints)
+            {
+                Drawing.DrawPoint(owner, ChosenCalculationObject.GetPoint(0), drawingProperties);
+            }
 
             // Test if there is more than two points to be able in draw a line
-            if (ChosenCalculationObject.GetPointsList().Count > 1)
+            if (ShowLines)
             {
-                Drawing.DrawZigZag(owner, drawingProperties,
-                                   ChosenCalculationObject.GetPoint(1),
-                                   ChosenCalculationObject.GetPoint(0));
+                if (ChosenCalculationObject.GetPointsList().Count > 1)
+                {
+                    Drawing.DrawZigZag(owner, drawingProperties,
+                                       ChosenCalculationObject.GetPoint(1),
+                                       ChosenCalculationObject.GetPoint(0));
+                }
             }
         }
 
@@ -86,11 +95,6 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
         }
 
         // Properties
-
-        public CalculationTypeList CalculationType { get; private set; }
-        public double Strength { get; private set; }
-        public bool UseHighLow { get; private set; }
-        public bool ShowLog { get; private set; }
 
         public List<Point> GetPointsList
         {
