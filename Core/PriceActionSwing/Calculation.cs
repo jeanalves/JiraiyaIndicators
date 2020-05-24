@@ -277,12 +277,17 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
 
         // Miscellaneous
 
-        public struct CalculationData
+        public class CalculationData
         {
             public bool isNewSwing;
             public double price;
             public int barIndex;
             public Point.SidePoint sideSwing;
+
+            public CalculationData()
+            {
+                isNewSwing = false;
+            }
 
             public CalculationData(double price, int barIndex, Point.SidePoint sideSwing)
             {
