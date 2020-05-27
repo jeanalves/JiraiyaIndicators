@@ -21,6 +21,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
             pointsList.Clear();
             isNewMatrixPoints = false;
+            ResetWhichTrendVariableBySMA(20);
 
             //----Bearish----|---Bullish---
             //----0----------|----------3--
@@ -59,6 +60,11 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
 
             return isNewMatrixPoints == true ? new CalculationData(pointsList, whichTrend, MatrixPoints.WhichGraphicPatternType.Pivot) : 
                 new CalculationData();
+        }
+
+        private void ResetWhichTrendVariableBySMA(int smaPeriod)
+        {
+
         }
     }
 }
