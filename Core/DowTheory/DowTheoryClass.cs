@@ -77,7 +77,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             Drawing.DrawPivot(owner, drawingProperties, chosenCalculationObject.GetMatrixPoints(0));
         }
 
-        private Calculation GetChosenCalculationObject()
+        public Calculation GetChosenCalculationObject()
         {
             switch(CalculationType)
             {

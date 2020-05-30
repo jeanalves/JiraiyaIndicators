@@ -69,6 +69,17 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
             }
         }
 
+        // Other properties
+
+        [Browsable(false)]
+        public MatrixPoints LastMatrix
+        {
+            get
+            {
+                return dowTheory.GetChosenCalculationObject().LastMatrixPoints;
+            }
+        }
+
         #region Properties
         [NinjaScriptProperty]
         [Display(Name = "Dow theory calculation type", Order = 0, GroupName = "Parameters")]
