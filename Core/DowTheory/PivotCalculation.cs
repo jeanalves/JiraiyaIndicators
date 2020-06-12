@@ -7,7 +7,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
     public class PivotCalculation : Calculation
     {
         private List<Point> pointsList = new List<Point>();
-        private bool isNewMatrixPoints = true;
+        private bool isNewPivot = true;
         private MatrixPoints.WhichTrendSideSignal whichTrend = MatrixPoints.WhichTrendSideSignal.None;
 
         public PivotCalculation(NinjaScriptBase owner) : base(owner) { }
@@ -20,8 +20,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             }
 
             pointsList.Clear();
-            isNewMatrixPoints = false;
-            ResetWhichTrendVariableBySMA(20);
+            isNewPivot = false;
 
             //----Bearish----|---Bullish---
             //----3----------|----------0--
@@ -39,10 +38,13 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             if ((pointsList[3].CurrentSideSwing == Point.SidePoint.Low && whichTrend != MatrixPoints.WhichTrendSideSignal.Bullish) ||
                 (pointsList[3].CurrentSideSwing == Point.SidePoint.Low && IsNewMatrixTheSameTheLastOne(pointsList)))
             {
-                isNewMatrixPoints = pointsList[3].Price < pointsList[1].Price &&
+                isNewPivot = pointsList[3].Price < pointsList[1].Price &&
                                     pointsList[2].Price < pointsList[0].Price;
-                if (isNewMatrixPoints)
+                
+                if (isNewPivot)
                 {
+                    IsLowerThanMaxPercentPivotRetracement(pointsList, 50, MatrixPoints.WhichTrendSideSignal.Bullish);
+                    IsHigherThanMinPercentPivotRetracement(pointsList, 10, MatrixPoints.WhichTrendSideSignal.Bullish);
                     whichTrend = MatrixPoints.WhichTrendSideSignal.Bullish;
                 }
             }
@@ -50,21 +52,94 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             else if ((pointsList[3].CurrentSideSwing == Point.SidePoint.High && whichTrend != MatrixPoints.WhichTrendSideSignal.Bearish) ||
                      (pointsList[3].CurrentSideSwing == Point.SidePoint.High && IsNewMatrixTheSameTheLastOne(pointsList)))
             {
-                isNewMatrixPoints = pointsList[3].Price > pointsList[1].Price &&
+                isNewPivot = pointsList[3].Price > pointsList[1].Price &&
                                     pointsList[2].Price > pointsList[0].Price;
-                if (isNewMatrixPoints)
+                if (isNewPivot)
                 {
+                    IsLowerThanMaxPercentPivotRetracement(pointsList, 50, MatrixPoints.WhichTrendSideSignal.Bearish);
+                    IsHigherThanMinPercentPivotRetracement(pointsList, 10, MatrixPoints.WhichTrendSideSignal.Bearish);
                     whichTrend = MatrixPoints.WhichTrendSideSignal.Bearish;
                 }
             }
 
-            return isNewMatrixPoints == true ? new CalculationData(pointsList, whichTrend, MatrixPoints.WhichGraphicPatternType.Pivot) : 
+            return isNewPivot == true ? new CalculationData(pointsList, whichTrend, MatrixPoints.WhichGraphicPatternType.Pivot) : 
                 new CalculationData();
         }
 
-        private void ResetWhichTrendVariableBySMA(int smaPeriod)
+        private bool IsLowerThanMaxPercentPivotRetracement(List<Point> pointsList, double maxPercent, MatrixPoints.WhichTrendSideSignal whichTrendSideSignal)
         {
+            switch(whichTrendSideSignal)
+            {
+                case MatrixPoints.WhichTrendSideSignal.Bullish:
+                    
+                    double bullishRangeToMeasure = (pointsList[3].Price - pointsList[2].Price) * -1;
+                    double upLimit = (maxPercent / 100) * bullishRangeToMeasure;
+                    upLimit -= (pointsList[3].Price * -1);
 
+                    DrawWrapper.DrawLineForTest(owner, "Up test " + owner.CurrentBar, System.Windows.Media.Brushes.Gray,
+                                                pointsList[3].BarIndex, upLimit, pointsList[0].BarIndex, upLimit);
+
+                    if (pointsList[1].Price < upLimit)
+                    {
+                        return true;
+                    }
+                    break;
+
+                case MatrixPoints.WhichTrendSideSignal.Bearish:
+
+                    double bearishRangeToMeasure = pointsList[3].Price - pointsList[2].Price;
+                    double downLimit = (maxPercent / 100) * bearishRangeToMeasure;
+                    downLimit += pointsList[2].Price;
+
+                    DrawWrapper.DrawLineForTest(owner, "Down test " + owner.CurrentBar, System.Windows.Media.Brushes.Gray,
+                                                pointsList[3].BarIndex, downLimit, pointsList[0].BarIndex, downLimit);
+
+                    if(pointsList[1].Price > downLimit)
+                    {
+                        return true;
+                    }
+                    break;
+            }
+            return false;
+        }
+
+        private bool IsHigherThanMinPercentPivotRetracement(List<Point> pointsList, double minPercent, MatrixPoints.WhichTrendSideSignal whichTrendSideSignal)
+        {
+            switch(whichTrendSideSignal)
+            {
+                case MatrixPoints.WhichTrendSideSignal.Bullish:
+                    
+                    double bullishRangeToMeasure = (pointsList[3].Price - pointsList[2].Price) * -1;
+                    double upLimit = (minPercent / 100) * bullishRangeToMeasure;
+                    upLimit -= (pointsList[3].Price * -1);
+
+                    DrawWrapper.DrawLineForTest(owner, "Up min test " + owner.CurrentBar, System.Windows.Media.Brushes.LightGray,
+                                                        pointsList[3].BarIndex, upLimit, pointsList[0].BarIndex, upLimit);
+
+                    if (pointsList[1].Price > upLimit)
+                    {
+                        return true;
+                    }
+                    break;
+
+                case MatrixPoints.WhichTrendSideSignal.Bearish:
+
+                    double bearishRangeToMeasure = pointsList[3].Price - pointsList[2].Price;
+                    double downLimit = (minPercent / 100) * bearishRangeToMeasure;
+                    downLimit += pointsList[2].Price;
+
+                    DrawWrapper.DrawLineForTest(owner, "Down min test " + owner.CurrentBar, System.Windows.Media.Brushes.LightGray,
+                                                pointsList[3].BarIndex, downLimit, pointsList[0].BarIndex, downLimit);
+
+                    if (pointsList[1].Price < downLimit)
+                    {
+                        return true;
+                    }
+                    break;
+            }
+            
+
+            return false;
         }
     }
 }
