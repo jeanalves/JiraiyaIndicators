@@ -45,6 +45,20 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators
                 drawingProperties.LineColor, drawingProperties.LineDashStyle, drawingProperties.LineWidth);
         }
 
+        public static void DrawLineForTest(NinjaScriptBase owner,
+                                           string text,
+                                           Brush color,
+                                           int barIndex1,
+                                           double price1,
+                                           int barIndex0,
+                                           double price0)
+        {
+            Draw.Line(owner, text, false,
+                      ConvertBarIndexToBarsAgo(owner, barIndex1), price1, 
+                      ConvertBarIndexToBarsAgo(owner, barIndex0), price0, 
+                      color, Gui.DashStyleHelper.Solid, 5);
+        }
+
         public static void DrawPathLine(NinjaScriptBase owner,
                                         DrawingProperties drawingProperties,
                                         int pointIndex,
