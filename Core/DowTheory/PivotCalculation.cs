@@ -9,8 +9,16 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         private List<Point> pointsList = new List<Point>();
         private bool isNewPivot = true;
         private MatrixPoints.WhichTrendSideSignal whichTrend = MatrixPoints.WhichTrendSideSignal.None;
+        private double maxPercentOfPivotRetraction = 0;
+        private double minPercentOfPivotRetraction = 0;
 
-        public PivotCalculation(NinjaScriptBase owner) : base(owner) { }
+        public PivotCalculation(NinjaScriptBase owner, 
+                                double maxPercentOfPivotRetraction,
+                                double minPercentOfPivotRetraction) : base(owner)
+        {
+            this.maxPercentOfPivotRetraction = maxPercentOfPivotRetraction;
+            this.minPercentOfPivotRetraction = minPercentOfPivotRetraction;
+        }
 
         protected override CalculationData OnCalculationRequest(PriceActionSwingClass priceActionSwingClass)
         {
@@ -38,13 +46,20 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             if ((pointsList[3].CurrentSideSwing == Point.SidePoint.Low && whichTrend != MatrixPoints.WhichTrendSideSignal.Bullish) ||
                 (pointsList[3].CurrentSideSwing == Point.SidePoint.Low && IsNewMatrixTheSameTheLastOne(pointsList)))
             {
-                isNewPivot = pointsList[3].Price < pointsList[1].Price &&
-                                    pointsList[2].Price < pointsList[0].Price;
+                bool isLongPivot = pointsList[3].Price < pointsList[1].Price &&
+                                   pointsList[2].Price < pointsList[0].Price;
                 
+                bool isBetweenLongPercentRetracement = IsLowerThanMaxPercentPivotRetracement(pointsList, 
+                                                                                             maxPercentOfPivotRetraction, 
+                                                                                             MatrixPoints.WhichTrendSideSignal.Bullish) &&
+                                                       IsHigherThanMinPercentPivotRetracement(pointsList, 
+                                                                                              minPercentOfPivotRetraction,
+                                                                                              MatrixPoints.WhichTrendSideSignal.Bullish);
+
+                isNewPivot = isLongPivot && isBetweenLongPercentRetracement;
+
                 if (isNewPivot)
                 {
-                    IsLowerThanMaxPercentPivotRetracement(pointsList, 50, MatrixPoints.WhichTrendSideSignal.Bullish);
-                    IsHigherThanMinPercentPivotRetracement(pointsList, 10, MatrixPoints.WhichTrendSideSignal.Bullish);
                     whichTrend = MatrixPoints.WhichTrendSideSignal.Bullish;
                 }
             }
@@ -52,12 +67,20 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             else if ((pointsList[3].CurrentSideSwing == Point.SidePoint.High && whichTrend != MatrixPoints.WhichTrendSideSignal.Bearish) ||
                      (pointsList[3].CurrentSideSwing == Point.SidePoint.High && IsNewMatrixTheSameTheLastOne(pointsList)))
             {
-                isNewPivot = pointsList[3].Price > pointsList[1].Price &&
+                bool isShortPivot = pointsList[3].Price > pointsList[1].Price &&
                                     pointsList[2].Price > pointsList[0].Price;
+
+                bool isBetweenShortPercentRetracement = IsLowerThanMaxPercentPivotRetracement(pointsList, 
+                                                                                              maxPercentOfPivotRetraction, 
+                                                                                              MatrixPoints.WhichTrendSideSignal.Bearish) &&
+                                                        IsHigherThanMinPercentPivotRetracement(pointsList,
+                                                                                               minPercentOfPivotRetraction,
+                                                                                               MatrixPoints.WhichTrendSideSignal.Bearish);
+
+                isNewPivot = isShortPivot && isBetweenShortPercentRetracement;
+
                 if (isNewPivot)
                 {
-                    IsLowerThanMaxPercentPivotRetracement(pointsList, 50, MatrixPoints.WhichTrendSideSignal.Bearish);
-                    IsHigherThanMinPercentPivotRetracement(pointsList, 10, MatrixPoints.WhichTrendSideSignal.Bearish);
                     whichTrend = MatrixPoints.WhichTrendSideSignal.Bearish;
                 }
             }
@@ -76,11 +99,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                     double upLimit = (maxPercent / 100) * bullishRangeToMeasure;
                     upLimit -= (pointsList[3].Price * -1);
 
-                    DrawWrapper.DrawLineForTest(owner, "Up test " + owner.CurrentBar, System.Windows.Media.Brushes.Gray,
-                                                pointsList[3].BarIndex, upLimit, pointsList[0].BarIndex, upLimit);
-
                     if (pointsList[1].Price < upLimit)
                     {
+                        /*DrawWrapper.DrawLineForTest(owner, "Up test " + owner.CurrentBar, System.Windows.Media.Brushes.Gray,
+                                                pointsList[3].BarIndex, upLimit, pointsList[0].BarIndex, upLimit);*/
                         return true;
                     }
                     break;
@@ -91,11 +113,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                     double downLimit = (maxPercent / 100) * bearishRangeToMeasure;
                     downLimit += pointsList[2].Price;
 
-                    DrawWrapper.DrawLineForTest(owner, "Down test " + owner.CurrentBar, System.Windows.Media.Brushes.Gray,
-                                                pointsList[3].BarIndex, downLimit, pointsList[0].BarIndex, downLimit);
-
-                    if(pointsList[1].Price > downLimit)
+                    if(pointsList[1].Price < downLimit)
                     {
+                        /*DrawWrapper.DrawLineForTest(owner, "Down test " + owner.CurrentBar, System.Windows.Media.Brushes.Gray,
+                                                pointsList[3].BarIndex, downLimit, pointsList[0].BarIndex, downLimit);*/
                         return true;
                     }
                     break;
@@ -113,11 +134,10 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                     double upLimit = (minPercent / 100) * bullishRangeToMeasure;
                     upLimit -= (pointsList[3].Price * -1);
 
-                    DrawWrapper.DrawLineForTest(owner, "Up min test " + owner.CurrentBar, System.Windows.Media.Brushes.LightGray,
-                                                        pointsList[3].BarIndex, upLimit, pointsList[0].BarIndex, upLimit);
-
                     if (pointsList[1].Price > upLimit)
                     {
+                        /*DrawWrapper.DrawLineForTest(owner, "Up min test " + owner.CurrentBar, System.Windows.Media.Brushes.LightGray,
+                                                        pointsList[3].BarIndex, upLimit, pointsList[0].BarIndex, upLimit);*/
                         return true;
                     }
                     break;
@@ -128,17 +148,14 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                     double downLimit = (minPercent / 100) * bearishRangeToMeasure;
                     downLimit += pointsList[2].Price;
 
-                    DrawWrapper.DrawLineForTest(owner, "Down min test " + owner.CurrentBar, System.Windows.Media.Brushes.LightGray,
-                                                pointsList[3].BarIndex, downLimit, pointsList[0].BarIndex, downLimit);
-
-                    if (pointsList[1].Price < downLimit)
+                    if (pointsList[1].Price > downLimit)
                     {
+                        /*DrawWrapper.DrawLineForTest(owner, "Down min test " + owner.CurrentBar, System.Windows.Media.Brushes.LightGray,
+                                                pointsList[3].BarIndex, downLimit, pointsList[0].BarIndex, downLimit);*/
                         return true;
                     }
                     break;
             }
-            
-
             return false;
         }
     }

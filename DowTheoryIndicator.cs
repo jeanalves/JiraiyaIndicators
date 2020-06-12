@@ -39,6 +39,8 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 UseHighLow                                  = true;
                 ShowPoints                                  = true;
                 ShowLines                                   = true;
+                MaxPercentOfPivotRetraction                 = 80;
+                MinPercentOfPivotRetraction                 = 20;
 
                 AddPlot(Brushes.Transparent, "Long Short Signal");
 			}
@@ -50,7 +52,8 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 drawingProperties = new DrawingProperties(true, Brushes.Green, Brushes.Red, Brushes.Transparent, Brushes.White,
                                                           true, 15, Brushes.White, new Gui.Tools.SimpleFont("Arial", 11), TextAlignment.Center, Brushes.Transparent, Brushes.Transparent, 100,
                                                           true, Brushes.White, Gui.DashStyleHelper.Solid, 3);
-                dowTheory = new DowTheoryClass(this, drawingProperties, CalculationTypeDT, CalculationTypePCW, Strength, UseHighLow, ShowPoints, ShowLines);
+                dowTheory = new DowTheoryClass(this, drawingProperties, CalculationTypeDT, CalculationTypePCW, Strength, UseHighLow, ShowPoints, ShowLines,
+                                               MaxPercentOfPivotRetraction, MinPercentOfPivotRetraction);
 
                 // Everytime the F5 key is pressed automatically will clear the output window.
                 // LogPrinter.ResetOuputTabs();
@@ -108,6 +111,18 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         public bool ShowLines
         { get; set; }
 
+        [NinjaScriptProperty]
+        [Range(0, 100)]
+        [Display(Name = "Max percent of pivot retraction", Order = 6, GroupName = "Parameters")]
+        public double MaxPercentOfPivotRetraction
+        { get; set; }
+
+        [NinjaScriptProperty]
+        [Range(0, 100)]
+        [Display(Name = "Min percent of pivot retraction", Order = 7, GroupName = "Parameters")]
+        public double MinPercentOfPivotRetraction
+        { get; set; }
+
         [Browsable(false)]
         [XmlIgnore]
         public Series<double> LongShortSignal
@@ -125,18 +140,18 @@ namespace NinjaTrader.NinjaScript.Indicators
 	public partial class Indicator : NinjaTrader.Gui.NinjaScript.IndicatorRenderBase
 	{
 		private JiraiyaIndicators.DowTheoryIndicator[] cacheDowTheoryIndicator;
-		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
+		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
-			return DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
+			return DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
 
-		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input, CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
+		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input, CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
 			if (cacheDowTheoryIndicator != null)
 				for (int idx = 0; idx < cacheDowTheoryIndicator.Length; idx++)
-					if (cacheDowTheoryIndicator[idx] != null && cacheDowTheoryIndicator[idx].CalculationTypeDT == calculationTypeDT && cacheDowTheoryIndicator[idx].CalculationTypePCW == calculationTypePCW && cacheDowTheoryIndicator[idx].Strength == strength && cacheDowTheoryIndicator[idx].UseHighLow == useHighLow && cacheDowTheoryIndicator[idx].EqualsInput(input))
+					if (cacheDowTheoryIndicator[idx] != null && cacheDowTheoryIndicator[idx].CalculationTypeDT == calculationTypeDT && cacheDowTheoryIndicator[idx].CalculationTypePCW == calculationTypePCW && cacheDowTheoryIndicator[idx].Strength == strength && cacheDowTheoryIndicator[idx].UseHighLow == useHighLow && cacheDowTheoryIndicator[idx].MaxPercentOfPivotRetraction == maxPercentOfPivotRetraction && cacheDowTheoryIndicator[idx].MinPercentOfPivotRetraction == minPercentOfPivotRetraction && cacheDowTheoryIndicator[idx].EqualsInput(input))
 						return cacheDowTheoryIndicator[idx];
-			return CacheIndicator<JiraiyaIndicators.DowTheoryIndicator>(new JiraiyaIndicators.DowTheoryIndicator(){ CalculationTypeDT = calculationTypeDT, CalculationTypePCW = calculationTypePCW, Strength = strength, UseHighLow = useHighLow }, input, ref cacheDowTheoryIndicator);
+			return CacheIndicator<JiraiyaIndicators.DowTheoryIndicator>(new JiraiyaIndicators.DowTheoryIndicator(){ CalculationTypeDT = calculationTypeDT, CalculationTypePCW = calculationTypePCW, Strength = strength, UseHighLow = useHighLow, MaxPercentOfPivotRetraction = maxPercentOfPivotRetraction, MinPercentOfPivotRetraction = minPercentOfPivotRetraction }, input, ref cacheDowTheoryIndicator);
 		}
 	}
 }
@@ -145,14 +160,14 @@ namespace NinjaTrader.NinjaScript.MarketAnalyzerColumns
 {
 	public partial class MarketAnalyzerColumn : MarketAnalyzerColumnBase
 	{
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
-			return indicator.DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
+			return indicator.DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
 
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
-			return indicator.DowTheoryIndicator(input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
+			return indicator.DowTheoryIndicator(input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
 	}
 }
@@ -161,14 +176,14 @@ namespace NinjaTrader.NinjaScript.Strategies
 {
 	public partial class Strategy : NinjaTrader.Gui.NinjaScript.StrategyRenderBase
 	{
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
-			return indicator.DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
+			return indicator.DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
 
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
-			return indicator.DowTheoryIndicator(input, calculationTypeDT, calculationTypePCW, strength, useHighLow);
+			return indicator.DowTheoryIndicator(input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
 	}
 }
