@@ -72,6 +72,11 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
             }
         }
 
+        public void ResetLongShortSignal()
+        {
+            Value[0] = 0;
+        }
+
         // Other properties
 
         [Browsable(false)]
