@@ -44,7 +44,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             // Calculates if the current high value is a new swing
             if (newHigh)
             {
-                for (int i = 1; i < priceActionSwingClass.Strength + 1; i++)
+                for (int i = 1; i <= priceActionSwingClass.Strength; i++)
                 {
                     if (highs[0] <= highs[i])
                     {
@@ -57,7 +57,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing
             // Calculates if the current low value is a new swing
             if (newLow)
             {
-                for (int i = 1; i < priceActionSwingClass.Strength + 1; i++)
+                for (int i = 1; i <= priceActionSwingClass.Strength; i++)
                 {
                     if (lows[0] >= lows[i])
                     {
