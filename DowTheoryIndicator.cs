@@ -74,17 +74,33 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 
         public void ResetLongShortSignal()
         {
-            Value[0] = 0;
+            LongShortSignal = 0;
         }
 
         // Other properties
 
         [Browsable(false)]
+        [XmlIgnore]
         public MatrixPoints LastMatrix
         {
             get
             {
                 return dowTheory.GetChosenCalculationObject().LastMatrixPoints;
+            }
+        }
+
+        [Browsable(false)]
+        [XmlIgnore]
+        public int LongShortSignal
+        {
+            get 
+            {
+                Print(dowTheory.LongShortSignal);
+                return dowTheory.LongShortSignal;
+            }
+            set
+            {
+                dowTheory.LongShortSignal = value;
             }
         }
 
@@ -127,13 +143,6 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         [Display(Name = "Min percent of pivot retraction", Order = 7, GroupName = "Parameters")]
         public double MinPercentOfPivotRetraction
         { get; set; }
-
-        [Browsable(false)]
-        [XmlIgnore]
-        public Series<double> LongShortSignal
-        {
-            get { return Values[0]; }
-        }
         #endregion
     }
 }

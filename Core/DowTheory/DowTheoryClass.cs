@@ -14,6 +14,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         private readonly TrendCalculation trendCalculation;
 
         public CalculationTypeListDowTheory CalculationType { get; private set; }
+        public int LongShortSignal { get; set; }
 
         // Initialization
 
@@ -24,6 +25,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             this.owner = owner;
             this.drawingProperties = drawingProperties;
             CalculationType = calculationTypeListDT;
+            LongShortSignal = 0;
 
             priceActionSwingClass = new PriceActionSwingClass(owner, drawingProperties, calculationTypeListPCW, strength, 
                                                               useHighLow, showPoints, showLines);
@@ -65,12 +67,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                 {
                     case MatrixPoints.WhichTrendSideSignal.Bullish:
                         // Enter a long signal
-                        owner.Value[0] = 1;
+                        LongShortSignal = 1;
                         break;
 
                     case MatrixPoints.WhichTrendSideSignal.Bearish:
                         // Enter a short signal
-                        owner.Value[0] = -1;
+                        LongShortSignal = -1;
                         break;
                 }
             }
