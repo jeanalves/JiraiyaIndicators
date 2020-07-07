@@ -1,4 +1,4 @@
-﻿using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
+using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
 using NinjaTrader.NinjaScript;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
@@ -19,7 +19,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         // Initialization
 
         public DowTheoryClass(NinjaScriptBase owner, DrawingProperties drawingProperties, CalculationTypeListDowTheory calculationTypeListDT,
-                              CalculationTypeList calculationTypeListPCW, double strength, bool useHighLow, bool showPoints, bool showLines,
+                              CalculationTypeListPriceActionSwing calculationTypeListPCW, double strength, bool useHighLow, bool showPoints, bool showLines,
                               double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
         {
             this.owner = owner;
@@ -93,10 +93,4 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             return null;
         }
     }
-}
-
-public enum CalculationTypeListDowTheory
-{
-    Trend,
-    Pivot
 }

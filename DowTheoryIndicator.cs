@@ -34,7 +34,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 				IsSuspendedWhileInactive					= true;
 
                 CalculationTypeDT                           = CalculationTypeListDowTheory.Pivot;
-                CalculationTypePCW                          = CalculationTypeList.SwingForward;
+                CalculationTypePCW                          = CalculationTypeListPriceActionSwing.SwingForward;
                 Strength                                    = 2;
                 UseHighLow                                  = true;
                 ShowPoints                                  = true;
@@ -112,7 +112,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 
         [NinjaScriptProperty]
         [Display(Name = "Price action swing calculation type", Order = 1, GroupName = "Parameters")]
-        public CalculationTypeList CalculationTypePCW
+        public CalculationTypeListPriceActionSwing CalculationTypePCW
         { get; set; }
 
         [NinjaScriptProperty]
@@ -154,12 +154,12 @@ namespace NinjaTrader.NinjaScript.Indicators
 	public partial class Indicator : NinjaTrader.Gui.NinjaScript.IndicatorRenderBase
 	{
 		private JiraiyaIndicators.DowTheoryIndicator[] cacheDowTheoryIndicator;
-		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
+		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeListPriceActionSwing calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
 			return DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
 
-		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input, CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
+		public JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input, CalculationTypeListDowTheory calculationTypeDT, CalculationTypeListPriceActionSwing calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
 			if (cacheDowTheoryIndicator != null)
 				for (int idx = 0; idx < cacheDowTheoryIndicator.Length; idx++)
@@ -174,12 +174,12 @@ namespace NinjaTrader.NinjaScript.MarketAnalyzerColumns
 {
 	public partial class MarketAnalyzerColumn : MarketAnalyzerColumnBase
 	{
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeListPriceActionSwing calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
 			return indicator.DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
 
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeListPriceActionSwing calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
 			return indicator.DowTheoryIndicator(input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
@@ -190,12 +190,12 @@ namespace NinjaTrader.NinjaScript.Strategies
 {
 	public partial class Strategy : NinjaTrader.Gui.NinjaScript.StrategyRenderBase
 	{
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(CalculationTypeListDowTheory calculationTypeDT, CalculationTypeListPriceActionSwing calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
 			return indicator.DowTheoryIndicator(Input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
 
-		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeList calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
+		public Indicators.JiraiyaIndicators.DowTheoryIndicator DowTheoryIndicator(ISeries<double> input , CalculationTypeListDowTheory calculationTypeDT, CalculationTypeListPriceActionSwing calculationTypePCW, double strength, bool useHighLow, double maxPercentOfPivotRetraction, double minPercentOfPivotRetraction)
 		{
 			return indicator.DowTheoryIndicator(input, calculationTypeDT, calculationTypePCW, strength, useHighLow, maxPercentOfPivotRetraction, minPercentOfPivotRetraction);
 		}
