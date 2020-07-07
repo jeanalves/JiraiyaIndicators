@@ -1,4 +1,4 @@
-using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
+﻿using NinjaTrader.Custom.Indicators.JiraiyaIndicators.PriceActionSwing;
 using NinjaTrader.NinjaScript;
 
 namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
@@ -14,7 +14,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
         private readonly TrendCalculation trendCalculation;
 
         public CalculationTypeListDowTheory CalculationType { get; private set; }
-        public int LongShortSignal { get; set; }
+        public OrderSideSignal LongShortSignal { get; set; }
 
         // Initialization
 
@@ -25,7 +25,7 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
             this.owner = owner;
             this.drawingProperties = drawingProperties;
             CalculationType = calculationTypeListDT;
-            LongShortSignal = 0;
+            LongShortSignal = OrderSideSignal.Flat;
 
             priceActionSwingClass = new PriceActionSwingClass(owner, drawingProperties, calculationTypeListPCW, strength, 
                                                               useHighLow, showPoints, showLines);
@@ -67,12 +67,12 @@ namespace NinjaTrader.Custom.Indicators.JiraiyaIndicators.DowPivot
                 {
                     case MatrixPoints.WhichTrendSideSignal.Bullish:
                         // Enter a long signal
-                        LongShortSignal = 1;
+                        LongShortSignal = OrderSideSignal.Buy;
                         break;
 
                     case MatrixPoints.WhichTrendSideSignal.Bearish:
                         // Enter a short signal
-                        LongShortSignal = -1;
+                        LongShortSignal = OrderSideSignal.Sell;
                         break;
                 }
             }

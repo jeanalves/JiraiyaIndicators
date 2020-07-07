@@ -74,7 +74,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 
         public void ResetLongShortSignal()
         {
-            LongShortSignal = 0;
+            LongShortSignalIsh = OrderSideSignal.Flat;
         }
 
         // Other properties
@@ -91,7 +91,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 
         [Browsable(false)]
         [XmlIgnore]
-        public int LongShortSignal
+        public OrderSideSignal LongShortSignalIsh
         {
             get 
             {
