@@ -95,7 +95,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
         {
             get 
             {
-                Print(dowTheory.LongShortSignal);
+                Update();
                 return dowTheory.LongShortSignal;
             }
             set
