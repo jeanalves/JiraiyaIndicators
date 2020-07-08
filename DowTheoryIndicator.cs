@@ -41,8 +41,6 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
                 ShowLines                                   = true;
                 MaxPercentOfPivotRetraction                 = 80;
                 MinPercentOfPivotRetraction                 = 20;
-
-                AddPlot(Brushes.Transparent, "Long Short Signal");
 			}
 			else if (State == State.Configure)
 			{
@@ -74,7 +72,7 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
 
         public void ResetLongShortSignal()
         {
-            LongShortSignalIsh = OrderSideSignal.Flat;
+            dowTheory.LongShortSignal = OrderSideSignal.Flat;
         }
 
         // Other properties
@@ -97,10 +95,6 @@ namespace NinjaTrader.NinjaScript.Indicators.JiraiyaIndicators
             {
                 Update();
                 return dowTheory.LongShortSignal;
-            }
-            set
-            {
-                dowTheory.LongShortSignal = value;
             }
         }
 
